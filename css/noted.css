@@ -1,0 +1,943 @@
+body {
+	position:relative;
+	height:100%;
+	margin:0;
+	padding:0 0 35px;
+	font-family:Helvetica,Arial,sans-serif;
+	font-size:12px;
+	line-height:16px;
+	color:#ccc;
+	background:#2a2a2a;
+	background:#444;
+}
+
+body.slate {
+	background:#333 url('../images/slate.jpg') 0 0 repeat-x;
+}
+
+body.cork {
+	background:url('../images/corkboard.png');
+	/* adapted from:
+	http://www.noctua-graphics.de/images/download/tex/wood/kork03.jpg */
+}
+
+body.wood {
+	background:#a04d1e url('../images/wood.jpg');
+	/* adapted from:
+	http://Bobbyperux.deviantart.com/art/Wood-CSS-Pack-103088022 */
+}
+
+body.wood2 {
+	background:#b88f5f url('../images/wood2.jpg');
+	/* adapted from:
+	cgtextures.com WoodFine0001*/
+	/* NO DISTRIBUTION!!! */
+}
+
+
+body.rough_wood {
+	background:url('../images/rough_wood.jpg');
+}
+
+body.paint {
+	background:url('../images/paint.jpg');
+}
+
+
+body.leather {
+	background:url('../images/leather.png');
+	/* http://seamlesstextures.net/textures/slightly%20worn%20leather */
+}
+
+
+
+
+a {
+	color:#c00;
+}
+
+a img {
+	border:0;
+}
+
+#masthead {
+	padding:5px 10px;
+	background:rgba(0,0,0,0.66);
+	position:relative;
+	z-index:100;
+}
+
+	#masthead a {
+		text-decoration:none;
+	}
+	
+	#masthead a img {
+		margin-bottom:-3px;
+	}
+
+#masthead .logo {
+	display:inline-block;
+	width:80px;
+	height:14px;
+	background:url('../images/noted-header.png') 0 0 no-repeat;
+	text-indent:-12345px;
+}
+
+/* Menus
+----------------------------- */
+
+.menu_trigger {
+	position:relative;
+	display:inline-block;
+	margin:-5px 5px;
+	padding:5px 10px 5px 10px;
+	color:#c00;
+	border:1px solid #444;
+	border-width:0 1px;
+}
+
+.menu_trigger:hover {
+	background-color:rgba(0,0,0,0.8);
+}
+
+	.menu_trigger:hover ul {
+		display:block;
+	}
+
+	ul.menu {
+		position:absolute;
+		top:100%;
+		left:0;
+		width:140px;
+		margin:0 0 0 -1px;
+		padding:0;
+		list-style:none;
+		border:1px solid #444;
+		border-width:0 1px 1px;
+		display:none;
+	}
+	
+		ul.menu li {
+			margin:0;
+			padding:3px 0;
+			background:rgba(0,0,0,0.85);
+		}
+		
+			ul.menu li a {
+				display:block;
+				padding:3px 10px;
+				
+			}
+			
+			ul.menu li a:hover {
+				background:rgba(40,40,40,0.95);
+				color:#f00;
+				
+				background:rgba(175,0,0,0.95);
+				color:#000;
+			}
+
+#prefs {
+	position:absolute;
+	top:0;
+	right:0;
+	padding:5px 10px;
+	width:80px;
+}
+
+ul.body_styles.menu {
+	left:auto;
+	right:-1px;
+}
+
+
+/* Tools 
+----------------------------- */
+
+#tools {
+	padding-left:25px;
+	background-image:url('../images/cog.png');
+	background-position:5px 4px;
+	background-repeat:no-repeat;
+}
+
+
+
+
+/* ============================================
+	
+	ALERTS
+
+============================================ */
+
+#alerts {
+	margin:0;
+	padding:1px;
+	background:rgba(0,0,0,0.5);
+	position:relative;
+}
+
+#alerts .alerts_content {
+	display:none;
+	overflow:auto;
+	padding:1px 0;
+}
+
+#alerts .overdue,
+#alerts .due,
+#alerts .coming {
+	float:left;
+	width:33%;
+	
+	padding:1px 0;
+}
+
+#alerts .alert {
+	margin:5px 10px;
+	padding:5px;
+	border:1px solid;
+	border-width:0 0 1px;
+}
+
+#alerts .alert:hover {
+	cursor:pointer;
+}
+
+#alerts .overdue .alert {
+	color:#fcc;
+	border-color:#f00; /* full border */
+	border-color:#500; /* bottom border */
+	padding-left:24px;
+	background:rgba(170,0,0,0.8) url('../images/exclamation.png') 4px 50% no-repeat;
+}
+
+#alerts .due .alert {
+	color:#fff;
+	border-color:#ffc; /* full border */
+	border-color:#630; /* bottom border */
+	padding-left:24px;
+	background:rgba(255,204,0,0.5) url('../images/error.png') 4px 50% no-repeat;
+	background:rgba(204,165,0,0.7) url('../images/error.png') 4px 50% no-repeat;
+}
+
+#alerts .coming .alert {
+	border-color:#ccc;  /* full border */
+	border-color:#333; /* bottom border */
+	color:#eee;
+	background:rgba(75,75,75,0.7);
+}
+
+#alerts h3 {
+	font-family:'LeagueGothicRegular',Arial,sans-serif;
+	font-size:24px;
+	line-height:24px;
+	text-transform:uppercase;
+	margin:2px 10px 5px;
+
+	/* opacity:0.99; */
+}
+
+#todayDisplay {
+	color:#fc0;
+	color:#c90;
+	color:#d7b700;
+	
+}
+
+#alerts_tab {
+	position:absolute;
+	width:80px;
+	height:10px;
+	line-height:10px;
+	bottom:-10px;
+	left:50%;
+	margin-left:-40px;
+	text-align:center;
+	text-decoration:none;
+	color:#fff;
+	background:rgba(0,0,0,0.5);
+}
+
+/* ============================================
+	
+	THE BOARD
+
+============================================ */
+
+#board {
+	margin:0;
+	padding:10px;
+	list-style:none;
+	overflow:auto;
+	/*
+	-webkit-perspective: 1000;
+	-webkit-transform-style: preserve-3d;
+	*/
+}
+
+#new_note_ghost {
+	float:left;
+	margin:90px 40px 60px;
+	width:120px;
+	height:120px;
+	background: url('../images/new_note_ghost.png') 50% 50% no-repeat;
+	opacity:0.5;
+	cursor:pointer;
+}
+
+#new_note_ghost:hover {
+	opacity:1;
+}
+
+.note {
+	/* /
+	position:absolute;
+	top:20px;
+	left:20px;
+	/*  */
+
+	position:relative;
+	list-style:none;
+	
+	color:#222;
+	
+	float:left;
+	margin:10px 0px 5px;
+	
+	padding:0 10px 0;
+	
+	background:url('../images/note_bg.png') 100% 100% no-repeat;
+	
+	z-index:1;
+	
+	-webkit-animation-duration: .5s;
+	-webkit-animation-timing-function: ease-in-out;
+}
+
+.note.top {
+	z-index:2;
+}
+
+.note.done {
+	/*outline:2px solid green;*/
+}
+
+.note.todo {
+	/*outline:2px solid red;*/
+}
+
+.note.top {
+	z-index:10;
+}
+
+.note.sorting {
+	padding-top:10px;
+	margin-top:-10px;
+	outline:4px solid rgba(0,150,255,0.75);
+}
+
+/* From jQTouch */
+
+.flipinfromleft {
+	-webkit-animation-name: flipinfromleft;
+}
+
+.flipouttoleft {
+	-webkit-animation-name: flipouttoleft;
+}
+
+@-webkit-keyframes flipouttoleft {
+    from { -webkit-transform: rotateY(0) scale(1); }
+    to { -webkit-transform: rotateY(-90deg) scale(.9); }
+}
+
+
+@-webkit-keyframes flipinfromleft {
+    from { -webkit-transform: rotateY(-90deg) scale(.9); }
+    to { -webkit-transform: rotateY(0) scale(1); }
+}
+
+
+
+
+/*
+
+@-webkit-keyframes flipouttoleft {
+    from { -webkit-transform: rotateY(0) ; }
+    to { -webkit-transform:rotateY(90deg) ; }
+}
+
+
+@-webkit-keyframes flipinfromleft {
+    from { -webkit-transform:rotateY(90deg); }
+    to { -webkit-transform: rotateY(0) ; }
+}
+
+*/
+
+.note_foot {
+	height:30px;
+	position:relative;
+	z-index:1;
+}
+
+
+.note_content {
+	position:relative;
+	padding:20px 0 36px;
+	
+	width:250px;
+	height:240px;
+	
+	overflow:visible;
+	
+	background:#eee url('../images/shine.png') 100% 100% no-repeat;
+}
+
+	.note .title {
+		position:absolute;
+		top:0;
+		left:0;
+		width:100%;
+		padding:3px 0;
+		text-indent:10px;
+		border-bottom:1px solid rgba(50,50,50,0.3);
+		font-weight:bold;
+	}
+	
+	.note ul.items {
+		margin:2px 0 0 10px;
+		padding:5px 0 5px 20px;
+		list-style:none;
+		max-height:100%;
+		overflow:auto;
+	}
+	
+		.note ul.items li {
+			position:relative;
+			margin:0 0 5px;
+			padding:0 20px 0 0;
+			
+			margin:0;
+			padding:3px 20px 2px 0;
+			
+			line-height:16px;
+			text-indent:-20px;
+		}
+		
+		.note ul.items li:hover {
+			background:rgba(0,0,0,0.05);
+		}
+		
+		.note ul.items li.hilite {
+			background:rgba(255,255,255,0.6);
+			color:#000;
+		}
+		
+		.note ul.items li.datepicking {
+			background:#000;
+			color:#fff;
+			outline:2px solid #000;
+		}
+		
+		.note ul.items li.overdue {
+			color:#400;
+			font-weight:bold;
+		}
+		
+		.note ul.items li.due_today {
+		}
+		
+	
+			.note ul.items li a.trigger {
+				display:inline-block;
+				width:16px;
+				height:16px;
+				margin:0 5px -4px 0;
+				background-color:transparent;
+				background-position:50% 50%;
+				background-repeat:no-repeat;
+			}
+
+			.note ul.items li a.trigger:hover,
+			.note ul.items li a.date_trigger:hover {
+				cursor:pointer;
+			}
+
+			.note.todo ul.items li a.trigger {
+				background-image:url('../images/bullet_green.png');
+			}
+			
+			.note.todo ul.items li.has_deadline a.trigger {
+				background-image:url('../images/clock.png');
+			}
+			
+			.note.todo ul.items li.has_deadline.overdue a.trigger {
+				background-image:url('../images/clock_red.png');
+			}
+			
+			.note.todo ul.items li:hover a.trigger {
+				background-image:url('../images/accept.png') !important;
+			}
+			
+			.note.done ul.items li a.trigger {
+				background-image:url('../images/tick.png');
+			}
+			
+			.note.done ul.items li:hover a.trigger {
+				background-image:url('../images/delete.png');
+			}
+		
+			.note ul.items li a.date_trigger {
+				position:absolute;
+				top:0;
+				right:5px;
+				margin:0 0 -4px 0;
+				width:16px;
+				height:16px;
+				background-position:50% 50%;
+				background-repeat:no-repeat;
+			}
+		
+			.note.todo ul.items li:hover a.date_trigger {
+				background-image:url('../images/date_add.png');
+			}
+			
+			.note.todo ul.items li.datepicking a.date_trigger {
+				display:none;
+			}
+		
+			.note ul.items li a.date_delete {
+				position:absolute;
+				top:1px;
+				right:20px;
+				display:none;
+			}
+			
+			.note ul.items li.has_deadline:hover a.date_delete {
+				display:inline;
+			}
+			
+			.note ul.items li.has_deadline.datepicking a.date_delete {
+				display:none;
+			}
+			
+			.note ul.items li a img,
+			.note .add img {
+				vertical-align:middle;
+				margin-top:-4px;
+				margin-right:5px;
+			}
+
+			
+			.note ul.items li input.due {
+				position:absolute;
+				top:-2px;
+				left:0px;
+				background:#ffa;
+				border:1px solid #fc0;
+				display:none;
+			}
+
+	.note.done li span {
+		/* text-decoration:line-through; */
+		color:#666;
+	}
+
+	.note li.editing {
+
+	}
+	
+	.note.todo ul.items li.editing span {		// when editing, hide span
+		position:relative; /* strange safari trigger */
+		display:none;
+	}
+	
+	.note.todo ul.items li.editing a.date_trigger,
+	.note.todo ul.items li.editing a.date_delete {				// when editing, hide date triggers
+		position:absolute; /* strange safari trigger */
+		display:none;
+	}
+	
+	.note input.item {
+		width:95%;
+	}
+	
+	.note input.date {
+		position:absolute;
+		top:0;
+		left:0;
+		margin:-16px 0 0 20px;
+		width:10px;
+		height:10px;
+		visibility:hidden;
+	}
+	
+	#ui-datepicker-div {
+		z-index:10;
+	}
+	
+	.note input.titleText {
+		width:90%;
+	}
+
+	.note div.add {
+		margin:0 10px;
+		padding:5px 0;
+		border-top:1px solid rgba(0,0,0,0.3);
+		opacity:0.66;
+	}
+	
+	.note div.add:hover {
+		cursor:pointer;
+		background:rgba(0,0,0,0.07);
+		opacity:1;
+	}
+	
+		.note div.add:hover span {
+			text-decoration:underline;
+		}
+	
+	.note .controls {
+		position:absolute;
+		bottom:2px;
+		left:0;
+		width:100%;
+		opacity:0.66;
+		/*border-top:1px solid rgba(50,50,50,0.5);
+		background:rgba(0,0,0,0.1);*/
+	}
+	
+	.note .controls:hover {
+		opacity:1;
+	}
+	
+	.note .controls a {
+		display:inline-block;
+		color:rgba(255,255,255,0.6);
+		background:rgba(0,0,0,0.35);
+		padding:1px 4px;
+		margin:0 3px 2px;
+		border-radius:4px;
+		-webkit-border-radius:4px;
+		-moz-border-radius:4px;
+	}
+	
+	.note.done .controls a.done_trigger,
+	.note.todo .controls a.todo_trigger {
+		background:rgba(0,0,0,0.6);
+		color:#ddd;
+		font-weight:bold;
+		text-decoration:none;
+	}
+	
+	.note .controls a.color_trigger,
+	.note .controls a.tools_trigger {
+		background:transparent;
+		padding:0;
+		margin-left:10px;
+		position:relative;
+		bottom:-3px;
+	}
+	
+	.note .controls a.tools_trigger {
+		margin-left:2px;
+		margin-right:15px;
+	}
+	
+	.note .controls a.resize_handle {
+		position:absolute;
+		bottom:28px;
+		right:0;
+		color:#000;
+		background:#888;
+		text-decoration:none;
+		opacity:.3;
+	}
+	
+	.note .title a.delete_note {
+		position:absolute;
+		top:2px;
+		right:2px;
+		display:none;
+	}
+	
+	.note .title:hover a.delete_note {
+		display:inline;
+	}
+	
+/* SHOW AND HIDE ITEMS BASED ON NOTE STATE */
+
+.note.done .items li,
+.note.todo .items li.done {
+	display:none;
+}
+	
+.note.done .items li.done,
+.note.todo .items li {
+	display:block;
+}
+
+.note.done div.add {
+	display:none;
+}
+
+#note_template,
+#item_template {
+	display:none;
+}
+
+/* Colors */
+
+.note .colors {
+	display:none;
+	position:absolute;
+	bottom:22px;
+	left:0px;
+	width:100%;
+	padding:0 0 8px;
+	background:url('../images/color-tick.png') 10px 100% no-repeat;
+
+}
+
+	.note .colors .panel_title,
+	.note .tools .panel_title {
+		padding:5px 10px;
+		padding-right:24px;
+		margin:0 0 0;
+		border-bottom:1px solid #333;
+		color:#ccc;
+		background:#000;
+	}
+	
+	.note .colors .colorblocks {
+		overflow:hidden;
+		padding:7px 10px 0;
+		background:#000;
+	}
+	
+		.note .colors .colorblocks a {
+			float:left;
+			width:15px;
+			height:15px;
+			margin:0 2px 0 0;
+			border:1px solid #999;
+		}
+		
+		.note .colors .colorblocks a:hover {
+			border-color:#444;
+		}
+
+	.note .colors .color_input {
+		padding:5px 8px 7px;
+		background:#000;
+	}
+	
+	.note .colors .color_input input {
+
+	}
+	
+	.note .colors .color_input img {
+		vertical-align:middle;
+	}
+	
+	.note .colors a.close,
+	.note .tools a.close {
+		position:absolute;
+		top:5px;
+		right:5px;
+	}
+
+/* Tools */
+
+.note .tools {
+	display:none;
+	position:absolute;
+	bottom:22px;
+	left:0px;
+	width:100%;
+	padding:0 0 8px;
+	background:url('../images/color-tick.png') 35px 100% no-repeat;
+}
+
+	.note .tools ul {
+		margin:0;
+		padding:0;
+		list-style:none;
+		background:#000;
+	}
+	
+		.note .tools ul li {
+			margin:0;
+			padding:0;
+		}
+		
+			.note .tools ul li a {
+				display:block;
+				padding:3px 10px;
+				text-decoration:none;
+				color:#c00;
+				border:1px solid #000;
+				border-width:0 1px;
+				border-top:1px solid #333;
+			}
+			
+			.note .tools ul li a:hover {
+				color:#f00;
+				background:#222;
+			}
+
+	
+/* 
+	EXTRAS
+*/
+
+#duedate_pointer {
+	position:absolute;
+	top:50%;
+	left:50%;
+	width:55px;
+	height:36px;
+	padding:1px 0px 0; 
+	margin-top:-36px;
+	margin-left:-10px;
+	
+	font-family:'LeagueGothicRegular',Arial,sans-serif;
+	font-size:24px;
+	line-height:28px;
+	text-align:center;
+	text-transform:uppercase;
+	
+	color:#666;
+	
+	border:0;
+	-webkit-border-radius:5px;
+	-mozilla-border-radius:5px;
+	border-radius:5px;
+
+
+	background:url('../images/duedate_pointer.png') 50% 0 no-repeat;
+	z-index:99;
+	
+	display:none;
+}
+
+#duedate_pointer .month {
+	opacity:0.66;
+	-webkit-opacity:0.66;
+	-moz-opacity:0.66;
+}
+
+#duedate_pointer.due_today {
+	color:#c60;
+}
+
+
+#duedate_pointer.overdue {
+	color:#c00;
+}
+
+
+.modal {
+	position:fixed;
+	top:50%;
+	left:50%;
+	
+	margin-left:-250px;
+	margin-top:-200px;
+	padding:0 10px 30px;
+
+	background:url('../images/note_bg.png') 100% 100% no-repeat;
+
+	z-index:201;
+	
+	display:none;
+}
+
+	.modal h3 {
+		font-family:'LeagueGothicRegular',Arial,sans-serif;
+		font-size:24px;
+		line-height:24px;
+		text-transform:uppercase;
+		margin:2px 0 5px;
+	}
+
+	.modal .content {
+		width:500px;
+		height:400px;
+		padding:10px;
+		color:#333;
+		background:#ffa url('../images/shine.png') 100% 100% no-repeat;
+	}
+
+		.modal .content textarea {
+			width:460px;
+			width:100%;
+			height:290px;
+		}
+
+#importing_note,
+#exported_note {
+	color:#a00;
+}
+
+#modal_screen {
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background:rgba(48,48,48,0.8);
+	z-index:200;
+	display:none;
+}
+
+
+p.warning {
+	padding:2px 0 2px 24px;
+	background:#fcc url('../images/exclamation.png') 4px 50% no-repeat;
+}
+
+div#footer {
+	position:absolute;
+	left:0;
+	bottom:0;
+	width:100%;
+	padding:10px 0;
+	text-align:center;
+	color:rgba(255,255,255,0.65);
+	opacity:0.5;
+}
+
+	div#footer a {
+		color:rgba(255,255,255,0.85);
+	}
+	
+	div#footer:hover {
+		opacity:1;
+	}
+	
+	span#made_by {
+		padding:5px;
+		border:0;
+		border-radius:4px;
+		-webkit-border-radius:4px;
+		background:rgba(255,255,255,0.2);
+	}
+
+/*
+ *
+ * The fonts included are copyrighted by the vendor listed below.
+ *
+ * @vendor:     The League of Moveable Type
+ * @vendorurl:  http://www.theleagueofmoveabletype.com
+ * @licenseurl: http://www.fontsquirrel.com/license/League-Gothic
+ *
+ *
+ */
+
+@font-face {
+	font-family: 'LeagueGothicRegular';
+	src: url('League_Gothic.eot');
+	src: local('League Gothic Regular'), local('LeagueGothic'), url('League_Gothic.ttf') format('truetype');
+}

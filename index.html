@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Noted</title>
+	<link rel="shortcut icon" href="./noted_icon.png" type="image/png"/>
+	<link rel="stylesheet" type="text/css" href="css/noted.css" />
+	<link rel="stylesheet" type="text/css" href="css/dark-hive/jquery-ui-1.7.2.custom.css" />
+	<script type="text/javascript" src="js/jquery-1.4.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.7.2.custom.min.js"></script>
+	<script type="text/javascript" src="js/json2.js"></script>
+	<script type="text/javascript" src="js/noted.js"></script>
+	
+</head>
+<body>
+
+<div id="masthead">
+	<span class="logo">Noted</span>
+	<div id="tools" class="menu_trigger">
+		Tools
+
+		<ul class="menu">
+			<li><a href="#snap_to_size" id="snap_to_size" title="Snap all notes to standard size">Snap to size</a></li>
+			<li><a href="#import_all" id="import_all" title="Replace all notes with imported JSON">Import All Notes</a></li>
+			<li><a href="#export_all" id="export_all" title="Export all notes as JSON">Export All Notes</a></li>
+		</ul>
+		
+	</div>
+	
+	<a href="#new_note" id="new_note"><img src="images/note_add.png" /> New Note</a><!--| <a href="#nuke" id="nuke">Nuke it</a>-->
+	
+	<div id="prefs">
+		<div class="styles menu_trigger">
+			Styles &rarr;
+			<ul class="body_styles menu">
+				<li><a href="#slate">Slate</a></li>
+				<li><a href="#cork">Cork</a></li>
+				<li><a href="#wood">Wood</a></li>
+				<li><a href="#wood2">Light Wood</a></li>
+				<!--<li><a href="#rough_wood">Rough Wood</a></li>
+				<li><a href="#paint">Paint</a></li>-->
+				<li><a href="#leather">Leather</a></li>
+			</ul>
+		</div>
+		
+	</div>
+</div>
+
+<div id="alerts">
+	<div class="alerts_content">
+		<div class="overdue"><h3>Overdue</h3></div>
+		<div class="due"><h3>Due Today — <span id="todayDisplay"></span></h3></div>
+		<div class="coming"><h3>Coming Up</h3></div>
+	</div>
+	<a href="#alerts" id="alerts_tab" title="Click or hit F1 to open/close alerts panel">=</a>
+</div>
+
+
+<ul id="board">
+	<li id="new_note_ghost" title="Create New Note"></li>
+</ul>
+
+
+<div id="note_template">
+	<li class="note" id="note0">
+
+		<div class="note_content">
+
+			<div class="title"><span>(Double-click to edit note title)</span><a href="#delete" class="delete_note" title="Delete this note"><img src="images/delete.png" /></a></div>
+	
+			<ul class="items">
+			</ul>		
+	
+		
+			<div class="add"><a href="#" class="trigger"><img src="images/add.png" /></a><span>Add</span></div>
+		
+			
+		</div>
+
+		<div class="note_foot">
+			<div class="controls">
+				<a href="#colors" class="color_trigger"><img src="images/color_wheel.png" /></a>
+				<a href="#tools" class="tools_trigger"><img src="images/cog.png" /></a>
+				<a href="#todo" class="todo_trigger">to do</a>
+				<a href="#done" class="done_trigger">done</a>
+				<!--<a href="#" class="resize_handle">///</a>-->
+				
+			</div>
+			
+			<div class="colors">
+				<div class="panel_title">Set Note Color</div>
+				<div class="colorblocks">
+				<a href="#" style="background:#eee"></a>
+				<a href="#" style="background:#bbd6f9"></a><!--#cdf--><!--#c6d9ff-->
+				<a href="#" style="background:#cfd"></a>
+				<a href="#" style="background:#ffa"></a>
+				<a href="#" style="background:#ffdd90"></a>
+				<a href="#" style="background:#fce"></a>
+				</div>
+				<div class="color_input"><input class="color" value="#eee" /><a href="#" title="Set this color value"><img src="images/control_play.png" /></a></div>
+				<a href="#" class="close"><img src="images/cancel.png" /></a>
+			</div>
+			<div class="tools">
+				<div class="panel_title">Note Tools</div>
+				<ul>
+					<li><a href="#exportJSON" class="export_trigger" title="Export this note as JSON">Export note as JSON</a></li>
+					<li><a href="#importJSON" class="import_trigger" title="Import JSON into this note">Import note JSON</a></li>
+				</ul>
+				<a href="#" class="close"><img src="images/cancel.png" /></a>
+			</div>
+		</div>
+		<input name="date" class="date" />
+		
+	</li>
+</div>
+
+<div id="item_template">
+	<li><a href="#" class="trigger" title="click to complete this item" ></a><span style="display:none"></span><input type="text" class="item" value="" /><a href="#date" class="date_trigger" title="set due date for this item"></a><input type="text" class="due" value="" /><a href="#date" class="date_delete" title="clear due date for this item"><img src="images/date_delete.png" /></a></li>
+</div>
+
+<div id="alert_template">
+	<div class="alert" title="click to complete this item"></div>
+</div>
+
+<div id="duedate_pointer">
+	<span class="month">Jan</span>
+	<span class="day">1</span>
+</div>
+
+<div class="modal" id="import_all_field">
+	<div class="content">
+		<h3>Paste JSON here to import a board:</h3>
+		<p class="warning"><strong>Warning:</strong> this action will destroy all current data, and cannot be undone.  Be careful!</p>
+		<p><textarea id="import_all_JSON" name="import_all_JSON"></textarea></p>		<p><a href="#import_all_cancel" id="import_all_cancel" class="modal_dismiss">Cancel</a> <button type="button" id="import_all_OK">Import</button></p>
+	</div>
+</div>
+
+
+<div class="modal" id="import_field">
+	<div class="content">
+		<h3>Paste JSON here to import into <span id="importing_note"></span>:</h3>
+		<p><textarea id="import_JSON" name="import_JSON"></textarea>
+		<input type="hidden" name="import_note_handle" id="import_note_handle" value="" /></p>
+		<p><a href="#import_cancel" id="import_cancel" class="modal_dismiss">Cancel</a> <button type="button" id="import_OK">Import</button></p>
+	</div>
+</div>
+
+<div class="modal" id="export_field">
+	<div class="content">
+		<h3>JSON for <span id="exported_note"></span>:</h3>
+		<p><textarea id="export_JSON" name="export_JSON"></textarea>
+		<input type="hidden" name="export_note_handle" id="export_note_handle" value="" /></p>
+		<p><button type="button" id="export_cancel" class="modal_dismiss">Done</button></p>
+	</div>
+</div>
+
+<div id="modal_screen"></div>
+
+<div id="footer"><span id="made_by">Noted: a <a href="http://www.jongala.com/">jongala.com</a> project.</span></div>
+
+</body>
+</html>
