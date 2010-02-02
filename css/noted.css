@@ -392,6 +392,10 @@ ul.body_styles.menu {
 	overflow:visible;
 	
 	background:#eee url('../images/shine.png') 100% 100% no-repeat;
+	
+	box-shadow: 0 2px 4px rgba(0,0,0,0.75);
+	-webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0 2px 4px rgba(0,0,0,0.75);
 }
 
 	.note .title {
