@@ -333,12 +333,6 @@ ul.body_styles.menu {
 	z-index:10;
 }
 
-.note.sorting {
-	padding-top:10px;
-	margin-top:-10px;
-	outline:4px solid rgba(0,150,255,0.75);
-}
-
 /* From jQTouch */
 
 .flipinfromleft {
@@ -399,6 +393,11 @@ ul.body_styles.menu {
 	box-shadow: 0 2px 4px rgba(0,0,0,0.75);
 	-webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.75);
 	-moz-box-shadow: 0 2px 4px rgba(0,0,0,0.75);
+}
+
+.note.sorting .note_content {
+	outline:4px solid rgba(0,150,255,0.75);
+	outline-offset:10px;
 }
 
 	.note .title {
