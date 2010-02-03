@@ -26,8 +26,6 @@ function noted() {
 	
 	var self = this;
 
-	self.note_default_data = '{"name":"Note Title","items":"{}","color":"#eeeeee","x":0,"y":0,"width":0,"height":0}';
-
 	/* OVERVIEW:
 	
 	 * Flow goes like this:
@@ -163,10 +161,12 @@ function noted() {
 		self.save_local_data('note_list',note_list.join(','));				// save the updated list
 		self.save_local_data('next_note_id',Number(new_note_id) + 1);		// save the updated increment
 
-		self.save_local_data('note' + new_note_id,self.note_default_data); 	// save the note data		
+		var default_note_data = serialize_note($('#note_template .note')[0]);
+
+		self.save_local_data('note' + new_note_id,default_note_data); 	// save the note data		
 		
 
-		build_note(note_handle,JSON.parse(self.note_default_data));	// build the note
+		build_note(note_handle,JSON.parse(default_note_data));	// build the note
 		
 		put_ghost_last();												// move ghost
 		
