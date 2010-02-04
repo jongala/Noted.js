@@ -24,16 +24,21 @@ body.cork {
 body.wood {
 	background:#a04d1e url('../images/wood.jpg');
 	/* texture by
-	http://henriliriani.com/
-	*/
+	http://henriliriani.com/	*/
 }
 
 body.wood2 {
 	background:#b88f5f url('../images/wood2.jpg');
-	/* adapted from:
-	cgtextures.com WoodFine0001*/
-	/* NO DISTRIBUTION!!! */
+	/* texture by
+	http://henriliriani.com/	*/
 }
+
+body.wood3 {
+	background:#b88f5f url('../images/wood3.jpg');
+	/* texture by
+	http://henriliriani.com/	*/
+}
+
 
 
 body.rough_wood {
