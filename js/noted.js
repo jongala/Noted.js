@@ -704,7 +704,7 @@ function noted() {
 		});
 		
 		// item due date pointer display
-		$('.todo .items li.has_deadline').live('mouseenter',function(){
+		$('.items li.has_deadline').live('mouseenter',function(){
 			clearTimeout(duedate_timer);
 			var $item = $(this);
 			var $due_field = $(this).find('input.due');
@@ -716,11 +716,12 @@ function noted() {
 			var due_date = new Date($due_field.val());
 			var due_month = short_months[due_date.getMonth()];
 			var due_day = due_date.getDate();
+			var due_day_name = short_days[due_date.getDay()] + ",";
 			
 			$('#duedate_pointer')[0].className = this.className;
 		
 			if($due_field.val()) {
-				$duedate_pointer.find('.month').text(due_month).siblings('.day').text(due_day);
+				$duedate_pointer.find('.day').text(due_day_name).siblings('.month').text(due_month).siblings('.date').text(due_day);
 				//$duedate_pointer.css({'left':itemleft,'top':itemtop + 10}).animate({'top':itemtop}).fadeIn();
 				$duedate_pointer.css({'left':itemleft,'top':itemtop}).fadeIn('fast');
 			}
@@ -1058,6 +1059,8 @@ function noted() {
 	
 	
 	var short_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	
+	var short_days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 	
 	var truncate_string = function(fullstring,limit) {
 		if(limit === undefined || limit === null) limit=15;

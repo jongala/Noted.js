@@ -23,8 +23,9 @@ body.cork {
 
 body.wood {
 	background:#a04d1e url('../images/wood.jpg');
-	/* adapted from:
-	http://Bobbyperux.deviantart.com/art/Wood-CSS-Pack-103088022 */
+	/* texture by
+	http://henriliriani.com/
+	*/
 }
 
 body.wood2 {
@@ -802,11 +803,11 @@ ul.body_styles.menu {
 	position:absolute;
 	top:50%;
 	left:50%;
-	width:55px;
+	width:90px;
 	height:36px;
 	padding:1px 0px 0; 
 	margin-top:-36px;
-	margin-left:-10px;
+	margin-left:-28px;
 	
 	font-family:'LeagueGothicRegular',Arial,sans-serif;
 	font-size:24px;
