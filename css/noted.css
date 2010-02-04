@@ -28,13 +28,13 @@ body.wood {
 }
 
 body.wood2 {
-	background:#b88f5f url('../images/wood2.jpg');
+	background:#9c9164 url('../images/wood2.jpg');
 	/* texture by
 	http://henriliriani.com/	*/
 }
 
 body.wood3 {
-	background:#b88f5f url('../images/wood3.jpg');
+	background:#322b2c url('../images/wood3.jpg');
 	/* texture by
 	http://henriliriani.com/	*/
 }
@@ -114,7 +114,7 @@ a img {
 		position:absolute;
 		top:100%;
 		left:0;
-		width:140px;
+		width:160px;
 		margin:0 0 0 -1px;
 		padding:0;
 		list-style:none;
