@@ -20,9 +20,9 @@
 		Tools
 
 		<ul class="menu">
-			<li><a href="#snap_to_size" id="snap_to_size" title="Snap all notes to standard size">Snap to size</a></li>
-			<li><a href="#import_all" id="import_all" title="Replace all notes with imported JSON">Import All Notes</a></li>
-			<li><a href="#export_all" id="export_all" title="Export all notes as JSON">Export All Notes</a></li>
+			<li><a href="#snap_to_size" id="snap_to_size" title="Snap all notes to standard size">Snap notes to size</a></li>
+			<li><a href="#import_all" id="import_all" title="Replace all notes with imported JSON">Import All Notes&#8217; Data</a></li>
+			<li><a href="#export_all" id="export_all" title="Export all notes as JSON">Export All Notes&#8217; Data</a></li>
 		</ul>
 		
 	</div>
@@ -104,8 +104,8 @@
 			<div class="tools">
 				<div class="panel_title">Note Tools</div>
 				<ul>
-					<li><a href="#exportJSON" class="export_trigger" title="Export this note as JSON">Export note as JSON</a></li>
-					<li><a href="#importJSON" class="import_trigger" title="Import JSON into this note">Import note JSON</a></li>
+					<li><a href="#exportJSON" class="export_trigger" title="Export this note as JSON">Export note data as JSON</a></li>
+					<li><a href="#importJSON" class="import_trigger" title="Import JSON into this note">Import note data as JSON</a></li>
 				</ul>
 				<a href="#" class="close"><img src="images/cancel.png" /></a>
 			</div>
@@ -149,7 +149,7 @@
 
 <div class="modal" id="export_field">
 	<div class="content">
-		<h3>JSON for <span id="exported_note"></span>:</h3>
+		<h3>JSON data for <span id="exported_note"></span>:</h3>
 		<p><textarea id="export_JSON" name="export_JSON"></textarea>
 		<input type="hidden" name="export_note_handle" id="export_note_handle" value="" /></p>
 		<p><button type="button" id="export_cancel" class="modal_dismiss">Done</button></p>
