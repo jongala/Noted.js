@@ -380,7 +380,7 @@ ul.body_styles.menu {
 
 .note_content {
 	position:relative;
-	padding:20px 0 36px;
+	padding:20px 0 38px;
 	
 	width:250px;
 	height:240px;
@@ -619,7 +619,7 @@ ul.body_styles.menu {
 	.note .controls a {
 		float:left;
 		margin:0 0 4px 1px;
-		padding:2px 8px;
+		padding:1px 6px;
 		text-decoration:none;
 		color:rgba(0,0,0,0.6);
 		background:#eee url('../images/tab_shade.png') 0 100% repeat-x;
@@ -658,7 +658,7 @@ ul.body_styles.menu {
 	.note .controls a.color_trigger,
 	.note .controls a.tools_trigger {
 		position:absolute;
-		top:2px;
+		top:0px;
 		background:transparent;
 		padding:4px 0 0;
 		bottom:-3px;
@@ -668,11 +668,11 @@ ul.body_styles.menu {
 	}
 	
 	.note .controls a.color_trigger {
-		left:130px;
+		left:125px;
 	}
 	
 	.note .controls a.tools_trigger {
-		left:155px;
+		left:150px;
 	}
 
 	.note .title a.delete_note {
@@ -712,11 +712,11 @@ ul.body_styles.menu {
 .note .colors {
 	display:none;
 	position:absolute;
-	bottom:22px;
+	bottom:24px;
 	left:0px;
 	width:100%;
-	padding:0 0 8px;
-	background:url('../images/color-tick.png') 132px 100% no-repeat;
+	padding:0 0 6px;
+	background:url('../images/color-tick.png') 127px 100% no-repeat;
 
 }
 
@@ -773,11 +773,11 @@ ul.body_styles.menu {
 .note .tools {
 	display:none;
 	position:absolute;
-	bottom:22px;
+	bottom:24px;
 	left:0px;
 	width:100%;
-	padding:0 0 8px;
-	background:url('../images/color-tick.png') 157px 100% no-repeat;
+	padding:0 0 6px;
+	background:url('../images/color-tick.png') 152px 100% no-repeat;
 }
 
 	.note .tools ul {
