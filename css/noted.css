@@ -378,13 +378,6 @@ ul.body_styles.menu {
 
 */
 
-.note_foot {
-	height:30px;
-	position:relative;
-	z-index:1;
-}
-
-
 .note_content {
 	position:relative;
 	padding:20px 0 36px;
@@ -609,64 +602,79 @@ ul.body_styles.menu {
 		.note div.add:hover span {
 			text-decoration:underline;
 		}
+
+.note_foot {
+	height:30px;
+	position:relative;
+	z-index:1;
+}
 	
 	.note .controls {
 		position:absolute;
-		bottom:2px;
+		top:0;
 		left:0;
 		width:100%;
-		opacity:0.66;
-		/*border-top:1px solid rgba(50,50,50,0.5);
-		background:rgba(0,0,0,0.1);*/
-	}
-	
-	.note .controls:hover {
-		opacity:1;
 	}
 	
 	.note .controls a {
-		display:inline-block;
-		color:rgba(255,255,255,0.6);
-		background:rgba(0,0,0,0.35);
-		padding:1px 4px;
-		margin:0 3px 2px;
-		border-radius:4px;
-		-webkit-border-radius:4px;
-		-moz-border-radius:4px;
+		float:left;
+		margin:0 0 4px 1px;
+		padding:3px 8px;
+		text-decoration:none;
+		color:rgba(0,0,0,0.6);
+		background:#eee url('../images/tab_shade.png') 0 100% repeat-x;
+		box-shadow:0 3px 2px rgba(0,0,0,0.3);
+		-webkit-box-shadow:0 3px 2px rgba(0,0,0,0.3);
+		-moz-box-shadow:0 3px 2px rgba(0,0,0,0.3);
+		opacity:0.5;
 	}
 	
+	.note .controls a.todo_trigger {
+		margin-left:25px;
+	}
+	
+	
+	/* hover in off state */
+	.note.todo .controls a.done_trigger:hover,
+	.note.done .controls a.todo_trigger:hover {
+		text-decoration:underline;
+		opacity:0.75;
+	}
+	
+	/* on state */
 	.note.done .controls a.done_trigger,
 	.note.todo .controls a.todo_trigger {
-		background:rgba(0,0,0,0.6);
-		color:#ddd;
 		font-weight:bold;
-		text-decoration:none;
+		opacity:1;
+	}
+
+	/* colors and tools */
+
+	.note .controls:hover a.color_trigger,
+	.note .controls:hover a.tools_trigger {
+		opacity:1;
 	}
 	
 	.note .controls a.color_trigger,
 	.note .controls a.tools_trigger {
+		position:absolute;
+		top:2px;
 		background:transparent;
-		padding:0;
-		margin-left:10px;
-		position:relative;
+		padding:4px 0 0;
 		bottom:-3px;
+		box-shadow:none;
+		-webkit-box-shadow:none;
+		-moz-box-shadow:none;
+	}
+	
+	.note .controls a.color_trigger {
+		left:130px;
 	}
 	
 	.note .controls a.tools_trigger {
-		margin-left:2px;
-		margin-right:15px;
+		left:155px;
 	}
-	
-	.note .controls a.resize_handle {
-		position:absolute;
-		bottom:28px;
-		right:0;
-		color:#000;
-		background:#888;
-		text-decoration:none;
-		opacity:.3;
-	}
-	
+
 	.note .title a.delete_note {
 		position:absolute;
 		top:2px;
@@ -708,7 +716,7 @@ ul.body_styles.menu {
 	left:0px;
 	width:100%;
 	padding:0 0 8px;
-	background:url('../images/color-tick.png') 10px 100% no-repeat;
+	background:url('../images/color-tick.png') 132px 100% no-repeat;
 
 }
 
@@ -769,7 +777,7 @@ ul.body_styles.menu {
 	left:0px;
 	width:100%;
 	padding:0 0 8px;
-	background:url('../images/color-tick.png') 35px 100% no-repeat;
+	background:url('../images/color-tick.png') 157px 100% no-repeat;
 }
 
 	.note .tools ul {

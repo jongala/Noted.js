@@ -215,7 +215,7 @@ function noted() {
 		}
 		
 		// SET NOTE COLOR
-		$note.find('.note_content').css('backgroundColor',note_data['color']);		// change actual color
+		$note.find('.note_content, .controls > a.done_trigger, .controls > a.todo_trigger').css('backgroundColor',note_data['color']);		// change actual color
 		$note.find('.colors .color_input input').val(note_data['color']);			// set val in the color selector
 		
 		// DEFAULT TO "TODO" STATE
@@ -577,7 +577,7 @@ function noted() {
 		// Change input hex val to set color
 		$('.note .colors input').live('change',function(){
 			var colorval = $(this).val();
-			$(this).parents('.note').find('.note_content').css('backgroundColor',colorval) 	// set color
+			$(this).parents('.note').find('.note_content, .controls > a.done_trigger, .controls > a.todo_trigger').css('backgroundColor',colorval) 	// set color
 			.end().end().parents('.colors').slideUp('fast');								// close the panel
 			save_note_color($(this).parents('.note')[0]);								// save it
 		});
