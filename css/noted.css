@@ -619,7 +619,7 @@ ul.body_styles.menu {
 	.note .controls a {
 		float:left;
 		margin:0 0 4px 1px;
-		padding:3px 8px;
+		padding:2px 8px;
 		text-decoration:none;
 		color:rgba(0,0,0,0.6);
 		background:#eee url('../images/tab_shade.png') 0 100% repeat-x;
