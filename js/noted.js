@@ -300,7 +300,7 @@ function noted() {
 
 			if(item_text.length) { // only save items with text
 				items[item_name] = {};
-				items[item_name]['text'] = escapeQuotes(item_text);
+				items[item_name]['text'] = escapeHtmlEntities(item_text);
 				items[item_name]['done'] = item_is_done;
 				items[item_name]['due'] = item_due;
 			}			
@@ -746,7 +746,7 @@ function noted() {
 			$item = $(this);
 			if( $item.is(':not(.editing)') ) {
 				$item.addClass('editing');
-				$item.append('<input type="text" class="item" value="' + escapeQuotes($(this).text()) + '"/>').find('input.item').focus();
+				$item.append('<input type="text" class="item" value="' + escapeHtmlEntities($(this).text()) + '"/>').find('input.item').focus();
 				/*
 				.bind('blur',function(){
 							save_field(this);
@@ -1020,7 +1020,10 @@ function noted() {
 	 * Javascript entity escape functions from Stackoverflow http://stackoverflow.com/questions/1354064/how-to-convert-characters-to-html-entities-using-plain-javascript/1354715#1354715
 	 */
 	var escapeHtmlEntities = function(text) {
-		return text.replace(/[\u00A0-\u2666<>\&]/g, function(c) { return '&' + escapeHtmlEntities.entityTable[c.charCodeAt(0)] || '#'+c.charCodeAt(0) + ';'; });
+		return text.replace(/[\u00A0-\u2666<>\&]/g, function(c) { 
+			s = escapeHtmlEntities.entityTable[c.charCodeAt(0)] || '#'+c.charCodeAt(0);
+			return '&' + s + ';'; 
+		});
 	};
 	
 	// all HTML4 entities as defined here: http://www.w3.org/TR/html4/sgml/entities.html
