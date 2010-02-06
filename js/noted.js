@@ -564,12 +564,15 @@ function noted() {
 		
 		// toggle colors panel from color trigger
 		$('.note .controls a.color_trigger').live('click',function(){
-			$(this).closest('.note').find('.tools').slideUp('fast');
+			$(this).closest('.note').find('.tools').slideUp('fast')
+				.end().find('.controls a.tools_trigger').removeClass('open');
 			var $colorPanel = $(this).closest('.note').find('.colors');
 			if($colorPanel.is(':visible')){
 				$colorPanel.slideUp("fast");
+				$(this).removeClass('open');
 			} else {
 				$colorPanel.slideDown("fast");
+				$(this).addClass('open');
 			}
 			return false;
 		});
@@ -608,12 +611,15 @@ function noted() {
 		
 		// toggle tools panel from color trigger
 		$('.note .controls a.tools_trigger').live('click',function(){
-			$(this).closest('.note').find('.colors').slideUp('fast');
+			$(this).closest('.note').find('.colors').slideUp('fast')
+				.end().find('.controls a.color_trigger').removeClass('open');
 			var $toolPanel = $(this).closest('.note').find('.tools');
 			if($toolPanel.is(':visible')){
 				$toolPanel.slideUp("fast");		// hide it
+				$(this).removeClass('open');
 			} else {
 				$toolPanel.slideDown("fast");	// show it
+				$(this).addClass('open');
 			}
 			return false;
 		});

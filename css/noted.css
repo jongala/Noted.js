@@ -651,7 +651,9 @@ ul.body_styles.menu {
 	/* colors and tools */
 
 	.note .controls:hover a.color_trigger,
-	.note .controls:hover a.tools_trigger {
+	.note .controls a.color_trigger.open,
+	.note .controls:hover a.tools_trigger,
+	.note .controls a.tools_trigger.open {
 		opacity:1;
 	}
 	
@@ -712,11 +714,11 @@ ul.body_styles.menu {
 .note .colors {
 	display:none;
 	position:absolute;
-	bottom:24px;
+	bottom:30px;
 	left:0px;
 	width:100%;
 	padding:0 0 6px;
-	background:url('../images/color-tick.png') 127px 100% no-repeat;
+	background:rgba(0,0,0,0.2) url('../images/color-tick.png') 127px 100% no-repeat;
 
 }
 
@@ -773,16 +775,16 @@ ul.body_styles.menu {
 .note .tools {
 	display:none;
 	position:absolute;
-	bottom:24px;
+	bottom:30px;
 	left:0px;
 	width:100%;
 	padding:0 0 6px;
-	background:url('../images/color-tick.png') 152px 100% no-repeat;
+	background:rgba(0,0,0,0.2) url('../images/color-tick.png') 152px 100% no-repeat;
 }
 
 	.note .tools ul {
 		margin:0;
-		padding:0;
+		padding:0 0 5px;
 		list-style:none;
 		background:#000;
 	}
