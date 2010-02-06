@@ -753,11 +753,6 @@ function noted() {
 			if( $item.is(':not(.editing)') ) {
 				$item.addClass('editing');
 				$item.append('<input type="text" class="item" value="' + escapeHtmlEntities($(this).text()) + '"/>').find('input.item').focus();
-				/*
-				.bind('blur',function(){
-							save_field(this);
-						})
-				*/
 			}
 			return false;
 		});
