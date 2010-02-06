@@ -633,7 +633,9 @@ function noted() {
 			
 			$('#importing_note').text($(this).closest('.note').find('.title span').text());
 			$('#import_note_handle').val( $note[0].id );
-			$('#import_field, #modal_screen').fadeIn();
+			$('#import_field, #modal_screen').fadeIn('normal',function(){
+				$('#import_JSON').focus();
+			});
 			return false;
 		});
 		
@@ -665,7 +667,9 @@ function noted() {
 			$('#export_note_handle').val( $note[0].id );
 			$('#exported_note').text($(this).closest('.note').find('.title span').text());
 			$('#export_JSON').val(note_JSON);
-			$('#export_field, #modal_screen').fadeIn();
+			$('#export_field, #modal_screen').fadeIn('normal',function(){
+				$('#export_JSON').focus();
+			});
 			return false;
 		});
 		
@@ -844,13 +848,17 @@ function noted() {
 			all_JSON = self.export_all();
 			$('#exported_note').text('everything');
 			$('#export_JSON').val(all_JSON);
-			$('#export_field, #modal_screen').fadeIn();
+			$('#export_field, #modal_screen').fadeIn('normal',function(){
+				$('#export_JSON').focus();
+			});
 			return false;
 		});
 		
 		// main menu trigger to import whole board
 		$('a#import_all').click(function(){
-			$('#import_all_field, #modal_screen').fadeIn();
+			$('#import_all_field, #modal_screen').fadeIn('normal',function(){
+				$('#import_all_JSON').focus();
+			});
 			return false;
 		});
 		
