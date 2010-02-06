@@ -764,7 +764,7 @@ function noted() {
 	
 		
 		// Live binding of save_field on item change
-		$('.items input.item').live('change',function(){
+		$('.items input.item').live('blur',function(){
 			save_field(this);
 		});
 		
