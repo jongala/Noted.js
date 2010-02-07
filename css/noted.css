@@ -92,14 +92,19 @@ a img {
 /* Menus
 ----------------------------- */
 
+.main_menu_item,
 .menu_trigger {
 	position:relative;
 	display:inline-block;
-	margin:-5px 5px;
+	margin:-5px 0;
 	padding:5px 10px 5px 10px;
 	color:#c00;
 	border:1px solid #444;
-	border-width:0 1px;
+	border-width:0 0 0 1px;
+}
+
+.main_menu_item {
+	
 }
 
 .menu_trigger:hover {
@@ -876,12 +881,18 @@ ul.body_styles.menu {
 	display:none;
 }
 
-	.modal h3 {
+	.modal h3,
+	.modal h4 {
 		font-family:'LeagueGothicRegular',Arial,sans-serif;
 		font-size:24px;
 		line-height:24px;
 		text-transform:uppercase;
 		margin:2px 0 5px;
+	}
+	
+	.modal h4 {
+		font-size:20px;
+		line-height:20px;
 	}
 
 	.modal .content {
@@ -890,6 +901,9 @@ ul.body_styles.menu {
 		padding:10px;
 		color:#333;
 		background:#ffa url('../images/shine.png') 100% 100% no-repeat;
+		box-shadow: 0 2px 4px rgba(0,0,0,0.75);
+		-webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.75);
+		-moz-box-shadow: 0 2px 4px rgba(0,0,0,0.75);
 	}
 
 		.modal .content textarea {
@@ -897,6 +911,13 @@ ul.body_styles.menu {
 			width:100%;
 			height:290px;
 		}
+
+#welcome {
+}
+
+#welcome h3 {
+	color:#a00;
+}
 
 #importing_note,
 #exported_note {

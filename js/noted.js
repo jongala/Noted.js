@@ -1,3 +1,14 @@
+/*!
+ * noted.js Javascript app
+ * http://noted.jongala.com/
+ *
+ * Copyright 2010, Jonathan Gala.
+ * jon@jongala.com
+ * Licensed under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+ *
+ */
+
 /* 
  * flipTo plugin
  */
@@ -832,6 +843,13 @@ function noted() {
 		$('a#nuke').click(function(){
 			self.nuke();
 			window.location.reload();
+			return false;
+		});
+		
+		$('#welcome_trigger').click(function(){
+			self.show_modal('#welcome',{
+				'width':650
+			});
 			return false;
 		});
 		

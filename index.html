@@ -16,6 +16,9 @@
 
 <div id="masthead">
 	<span class="logo">Noted</span>
+	
+	<a href="#welcome" id="welcome_trigger" class="main_menu_item"><img src="images/information.png" /> About</a>
+	
 	<div id="tools" class="menu_trigger">
 		Tools
 
@@ -27,7 +30,7 @@
 		
 	</div>
 	
-	<a href="#new_note" id="new_note"><img src="images/note_add.png" /> New Note</a><!--| <a href="#nuke" id="nuke">Nuke it</a>-->
+	<a href="#new_note" id="new_note" class="main_menu_item"><img src="images/note_add.png" /> New Note</a><!--| <a href="#nuke" id="nuke">Nuke it</a>-->
 	
 	<div id="prefs">
 		<div class="styles menu_trigger">
@@ -153,6 +156,30 @@
 		<p><textarea id="export_JSON" name="export_JSON"></textarea>
 		<input type="hidden" name="export_note_handle" id="export_note_handle" value="" /></p>
 		<p><button type="button" id="export_cancel" class="modal_dismiss">Done</button></p>
+	</div>
+</div>
+
+<div class="modal" id="welcome">
+	<div class="content">
+		<h3>Welcome to <strong>noted.js</strong></h3>
+
+		<p><strong>Noted is a note-taking and to-do list app for your browser</strong>.  Create notes and add items, which you can check off as you go.  Add due dates to items to keep track of what needs doing, and get reminders when deadlines are approaching or have passed.</p>
+		
+		<p>Resize notes, change their colors, and drag and drop to sort them.  Drag and drop items, too, within a note, or even between notes. You can also choose between a few different background textures, to keep things looking nice.</p>
+		
+		<h4>It&#8217;s All Yours</h4>
+		
+		<p>Noted uses HTML5 local storage to record your data &#8212; <strong>your information is never sent to any server</strong>.  That means it&#8217;s fast and totally private.  But it also mean there&#8217;s no syncing, and <strong>your notes are only available on the specific computer, using the specific browser used to create them</strong>.  </p>
+		
+		<p>To give you something to work with, you can export Noted data as JSON (a lightweight, open data format), which you can re-import in another browser or on another computer.</p>
+		
+		<h4>It&#8217;s Really All Yours</h4>
+		
+		<p>Noted is released as open source software under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>. Coming soon: a zip package so you can easily download and run a local instance, for speedier use.</p>
+
+		
+		<p><button type="button" id="welcome_OK" class="modal_dismiss">Start Using Noted!</button></p>
+	
 	</div>
 </div>
 
