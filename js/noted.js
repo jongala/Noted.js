@@ -633,8 +633,10 @@ function noted() {
 			
 			$('#importing_note').text($(this).closest('.note').find('.title span').text());
 			$('#import_note_handle').val( $note[0].id );
-			$('#import_field, #modal_screen').fadeIn('normal',function(){
-				$('#import_JSON').focus();
+			self.show_modal('#import_field',{
+				'callback':function(){
+					$('#import_JSON').focus();
+				}
 			});
 			return false;
 		});
@@ -649,7 +651,7 @@ function noted() {
 				deserialize_note($note,JSON.parse(import_JSON));
 				self.save_note($note[0]);
 			}
-			self.clearModals();
+			self.clear_modals();
 			$note.find('div.tools a.close').click();
 		});
 		
@@ -667,14 +669,16 @@ function noted() {
 			$('#export_note_handle').val( $note[0].id );
 			$('#exported_note').text($(this).closest('.note').find('.title span').text());
 			$('#export_JSON').val(note_JSON);
-			$('#export_field, #modal_screen').fadeIn('normal',function(){
-				$('#export_JSON').focus();
+			self.show_modal('#export_field',{
+				'callback':function(){
+					$('#export_JSON').focus();
+				}
 			});
 			return false;
 		});
 		
 		$('#export_cancel').click(function(){
-			self.clearModals();
+			self.clear_modals();
 			var export_note_handle = $('#export_note_handle').val();
 			if(export_note_handle.length) {
 				$('#' + export_note_handle).find('div.tools a.close').click();
@@ -848,16 +852,21 @@ function noted() {
 			all_JSON = self.export_all();
 			$('#exported_note').text('everything');
 			$('#export_JSON').val(all_JSON);
-			$('#export_field, #modal_screen').fadeIn('normal',function(){
-				$('#export_JSON').focus();
+			self.show_modal('#export_field',{
+				'callback':function(){
+					$('#export_JSON').focus();
+				}
 			});
 			return false;
 		});
 		
 		// main menu trigger to import whole board
 		$('a#import_all').click(function(){
-			$('#import_all_field, #modal_screen').fadeIn('normal',function(){
-				$('#import_all_JSON').focus();
+
+			self.show_modal('#import_all_field',{
+				'callback':function(){
+					$('#import_all_JSON').focus();
+				}
 			});
 			return false;
 		});
@@ -873,7 +882,7 @@ function noted() {
 			}
 			
 			$('#import_all_JSON').val('');
-			self.clearModals();
+			self.clear_modals();
 			return false;		
 		});
 		
@@ -925,7 +934,7 @@ function noted() {
 			// ESC
 			case 27: 
 				self.cancelAllEdits();
-				self.clearModals();
+				self.clear_modals();
 				break;
 		}
 	});
@@ -933,19 +942,41 @@ function noted() {
 	/* MODAL INTERACTIONS
 	 * 
 	 */
+	 
 
-	this.clearModals = function() {
+	this.show_modal = function(modal_selector,options) {
+		var defaults = {
+			'width':500,
+			'height':400,
+			'callback':function(){}
+		};
+
+		options = $.extend({},defaults,options);
+		
+		$(modal_selector).css({
+			'margin-left':-options.width/2,
+			'margin-top':-options.height/2
+		}).find('.content').css({
+			'width':options.width,
+			'height':options.height
+		});
+		
+		$( modal_selector + ', #modal_screen').fadeIn('fast',options.callback);
+			
+	}
+
+	this.clear_modals = function() {
 		return $('.modal, #modal_screen').fadeOut('fast');
 	}
 	
 	$('.modal_dismiss').live('click',function(){
 		$(this).closest('div.modal').find('textarea, input').val('');
-		self.clearModals();
+		self.clear_modals();
 		return false;
 	});
 	
 	$('#modal_screen').click(function(){
-		self.clearModals();
+		self.clear_modals();
 		return false;
 	});
 
