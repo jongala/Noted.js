@@ -627,7 +627,7 @@ ul.body_styles.menu {
 		padding:1px 6px;
 		text-decoration:none;
 		color:rgba(0,0,0,0.6);
-		background:#eee url('../images/tab_shade.png') 0 100% repeat-x;
+		background:#eee url('../images/tab_shade.png') 0 0 repeat-x;
 		box-shadow:0 3px 2px rgba(0,0,0,0.3);
 		-webkit-box-shadow:0 3px 2px rgba(0,0,0,0.3);
 		-moz-box-shadow:0 3px 2px rgba(0,0,0,0.3);
