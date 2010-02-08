@@ -649,6 +649,7 @@ function noted() {
 					$('#import_JSON').focus();
 				}
 			});
+			$(this).closest('.tools').find('a.close').click();
 			return false;
 		});
 		
@@ -685,6 +686,7 @@ function noted() {
 					$('#export_JSON').focus();
 				}
 			});
+			$(this).closest('.tools').find('a.close').click();
 			return false;
 		});
 		
