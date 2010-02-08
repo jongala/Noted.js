@@ -315,7 +315,7 @@ function noted() {
 
 			if(item_text.length) { // only save items with text
 				items[item_name] = {};
-				items[item_name]['text'] = escapeHtmlEntities(item_text);
+				items[item_name]['text'] = escapeQuotes(escapeHtmlEntities(item_text));
 				items[item_name]['done'] = item_is_done;
 				items[item_name]['due'] = item_due;
 			}			
@@ -777,7 +777,7 @@ function noted() {
 			$item = $(this);
 			if( $item.is(':not(.editing)') ) {
 				$item.addClass('editing');
-				$item.append('<input type="text" class="item" value="' + escapeHtmlEntities($(this).text()) + '"/>').find('input.item').focus();
+				$item.append('<input type="text" class="item" value="' + escapeQuotes(escapeHtmlEntities($(this).text())) + '"/>').find('input.item').focus();
 			}
 			return false;
 		});
