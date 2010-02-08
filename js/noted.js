@@ -90,6 +90,10 @@ function noted() {
 		
 		if( note_list === undefined || note_list === null || !note_list.length ) {
 
+			console.log("==============================\nFirst Launch\n==============================");
+
+			var welcome_timer = setTimeout(function(){$('#welcome_trigger').click()},500);
+
 			self.save_local_data('note_list','');	// give create_note a base list
 			self.save_local_data('next_note_id',0);	// set first note id number
 			self.create_note();	// create a note with default data
