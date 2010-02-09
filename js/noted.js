@@ -558,6 +558,14 @@ function noted() {
 			$note = $(this).closest('.note');
 			if($note.is('.done')) {
 				$note.flipTo('todo','done');
+				
+				$note.find('ul.done').slideUp('normal',function(){
+					$(this).siblings('ul.todo').slideDown('normal',function(){
+						$(this).css('overflow','auto');
+					});
+					//$note.removeClass('done').addClass('todo');
+				});
+				
 			}
 			return false;
 		});
@@ -567,6 +575,14 @@ function noted() {
 			$note = $(this).closest('.note');
 			if($note.is('.todo')) {
 				$note.flipTo('done','todo');
+				
+				$note.find('ul.todo').slideUp('normal',function(){
+					$(this).siblings('ul.done').slideDown('normal',function(){
+						$(this).css('overflow','auto');
+					});
+					//$note.removeClass('todo').addClass('done');
+				});
+				
 			}
 			return false;
 		});
@@ -1270,7 +1286,7 @@ function noted() {
 		$('li.note').each(function(){
 			note_title = truncate_string($(this).find('.title').text());
 			
-			$('.items li:not(.done)',this).each(function(){		// loop through all items
+			$('.items.todo li',this).each(function(){		// loop through all todo items
 				var $item = $(this);
 				var due = $item.find('input.due').val();
 				if(due) {
