@@ -638,12 +638,12 @@ ul.body_styles.menu {
 		margin-left:25px;
 	}
 	
-	
 	/* hover in off state */
 	.note.todo .controls a.done_trigger:hover,
 	.note.done .controls a.todo_trigger:hover {
 		text-decoration:underline;
-		opacity:0.75;
+		background-position:0 -60px;
+		opacity:1;
 	}
 	
 	/* on state */
