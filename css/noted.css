@@ -423,6 +423,11 @@ ul.body_styles.menu {
 		overflow:auto;
 	}
 	
+	.note.todo ul.items.done,
+	.note.done ul.items.todo {
+		display:none;
+	}
+	
 		.note ul.items li {
 			position:relative;
 			margin:0 0 5px;
@@ -694,16 +699,6 @@ ul.body_styles.menu {
 	}
 	
 /* SHOW AND HIDE ITEMS BASED ON NOTE STATE */
-
-.note.done .items li,
-.note.todo .items li.done {
-	display:none;
-}
-	
-.note.done .items li.done,
-.note.todo .items li {
-	display:block;
-}
 
 .note.done div.add {
 	display:none;

@@ -246,14 +246,10 @@ function noted() {
 		// LOOP THROUGH NOTE ITEMS AND BUILD LIST		
 		for(i in note_items) {
 			
-			if(note_items[i]['done']) {
-				item_class = 'done';
-			} else {
-				item_class = '';
-			}
+			var item_class = '';
 			
 			if(note_items[i]['due']) {
-				item_class += ' has_deadline';
+				item_class += ' has_deadline ';
 			}
 			
 			$new_item = $('#item_template li').clone();
@@ -262,7 +258,18 @@ function noted() {
 			         .siblings('input.due').val( note_items[i]['due'] );
 			$new_item.find('input.item').remove();
 			
-			$('.items',$note).append($new_item);
+			
+			if(note_items[i]['done']) {
+
+				item_class += ' done ';
+				$('.items.done',$note).append($new_item);	
+
+			} else {
+
+				$('.items.todo',$note).append($new_item);	
+				
+			}
+			
 		}
 		
 		return $note;
@@ -309,7 +316,7 @@ function noted() {
 			item_due = $item.siblings('input.due').val();
 			
 			// IS ITEM DONE?
-			item_is_done = $item.closest('li').hasClass('done');
+			item_is_done = $item.closest('ul').hasClass('done');
 
 			item_text = $item.text();
 
@@ -410,9 +417,15 @@ function noted() {
 	 * @arg item should be a <li> element
 	 */
 	var do_item = function(item) {
+
 		$item = $(item);
 		$item.addClass('done');
-		self.save_note($item.parents('.note')[0]);
+		
+		$note = $item.parents('.note');
+		
+		$note.find('.items.done').append($item.remove());
+		
+		self.save_note($note[0]);
 	}
 
 	/* 
