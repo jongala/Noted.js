@@ -675,7 +675,6 @@ function noted() {
 			// already cancels modals due to .modal_dismiss class
 			var $note = $('#' + $('#import_note_handle').val());
 			$note.find('div.tools a.close').click();
-			return false;
 		});
 		
 		// export button
