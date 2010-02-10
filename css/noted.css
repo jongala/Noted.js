@@ -343,6 +343,10 @@ ul.body_styles.menu {
 
 .note.todo {
 	/*outline:2px solid red;*/
+	
+}
+
+.note.flip_todo {
 	-webkit-animation-name: flipback;
 	-moz-animation-name: flipback;
 }

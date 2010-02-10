@@ -560,7 +560,7 @@ function noted() {
 			if($note.is('.done')) {
 				
 				// switch note state
-				$note.removeClass('done').addClass('todo');
+				$note.removeClass('done').addClass('todo flip_todo');
 				
 				// if we have CSS transforms, show/hide the note contents during transition
 				if( $('body').hasClass('css_transform') ) {
@@ -577,7 +577,7 @@ function noted() {
 			if($note.is('.todo')) {
 				
 				// switch note state
-				$note.removeClass('todo').addClass('done');
+				$note.removeClass('todo flip_todo').addClass('done');
 				
 				// if we have CSS transforms, show/hide the note contents during transition
 				if( $('body').hasClass('css_transform') ) {
