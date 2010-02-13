@@ -796,7 +796,7 @@ function noted() {
 			},200);
 		});
 		
-		// delete a done item trigger
+		// triggers in done items delete the item
 		$('.done .items li .trigger').live('click',function(){
 			delete_item($(this).closest('li'));
 			return false;
@@ -814,7 +814,7 @@ function noted() {
 		});
 	
 		
-		// Live binding of save_field on item change
+		// Live binding of save_field on item blur
 		$('.items input.item').live('blur',function(){
 			save_field(this);
 		});
@@ -831,7 +831,7 @@ function noted() {
 		// "Add" button creates a new item in entry mode
 		$('.note div.add').live('click',function(){
 			$new_item = $('#item_template li').clone().addClass('editing');
-			$(this).siblings('.items').append($new_item).find('li:last input.item').focus();
+			$(this).siblings('.items.todo').append($new_item).find('li:last input.item').focus();
 			return false;
 		});
 		
