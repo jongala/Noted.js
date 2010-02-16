@@ -268,6 +268,7 @@ ul.body_styles.menu {
 	text-decoration:none;
 	color:#fff;
 	background:rgba(0,0,0,0.5);
+	z-index:1;
 }
 
 /* ============================================
