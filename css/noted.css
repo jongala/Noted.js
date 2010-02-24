@@ -278,6 +278,7 @@ ul.body_styles.menu {
 ============================================ */
 
 #board {
+	position:relative;
 	margin:0;
 	padding:10px;
 	list-style:none;
