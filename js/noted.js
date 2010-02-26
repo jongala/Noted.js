@@ -120,14 +120,22 @@ function noted() {
 				// LOOP THROUGH ALL NOTES
 				for (var i=0 ; i < note_list.length ; i++ ) {
 					
-					var note_data = localStorage.getItem(note_list[i]);
+					var note_json = localStorage.getItem(note_list[i]);
 					
-					if(note_data.length) {
+					if(note_json.length) {
 						// ADD NOTE TO DOM
-						console.log('building: ' + note_list[i] + ',' + note_data);
-						build_note(note_list[i],JSON.parse(note_data));
-					} else {
-
+						console.log('building: ' + note_list[i] + ',' + note_json);
+						
+						var note_data = {};
+						try {
+							note_data = JSON.parse(note_json);
+							build_note(note_list[i],JSON.parse(note_json));
+						} catch(err) {
+							alert('init_notes(): JSON parse error');
+							console.log('init_notes() : JSON PARSE ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!');
+						}
+						
+						
 					}
 					
 				}
@@ -474,28 +482,49 @@ function noted() {
 	 * Imports a store of all notes, as produced by export_all
 	 */
 	this.import_all = function(import_JSON) {
-		self.nuke();
-		var note_list=[];
-		import_data = JSON.parse(import_JSON);
-		
-		var note_handle,note_id = 0;
-		
-		for(old_handle in import_data) {
-			console.log(old_handle);
-			console.log(import_data[old_handle]);
-			
-			note_handle = "note" + note_id;
-			
-			self.save_local_data(note_handle,JSON.stringify(import_data[old_handle]));
-			
-			note_list.push(note_handle);
-		
-			note_id++;
+
+		var import_data = {};
+		var data_ok = true;
+
+
+		try {
+			import_data = JSON.parse(import_JSON);
+
+		} catch(err) {
+			data_ok = false;
+			alert('import_all() : JSON parse error');
+			console.log('import_all() : JSON PARSE ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!');
+			console.log('data_ok: ' + data_ok);
+			return;
 		}
 
-		self.save_local_data('next_note_id',note_list.length);		
-		self.save_local_data('note_list',note_list.join(','));
-		init_notes();
+		console.log('data_ok: ' + data_ok);
+
+		if(data_ok) {
+	
+			self.nuke();
+			var note_list=[];
+			
+			var note_handle,note_id = 0;
+			
+			for(old_handle in import_data) {
+				console.log(old_handle);
+				console.log(import_data[old_handle]);
+				
+				note_handle = "note" + note_id;
+				
+				self.save_local_data(note_handle,JSON.stringify(import_data[old_handle]));
+				
+				note_list.push(note_handle);
+			
+				note_id++;
+			}
+	
+			self.save_local_data('next_note_id',note_list.length);		
+			self.save_local_data('note_list',note_list.join(','));
+			init_notes();
+		} 		
+		
 	}
 
 /* ========================================================================
@@ -1009,6 +1038,17 @@ function noted() {
 
 ======================================================================== */
 
+	// try to parse JSON
+	
+	var parse_json = function(json_string) {
+		var json_data = {};
+		try {
+			json_data = JSON.parse(json_string);
+		} catch(err) {
+			alert('JSON parse error');
+		}
+	}
+	
 	
 	// accepts input node as argument
 	var save_field = function(input_node) {
