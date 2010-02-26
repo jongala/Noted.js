@@ -124,17 +124,20 @@ function noted() {
 					
 					if(note_json.length) {
 						// ADD NOTE TO DOM
-						console.log('building: ' + note_list[i] + ',' + note_json);
+						//console.log('building: ' + note_list[i] + ',' + note_json);
 						
 						var note_data = {};
+						var do_build = true;
 						try {
 							note_data = JSON.parse(note_json);
-							build_note(note_list[i],JSON.parse(note_json));
 						} catch(err) {
 							alert('init_notes(): JSON parse error');
+							//show_error('JSON Parse Error');
 							console.log('init_notes() : JSON PARSE ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!');
+							do_build = false;
 						}
 						
+						if(do_build) { build_note(note_list[i],JSON.parse(note_json)); }
 						
 					}
 					
@@ -244,7 +247,7 @@ function noted() {
 		// DEFAULT TO "TODO" STATE
 		$note.addClass('todo');
 		
-		console.log('deserialize_note(): raw items:' + note_data['items']);
+		//console.log('deserialize_note(): raw items:' + note_data['items']);
 		
 		// PARSE NOTE ITEMS FROM JSON
 		note_items = JSON.parse(note_data['items']);
@@ -488,11 +491,20 @@ function noted() {
 
 
 		try {
+			// try parsing the JSON data
 			import_data = JSON.parse(import_JSON);
+			
+			// try parsing the items, which are serialized within
+			// this is done just to avoid catching parse errors at the note level
+			for( var i in import_data ) {
+				var item_data = JSON.parse(import_data[i].items);
+				console.log(item_data);
+			}
 
 		} catch(err) {
 			data_ok = false;
 			alert('import_all() : JSON parse error');
+			//show_error('JSON Parse Error during import');
 			console.log('import_all() : JSON PARSE ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!');
 			console.log('data_ok: ' + data_ok);
 			return;
@@ -509,7 +521,7 @@ function noted() {
 			
 			for(old_handle in import_data) {
 				console.log(old_handle);
-				console.log(import_data[old_handle]);
+				//console.log(import_data[old_handle]);
 				
 				note_handle = "note" + note_id;
 				
@@ -1019,6 +1031,12 @@ function noted() {
 
 	this.clear_modals = function() {
 		return $('.modal, #modal_screen').fadeOut('fast');
+	}
+	
+	var show_error = function(error_message) {
+		$('.modal').hide();
+		$('#error_message').text(error_message);
+		$('#error').show();
 	}
 	
 	$('.modal_dismiss').live('click',function(){
