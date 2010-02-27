@@ -915,7 +915,8 @@ ul.body_styles.menu {
 #welcome {
 }
 
-#welcome h3 {
+#welcome h3,
+.modal h3 strong {
 	color:#a00;
 }
 
