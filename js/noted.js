@@ -1129,9 +1129,8 @@ function noted() {
 		try {
 			localStorage.setItem(key,val);
 		} catch(e) {
-			if( e == QUOTA_EXCEEDED_ERR ) {
-				alert('Quota exceeded');
-			}
+			console.log('**** DATA SAVE ERROR ******');
+			show_error('<h3>Data Save Error</h3><p>Your data was not saved.  Please make sure that you are not browsing in Icognito/Private Browsing mode, and reload Noted.</p>');
 		}
 	}
 
