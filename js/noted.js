@@ -127,16 +127,16 @@ function noted() {
 						//console.log('building: ' + note_list[i] + ',' + note_json);
 						
 						var note_data = {};
-						var do_build = true;
+						var valid_JSON = true;
 						try {
 							note_data = JSON.parse(note_json);
 						} catch(err) {
-							show_error('<h3><strong>JSON Parse Error</strong></h3><p>Sorry, an error was encountered when processing your data, and your notes could not be loaded.</p>',{'width':300,'height':200});
+							show_error('<h3><strong>JSON Parse Error</strong></h3><p>Sorry, an error was encountered when processing your data, and your notes could not be loaded.</p>');
 							console.log('init_notes() : JSON PARSE ERROR');
-							do_build = false;
+							valid_JSON = false;
 						}
 						
-						if(do_build) { build_note(note_list[i],JSON.parse(note_json)); }
+						if(valid_JSON) { build_note(note_list[i],JSON.parse(note_json)); }
 						
 					}
 					
@@ -486,7 +486,7 @@ function noted() {
 	this.import_all = function(import_JSON) {
 
 		var import_data = {};
-		var data_ok = true;
+		var valid_JSON = true;
 
 
 		try {
@@ -501,17 +501,17 @@ function noted() {
 			}
 
 		} catch(err) {
-			data_ok = false;
+			valid_JSON = false;
 			
-			show_error('<h3><strong>JSON Parse Error</strong></h3><p>Sorry, an error was encountered when processing your data, and your notes could not be imported.</p>',{'width':300,'height':200});
+			show_error('<h3><strong>JSON Parse Error</strong></h3><p>Sorry, an error was encountered when processing your data, and your notes could not be imported.</p>');
 			console.log('import_all() : JSON PARSE ERROR');
-			console.log('data_ok: ' + data_ok);
+			console.log('valid_JSON: ' + valid_JSON);
 			return;
 		}
 
-		console.log('data_ok: ' + data_ok);
+		console.log('valid_JSON: ' + valid_JSON);
 
-		if(data_ok) {
+		if(valid_JSON) {
 	
 			self.nuke();
 			var note_list=[];
@@ -699,13 +699,28 @@ function noted() {
 		
 		$('#import_OK').click(function(){
 			import_JSON = $('#import_JSON').val();
+			var $note = $('#' + $('#import_note_handle').val());
 
 			if($.trim(import_JSON).length){
 			
-				var $note = $('#' + $('#import_note_handle').val());
-				$note.find('ul.items').empty();
-				deserialize_note($note,JSON.parse(import_JSON));
-				self.save_note($note[0]);
+				var valid_JSON = true;
+				var note_data = {};
+				
+				try {
+					note_data = JSON.parse(import_JSON);
+				} catch(e) {
+					valid_JSON = false;
+					show_error('<h3><strong>JSON Parse Error</strong></h3><p>Sorry, an error was encountered when processing your data, and your note data could not be loaded.</p>');
+					console.log('import one note: JSON PARSE ERROR');
+				}
+				
+				if(valid_JSON) {
+					$note.find('ul.items').empty();
+					deserialize_note($note,note_data);
+					self.save_note($note[0]);		
+				}
+				
+				
 			}
 			self.clear_modals();
 			$note.find('div.tools a.close').click();
@@ -1034,8 +1049,8 @@ function noted() {
 	
 	var show_error = function(error_message,options) {
 		var defaults = {
-			'width':500,
-			'height':400,
+			'width':300,
+			'height':200,
 			'callback':function(){}
 		};
 		
