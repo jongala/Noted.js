@@ -2,37 +2,20 @@
  * noted.js Javascript app
  * http://noted.jongala.com/
  *
- * Copyright 2010, Jonathan Gala.
+ * Copyright (c) 2010, Jonathan Gala - http://jongala.com/
  * jon@jongala.com
  * Licensed under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
  *
  */
 
-/* 
- * flipTo plugin
- */
-(function($){
-	$.fn.flipTo = function(targetClass,currentClass) {
-		if (currentClass === 'undefined') currentClass='';
-		return this.each(function(){
-			$element = $(this);
-			$element.addClass('flipouttoleft');
-			flipTimer = setTimeout(function(){
-				$element.addClass('flipinfromleft ' + targetClass).removeClass('flipouttoleft ' + currentClass);
-			},500); // match time to transition speed
-		});
-	};
-})(jQuery);
 
-
-gutter = 20; 		// gutter between newly created notes
 
 if (!console) {
 	var console = {log: function(msg) {}};
 }
 
-
+	
 function noted() {
 	
 	var self = this;
@@ -46,6 +29,31 @@ function noted() {
 	 * save_note serializes note data and items, and saves it to localStorage
 	
 	 */
+
+	var gutter = 20; 		// gutter between newly created notes
+	 
+	 /* 
+	 * Test for CSS Transforms — adapted from modernizr.js.
+	 *
+	 * Modernizr is copyright (c) 2009 Faruk Ates - http://farukat.es/
+	 * Licensed under the MIT license.
+	 * http://modernizr.com/license/
+	 *
+	 * Featuring major contributions by
+	 * Paul Irish  - http://paulirish.com
+	 * Ben Alman   - http://benalman.com/
+	 *
+	 * I don't know if this little snip matters, but here we are.
+	 */
+	var has_css_transform = 0;
+	var transform_properties = ['perspectiveProperty', 'webkitPerspective', 'MozPerspective', 'mozPerspective', 'oPerspective', 'msPerspective'];
+	var body_style = $('body')[0].style;
+	for (var i in transform_properties) {
+		if ( body_style[ transform_properties[i] ] !== undefined ) {
+			has_css_transform ++;
+		}
+	}
+	if( has_css_transform ) {$('body').addClass('css_transform');};
 
 /* ========================================================================
 
@@ -584,7 +592,14 @@ function noted() {
 			//$(this).parents('.note').removeClass('done').addClass('todo');
 			$note = $(this).closest('.note');
 			if($note.is('.done')) {
-				$note.flipTo('todo','done');
+				// switch note state
+				$note.removeClass('done').addClass('todo flip_todo');
+				
+				// if we have CSS transforms, show/hide the note contents during transition
+				if( $('body').hasClass('css_transform') ) {
+					$note.find('ul.items, .title, .controls, .add').hide();
+					var reveal = setTimeout(function(){$note.find('ul.items, .title, .controls, .add').fadeIn()},500);
+				}
 			}
 			return false;
 		});
@@ -593,7 +608,14 @@ function noted() {
 			//$(this).parents('.note').removeClass('todo').addClass('done');
 			$note = $(this).closest('.note');
 			if($note.is('.todo')) {
-				$note.flipTo('done','todo');
+				// switch note state
+				$note.removeClass('todo flip_todo').addClass('done');
+				
+				// if we have CSS transforms, show/hide the note contents during transition
+				if( $('body').hasClass('css_transform') ) {
+					$note.find('ul.items, .title, .controls, .add').hide();
+					var reveal = setTimeout(function(){$note.find('ul.items, .title, .controls').fadeIn()},500);
+				}
 			}
 			return false;
 		});
@@ -655,7 +677,8 @@ function noted() {
 		});
 		
 		/* TOOLS
-		 * 
+		 * Set triggers to open and close tool menus, 
+         * Set menu item interactions w/ modals
 		 */ 
 		
 		// close tools panel with close button
@@ -1176,7 +1199,7 @@ function noted() {
 	// Color Conversion functions based on work from highlightFade
 	// By Blair Mitchelmore
 	// http://jquery.offput.ca/highlightFade/
-	// ... modified to output hex by Jonathan Gala : jongala.com
+	// ... modified to output hex by Jonathan Gala : http://jongala.com/
 
 	// Parse strings looking for color tuples [255,255,255]
 	var getHex = function(color) {

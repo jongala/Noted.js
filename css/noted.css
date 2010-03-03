@@ -279,14 +279,17 @@ ul.body_styles.menu {
 ============================================ */
 
 #board {
+	position:relative;
 	margin:0;
 	padding:10px;
 	list-style:none;
 	overflow:auto;
-	/*
+	
 	-webkit-perspective: 1000;
-	-webkit-transform-style: preserve-3d;
-	*/
+	-webkit-transform-style: flat;
+	
+	-moz-perspective: 1000;
+	-moz-transform-style: flat;
 }
 
 #new_note_ghost {
@@ -328,17 +331,22 @@ ul.body_styles.menu {
 	-webkit-animation-timing-function: ease-in-out;
 }
 
-.note.top {
-	z-index:2;
-}
-
 .note.done {
 	/*outline:2px solid green;*/
+	-webkit-animation-name: flipover;
+	-moz-animation-name: flipover;
 }
 
 .note.todo {
 	/*outline:2px solid red;*/
+	
 }
+
+.note.flip_todo {
+	-webkit-animation-name: flipback;
+	-moz-animation-name: flipback;
+}
+
 
 .note.top {
 	z-index:10;
@@ -346,42 +354,27 @@ ul.body_styles.menu {
 
 /* From jQTouch */
 
-.flipinfromleft {
-	-webkit-animation-name: flipinfromleft;
+@-webkit-keyframes flipover {
+    from { -webkit-transform: rotateY(0); }
+    to { -webkit-transform: rotateY(180deg); }
 }
 
-.flipouttoleft {
-	-webkit-animation-name: flipouttoleft;
-}
-
-@-webkit-keyframes flipouttoleft {
-    from { -webkit-transform: rotateY(0) scale(1); }
-    to { -webkit-transform: rotateY(-90deg) scale(.9); }
+@-moz-keyframes flipover {
+    from { -moz-transform: rotateY(0); }
+    to { -moz-transform: rotateY(180deg); }
 }
 
 
-@-webkit-keyframes flipinfromleft {
-    from { -webkit-transform: rotateY(-90deg) scale(.9); }
-    to { -webkit-transform: rotateY(0) scale(1); }
+@-webkit-keyframes flipback {
+    from { -webkit-transform: rotateY(180deg); }
+    to { -webkit-transform: rotateY(0); }
 }
 
-
-
-
-/*
-
-@-webkit-keyframes flipouttoleft {
-    from { -webkit-transform: rotateY(0) ; }
-    to { -webkit-transform:rotateY(90deg) ; }
+@-moz-keyframes flipback {
+    from { -moz-transform: rotateY(180deg); }
+    to { -moz-transform: rotateY(0); }
 }
 
-
-@-webkit-keyframes flipinfromleft {
-    from { -webkit-transform:rotateY(90deg); }
-    to { -webkit-transform: rotateY(0) ; }
-}
-
-*/
 
 .note_content {
 	position:relative;
