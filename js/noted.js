@@ -16,7 +16,7 @@ if (!console) {
 }
 
 	
-function noted() {
+function Noted() {
 	
 	var self = this;
 
@@ -1441,6 +1441,6 @@ function noted() {
 
 $(document).ready(function(){
 	
-	nd = new noted();
+	nd = new Noted();
 	
 });
