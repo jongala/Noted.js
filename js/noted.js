@@ -1130,7 +1130,7 @@ function noted() {
 			localStorage.setItem(key,val);
 		} catch(e) {
 			console.log('**** DATA SAVE ERROR ******');
-			show_error('<h3>Data Save Error</h3><p>Your data was not saved.  Please make sure that you are not browsing in Icognito/Private Browsing mode, and reload Noted.</p>');
+			show_error('<h3><strong>Data Save Error</strong></h3><p>Your data was not saved.  Please make sure that you are not browsing in Icognito/Private Browsing mode, and reload Noted.</p>');
 		}
 	}
 
