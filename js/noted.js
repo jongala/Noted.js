@@ -131,7 +131,7 @@ function noted() {
 						try {
 							note_data = JSON.parse(note_json);
 						} catch(err) {
-							show_error('<h3><strong>JSON Parse Error</strong></h3><p>Sorry, an error was encountered when processing your data, and your notes could not be loaded.</p>');
+							show_error('<h3><strong>JSON Parse Error</strong></h3><p>Sorry, an error was encountered when processing your data, and your notes could not be loaded.</p>',{'width':300,'height':200});
 							console.log('init_notes() : JSON PARSE ERROR');
 							do_build = false;
 						}
@@ -503,7 +503,7 @@ function noted() {
 		} catch(err) {
 			data_ok = false;
 			
-			show_error('<h3><strong>JSON Parse Error</strong></h3><p>Sorry, an error was encountered when processing your data, and your notes could not be imported.</p>');
+			show_error('<h3><strong>JSON Parse Error</strong></h3><p>Sorry, an error was encountered when processing your data, and your notes could not be imported.</p>',{'width':300,'height':200});
 			console.log('import_all() : JSON PARSE ERROR');
 			console.log('data_ok: ' + data_ok);
 			return;
@@ -1032,9 +1032,25 @@ function noted() {
 		return $('.modal, #modal_screen').fadeOut('fast');
 	}
 	
-	var show_error = function(error_message) {
+	var show_error = function(error_message,options) {
+		var defaults = {
+			'width':500,
+			'height':400,
+			'callback':function(){}
+		};
+		
+		options = $.extend({},defaults,options);
+		
 		$('#error_message').html($(error_message));
 		$('.modal').hide();
+
+		$('#error').css({
+			'margin-left':-options.width/2,
+			'margin-top':-options.height/2
+		}).find('.content').css({
+			'width':options.width,
+			'height':options.height
+		});
 
 		// delay showing errors slightly, to allow other modals to clear first
 		var error_timer = setTimeout(function(){
