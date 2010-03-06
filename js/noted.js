@@ -31,7 +31,7 @@ function Noted() {
 	 */
 
 	var gutter = 20; 		// gutter between newly created notes
-	 
+	var max_done = 10; 
 	 
 	 /* 
 	 * Test for CSS Transforms — adapted from modernizr.js.
@@ -262,14 +262,21 @@ function Noted() {
 		
 		console.log('deserialize_note(): number of note_items:' + note_items.length);
 
-		// LOOP THROUGH NOTE ITEMS AND BUILD LIST		
+		// LOOP THROUGH NOTE ITEMS AND BUILD LIST
+		// init done count
+		var d = 0;
 		for(i in note_items) {
 			
 			if(note_items[i]['done']) {
 				item_class = 'done';
+				d++;
+				if(d > max_done) {
+					continue;
+				}
 			} else {
 				item_class = '';
 			}
+			
 			
 			if(note_items[i]['due']) {
 				item_class += ' has_deadline';
