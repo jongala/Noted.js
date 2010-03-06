@@ -32,6 +32,7 @@ function Noted() {
 
 	var gutter = 20; 		// gutter between newly created notes
 	 
+	 
 	 /* 
 	 * Test for CSS Transforms — adapted from modernizr.js.
 	 *
@@ -1411,26 +1412,42 @@ function Noted() {
 
 ======================================================================== */
 
-	
-	init_notes();						// read notes, create HMTL
-	init_items();						// init item behaviors
-	init_note_meta();					// init note behaviors
-	init_controls();					// init main noted options
-	load_defaults();					// load page defaults
-	
-	// make board sortable
-	$('#board').sortable({
-		distance:10,
-		start:function(event,ui){
-			$(ui.item).closest('.note').addClass('sorting');
-		},
-		stop:function(event,ui){
-			$(ui.item).closest('.note').removeClass('sorting');
-		},
-		update:function(event,ui){
-			save_note_order();
-		}
-	})
+	// TEST FOR LOCAL STORAGE, RUN INITS IF IT'S THERE
+	if( typeof window.localStorage == 'object')	{
+		
+		init_notes();						// read notes, create HMTL
+		init_items();						// init item behaviors
+		init_note_meta();					// init note behaviors
+		init_controls();					// init main noted options
+		load_defaults();					// load page defaults
+		
+		// make board sortable
+		$('#board').sortable({
+			distance:10,
+			start:function(event,ui){
+				$(ui.item).closest('.note').addClass('sorting');
+			},
+			stop:function(event,ui){
+				$(ui.item).closest('.note').removeClass('sorting');
+			},
+			update:function(event,ui){
+				save_note_order();
+			}
+		})
+		
+	} else { // OTHERWISE SHOW ERROR
+		
+		$('#masthead, #alerts, #new_note_ghost').hide();
+		var storage_error = "<h1>Error: No Data Storage</h1>"
+		+ "<p>Your browser does not support local data storage.  Please upgrade to:</p>"
+		+ "<ul>"
+		+ "<li><a href='http://www.apple.com/safari/'>Apple Safari 4+</a></li>"
+		+ "<li><a href='http://www.getfirefox.com/'>Mozilla Firefox 3.5+</a></li>"
+		+ "<li><a href='http://www.google.com/chrome/'>Google Chrome</a></li>"
+		+ "</ul>";
+		$('#board').append($(storage_error));
+		
+	}
 }
 
 
