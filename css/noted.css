@@ -330,16 +330,22 @@ ul.body_styles.menu {
 	-webkit-animation-timing-function: ease-in-out;
 }
 
-.note.done {
-	/*outline:2px solid green;*/
-	-webkit-animation-name: flipover;
-	-moz-animation-name: flipover;
-}
-
 .note.todo {
 	/*outline:2px solid red;*/
 	
 }
+
+.note.done {
+	/*outline:2px solid red;*/
+	
+}
+
+
+.note.flip_done {
+	-webkit-animation-name: flipover;
+	-moz-animation-name: flipover;
+}
+
 
 .note.flip_todo {
 	-webkit-animation-name: flipback;

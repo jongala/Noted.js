@@ -601,7 +601,7 @@ function Noted() {
 			$note = $(this).closest('.note');
 			if($note.is('.done')) {
 				// switch note state
-				$note.removeClass('done').addClass('todo flip_todo');
+				$note.removeClass('done flip_done').addClass('todo flip_todo');
 				
 				// if we have CSS transforms, show/hide the note contents during transition
 				if( $('body').hasClass('css_transform') ) {
@@ -617,7 +617,7 @@ function Noted() {
 			$note = $(this).closest('.note');
 			if($note.is('.todo')) {
 				// switch note state
-				$note.removeClass('todo flip_todo').addClass('done');
+				$note.removeClass('todo flip_todo').addClass('done flip_done');
 				
 				// if we have CSS transforms, show/hide the note contents during transition
 				if( $('body').hasClass('css_transform') ) {
@@ -794,7 +794,7 @@ function Noted() {
 		
 		// on click/drag, put dragged note on top
 		$('#board li.note').live('mousedown',function(){
-			$('#board li.note.top').removeClass('top');
+			$('#board li.note.top').removeClass('top flip_todo flip_done');
 			$(this).addClass('top');
 		});
 		
