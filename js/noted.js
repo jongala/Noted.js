@@ -1016,6 +1016,11 @@ function Noted() {
 			return false;
 		});
 		
+		$('#license_trigger').click(function(){
+			self.show_modal('#license');
+			return false;
+		});
+		
 	}
 
 	// LOADS GENERAL APP PREFS LIKE BODY STYLES, DISPLAY PREFS, ETC.

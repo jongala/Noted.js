@@ -97,7 +97,8 @@ a img {
 }
 
 .menu_trigger:hover {
-	background-color:rgba(0,0,0,0.8);
+	background-color:rgba(175,0,0,0.95);
+	color:#000;
 }
 
 	.menu_trigger:hover ul {
@@ -133,9 +134,6 @@ a img {
 			}
 			
 			ul.menu li a:hover {
-				background:rgba(40,40,40,0.95);
-				color:#f00;
-				
 				background:rgba(175,0,0,0.95);
 				color:#000;
 			}
@@ -283,10 +281,10 @@ ul.body_styles.menu {
 
 #new_note_ghost {
 	float:left;
-	margin:90px 40px 60px;
-	width:120px;
-	height:120px;
-	background: url('../images/new_note_ghost.png') 50% 50% no-repeat;
+	margin:10px 10px 0;
+	width:50px;
+	height:70px;
+	background: url('../images/new_note_ghost.png') 0 0 no-repeat;
 	opacity:0.5;
 	cursor:pointer;
 }
