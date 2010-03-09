@@ -31,7 +31,7 @@ function Noted() {
 	 */
 
 	var gutter = 20; 		// gutter between newly created notes
-	var max_done = 10; 
+	var max_done = 15; 
 	 
 	 /* 
 	 * Test for CSS Transforms — adapted from modernizr.js.
