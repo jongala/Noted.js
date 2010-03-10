@@ -158,24 +158,43 @@
 
 <div class="modal" id="welcome">
 	<div class="content">
-		<h3>Welcome to <strong>noted.js</strong></h3>
+		
+		
+		<div class="col instructions">
+			<h3>Welcome to <strong>noted.js</strong></h3>
+			
+			<p><strong>Noted is a note-taking and to-do list app for your browser</strong>.</p>  
+			
+<ul>
+<li><strong>Create notes</strong> and <strong>add items</strong>, which you can <strong>check off as you go</strong>.</li>
+<li><strong>Add due dates</strong> to items to keep track of what needs doing, and <strong>get reminders</strong> when deadlines are approaching or have passed.</li>
 
-		<p><strong>Noted is a note-taking and to-do list app for your browser</strong>.  Create notes and add items, which you can check off as you go.  Add due dates to items to keep track of what needs doing, and get reminders when deadlines are approaching or have passed.</p>
-		
-		<p>Resize notes, change their colors, and drag and drop to sort them.  Drag and drop items, too, within a note, or even between notes. You can also choose between a few different background textures, to keep things looking nice.</p>
-		
-		<h4>It&#8217;s All Yours</h4>
-		
-		<p>Noted uses HTML5 local storage to record your data &#8212; <strong>your information is never sent to any server</strong>.  That means it&#8217;s fast and totally private.  But it also mean there&#8217;s no syncing, and <strong>your notes are only available on the specific computer, using the specific browser used to create them</strong>.  </p>
-		
-		<p>To give you something to work with, you can export Noted data as JSON (a lightweight, open data format), which you can re-import in another browser or on another computer.</p>
-		
-		<h4>It&#8217;s Really All Yours</h4>
-		
-		<p>Noted is released as open source software under the <a href="license.txt">MIT License</a>. Coming soon: a zip package so you can easily download and run a local instance, for speedier use.</p>
+<li><strong>Double-click</strong> items or note titles to edit them.</li>
+<li><strong>Drag and drop</strong> notes to sort them.</li>
+<li>Resize notes by dragging from the bottom right corner.</li>
+<li>Drag and drop items, too, within a note, or even between notes.</li>
+<li>Change note colors and more with the <strong>note tools menu</strong>.</li>
+<li>Choose between a few different background textures.</li>
+</ul>
 
 		
-		<p><button type="button" id="welcome_OK" class="modal_dismiss">Start Using Noted!</button></p>
+		<!--col.instructions--></div>
+		
+		<div class="col moreinfo">
+			<h4>It&#8217;s All Yours</h4>
+		
+			<p>Noted uses HTML5 local storage to record your data &#8212; <strong>your information is never sent to any server</strong>.  That means it&#8217;s fast and totally private.  But it also mean there&#8217;s no syncing, and <strong>your notes are only available on the specific computer, using the specific browser used to create them</strong>.  </p>
+			
+			<p>To give you something to work with, you can export Noted data as JSON (a lightweight, open data format), which you can re-import in another browser or on another computer.</p>
+			
+			<h4>It&#8217;s Really All Yours</h4>
+			
+			<p>Noted is released as open source software under the <a href="license.txt">MIT License</a>. Coming soon: a zip package so you can easily download and run a local instance, for speedier use.</p>
+		<!--col.moreinfo--></div>
+		
+
+		
+		<p class="modal_controls"><button type="button" id="welcome_OK" class="modal_dismiss">Start Using Noted!</button></p>
 	
 	</div>
 </div>

@@ -910,6 +910,55 @@ ul.body_styles.menu {
 			height:290px;
 		}
 
+.modal .col {
+	float:left;
+}
+
+.modal .col.instructions {
+	width:350px;
+	padding-right:20px;
+}
+
+.modal .col.moreinfo {
+	width:280px;
+}
+
+
+.modal p,
+.modal ul {
+	line-height:1.5em;
+}
+
+.modal ul {
+	margin:0 0 1em;
+	padding:0 0 0 2em;
+}
+
+	.modal ul li {
+		margin:0.5em 0;
+		padding:0;
+	}
+
+	.modal .instructions li strong,
+	.modal .moreinfo strong {
+		font-weight:normal;
+		background:#fcc;
+		padding:2px 3px;
+	}
+	
+	.modal .moreinfo strong {
+		background:#def;
+	}
+
+
+p.modal_controls {
+	border-top:1px solid rgba(0,0,0,0.15);
+	padding:10px 0 0;
+	margin:0;
+	clear:both;
+	text-align:right;
+}
+
 #welcome {
 }
 
