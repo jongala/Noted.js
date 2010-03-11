@@ -133,7 +133,7 @@
 	<div class="content">
 		<h3>Paste JSON here to import a board:</h3>
 		<p class="warning"><strong>Warning:</strong> this action will destroy all current data, and cannot be undone.  Be careful!</p>
-		<p><textarea id="import_all_JSON" name="import_all_JSON"></textarea></p>		<p><a href="#import_all_cancel" id="import_all_cancel" class="modal_dismiss">Cancel</a> <button type="button" id="import_all_OK">Import</button></p>
+		<p><textarea id="import_all_JSON" name="import_all_JSON"></textarea></p>		<p class="modal_controls"><a href="#import_all_cancel" id="import_all_cancel" class="modal_dismiss">Cancel</a> <button type="button" id="import_all_OK">Import</button></p>
 	</div>
 </div>
 
@@ -143,7 +143,7 @@
 		<h3>Paste JSON here to import into <span id="importing_note"></span>:</h3>
 		<p><textarea id="import_JSON" name="import_JSON"></textarea>
 		<input type="hidden" name="import_note_handle" id="import_note_handle" value="" /></p>
-		<p><a href="#import_cancel" id="import_cancel" class="modal_dismiss">Cancel</a> <button type="button" id="import_OK">Import</button></p>
+		<p class="modal_controls"><a href="#import_cancel" id="import_cancel" class="modal_dismiss">Cancel</a> <button type="button" id="import_OK">Import</button></p>
 	</div>
 </div>
 
@@ -152,7 +152,7 @@
 		<h3>JSON data for <span id="exported_note"></span>:</h3>
 		<p><textarea id="export_JSON" name="export_JSON"></textarea>
 		<input type="hidden" name="export_note_handle" id="export_note_handle" value="" /></p>
-		<p><button type="button" id="export_cancel" class="modal_dismiss">Done</button></p>
+		<p class="modal_controls"><button type="button" id="export_cancel" class="modal_dismiss">Done</button></p>
 	</div>
 </div>
 

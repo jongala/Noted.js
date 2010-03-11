@@ -907,7 +907,7 @@ ul.body_styles.menu {
 		.modal .content textarea {
 			width:460px;
 			width:100%;
-			height:290px;
+			height:275px;
 		}
 
 .modal .col {
@@ -952,15 +952,23 @@ ul.body_styles.menu {
 
 
 p.modal_controls {
-	border-top:1px solid rgba(0,0,0,0.15);
-	padding:10px 0 0;
 	margin:0;
 	clear:both;
 	text-align:right;
 }
 
+	p.modal_controls a.modal_dismiss {
+		margin:0 5px;
+		color:#444;
+	}
+
 #welcome {
 }
+
+	#welcome .modal_controls {
+		border-top:1px solid rgba(0,0,0,0.15);
+		padding:10px 0 0;
+	}
 
 #welcome h3,
 .modal h3 strong {
@@ -1015,6 +1023,33 @@ div#footer {
 		-webkit-border-radius:4px;
 		background:rgba(255,255,255,0.2);
 	}
+
+
+ /* Buttons
+ ----------------------------------------- */
+
+button {
+	padding:3px 7px 4px 7px;
+	font-weight:bold;
+	font-size:13px;
+	background:#ddd;
+	color:#000;
+	cursor:pointer;
+	
+	border:1px solid #fff;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd));
+	background: -moz-linear-gradient(top, #fff, #ddd);
+	
+	box-shadow: 0 1px 2px rgba(0,0,0,0.75);
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.75);
+	
+	
+}
 
 /*
  *
