@@ -582,7 +582,7 @@ function Noted() {
 		
 		// save item field on change
 		/* */
-		$('.note .title input.titleText').live('change',function(){
+		$('.note .title input.titleText').live('change, blur',function(){
 			save_field(this);
 		});
 		/* */
