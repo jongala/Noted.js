@@ -1390,7 +1390,7 @@ function Noted() {
 					
 					duedate = Date.parse(due);
 		
-					lead = (duedate - today)/86400000;	// lead time in days
+					lead = Math.floor((duedate - today)/86400000);	// lead time in days
 					
 					console.log(lead);
 	
