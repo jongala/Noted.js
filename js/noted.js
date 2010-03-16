@@ -563,6 +563,31 @@ function Noted() {
 	var $duedate_pointer = $('#duedate_pointer');
 	var duedate_timer;
 
+	/**
+	 * Field: save itself when ENTER is pressed 
+	 */
+	var save_on_enter = function(event){
+		var code;
+		if (event.keyCode) {
+			code = event.keyCode;
+		} else if (event.which) {
+			code = event.which;
+		}
+		if(code && code == 13 ) {
+			save_field(this);
+		}
+	}
+	
+	/**
+	 * Field: save itself when blurred 
+	 */
+	var save_this_field = function(event){
+		save_field(this);
+	}
+	
+	
+	
+	
 
 	/* SET NOTE INTERACTION BEHAVIORS 
 	 * -----------------------------------------------
@@ -582,23 +607,11 @@ function Noted() {
 		
 		// save title field on change
 		/* */
-		$('.note .title input.titleText').live('blur',function(){
-			save_field(this);
-		});
+		$('.note .title input.titleText').live('blur',save_this_field);
 		/* */
 		
 		// save title field on ENTER keypress
-		$('.note .title input.titleText').live('keypress',function(event){
-			var code;
-			if (event.keyCode) {
-				code = event.keyCode;
-			} else if (event.which) {
-				code = event.which;
-			}
-			if(code && code == 13 ) {
-				save_field(this);
-			}
-		});
+		$('.note .title input.titleText').live('keypress',save_on_enter);
 		
 		// the todo_trigger activates itself, deactivates the done_trigger sibling, and sets the parent note class
 		$('.note .todo_trigger').live('click',function(){
@@ -874,22 +887,10 @@ function Noted() {
 	
 		
 		// Live binding of save_field on item change
-		$('.items input.item').live('blur',function(){
-			save_field(this);
-		});
+		$('.items input.item').live('blur',save_this_field);
 		
 		// Live binding of save_field on ENTER keypress
-		$('.items input.item').live('keypress',function(event){
-			var code;
-			if (event.keyCode) {
-				code = event.keyCode;
-			} else if (event.which) {
-				code = event.which;
-			}
-			if(code && code == 13 ) {
-				save_field(this);
-			}
-		});
+		$('.items input.item').live('keypress',save_on_enter);
 		
 		// "Add" button creates a new item in entry mode
 		$('.note div.add').live('click',function(){
