@@ -453,6 +453,19 @@ function Noted() {
 	}
 	
 	/* 
+	 * Confirm deleting a note.
+	 * @arg note should be li.note NODE
+	 */
+	this.confirm_delete_note = function(note) {
+		$note = $(note);
+		note_handle = note.id;
+		note_title = $note.find('.title span').text();
+		confirmation_panel =  $('#delete_note_confirmation_template .delete_note_confirmation').clone();
+		$note.find('.note_content').append( $(confirmation_panel) ).find('.delete_note_confirmation').slideDown('fast');
+		$note.find('.deleted_note_title').text(note_title);
+	}
+	
+	/* 
 	 * Delete a note.
 	 * @arg note should be li.note NODE
 	 */
@@ -460,23 +473,22 @@ function Noted() {
 		$note = $(note);
 		note_handle = note.id;
 		note_title = $note.find('.title span').text();
-		if( confirm("CAUTION: \nAre you sure you want to delete note \"" + note_title +  "\"? \n\nOnce it is deleted, it cannot be recovered.") ) {
-			console.log('deleting note ' + note_handle);
 
-			$('#' + note_handle).remove();				// delete DOM nodes
-			delete localStorage[note_handle];			// delete data
+		console.log('deleting note ' + note_handle);
 
-			var note_list = localStorage.note_list.split(',');
-			
-			for(var i =0 ; i<note_list.length ; i++) {	// delete from note list
-				if(note_list[i] == note_handle) {
-					note_list.splice(i,1);
-				}
+		$('#' + note_handle).remove();				// delete DOM nodes
+		delete localStorage[note_handle];			// delete data
+
+		var note_list = localStorage.note_list.split(',');
+		
+		for(var i =0 ; i<note_list.length ; i++) {	// delete from note list
+			if(note_list[i] == note_handle) {
+				note_list.splice(i,1);
 			}
-			
-			self.save_local_data('note_list',note_list.join(','));
-			
 		}
+		
+		self.save_local_data('note_list',note_list.join(','));
+
 	}
 
 
@@ -607,6 +619,7 @@ function Noted() {
 		
 		// save title field on change
 		/* */
+
 		$('.note .title input.titleText').live('blur',save_this_field);
 		/* */
 		
@@ -648,7 +661,9 @@ function Noted() {
 		
 		// delete a whole note -- trigger
 		$('li.note a.delete_note').live('click',function(){
-			self.delete_note($(this).closest('li.note')[0]);
+			if( !$(this).closest('.note').find('.delete_note_confirmation').length) {
+				self.confirm_delete_note($(this).closest('li.note')[0]);
+			}
 			return false;
 		});
 
@@ -1028,6 +1043,18 @@ function Noted() {
 		
 		$('#license_trigger').click(function(){
 			self.show_modal('#license');
+			return false;
+		});
+		
+		/* delete note stuff */
+		
+		$('.delete_note_confirmation .delete_note_dismiss').live('click',function(){
+			$(this).closest('.delete_note_confirmation').slideUp('fast',function(){$(this).remove()});
+			return false;
+		});
+		
+		$('.delete_note_confirmation .delete_note_OK').live('click',function(){
+			self.delete_note( $(this).closest('.note')[0] );
 			return false;
 		});
 		

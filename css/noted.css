@@ -813,7 +813,43 @@ ul.body_styles.menu {
 				background:#222;
 			}
 
+
+/* Delete Note Confirmation */
+
+#delete_note_confirmation_template {
+	display:none;
+}
+
+.delete_note_confirmation {
+	display:none;
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	padding:0 0 6px;
+	color:#ccc;
+	background:rgba(0,0,0,0.9);
+	z-index:5;
 	
+}
+
+	.delete_note_confirmation h3 {
+		margin:0;
+		font-family:'LeagueGothicRegular',Arial,sans-serif;
+		font-size:24px;
+		line-height:26px;
+		text-transform:uppercase;
+		color:#d00;
+	}
+
+	.delete_note_confirmation .content {
+		padding:10px 10px 0;
+	}
+	
+	.delete_note_confirmation .deleted_note_title {
+		color:#d00;
+	}
+
 /* 
 	EXTRAS
 */
@@ -952,7 +988,8 @@ ul.body_styles.menu {
 	}
 
 
-p.modal_controls {
+p.modal_controls,
+p.panel_controls {
 	margin:0;
 	clear:both;
 	text-align:right;
