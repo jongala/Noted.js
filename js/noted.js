@@ -580,16 +580,21 @@ function Noted() {
 		});
 		
 		
-		// save item field on change
+		// save title field on change
 		/* */
-		$('.note .title input.titleText').live('change, blur',function(){
+		$('.note .title input.titleText').live('blur',function(){
 			save_field(this);
 		});
 		/* */
 		
-		// save item field on ENTER keypress
-		$('.note .title input.titleText').live('keypress',function(){
-			var code = event.charCode || event.keyCode;
+		// save title field on ENTER keypress
+		$('.note .title input.titleText').live('keypress',function(event){
+			var code;
+			if (event.keyCode) {
+				code = event.keyCode;
+			} else if (event.which) {
+				code = event.which;
+			}
 			if(code && code == 13 ) {
 				save_field(this);
 			}
@@ -875,8 +880,12 @@ function Noted() {
 		
 		// Live binding of save_field on ENTER keypress
 		$('.items input.item').live('keypress',function(event){
-			//var code = event.charCode || event.keyCode;
-			var code = event.keyCode;
+			var code;
+			if (event.keyCode) {
+				code = event.keyCode;
+			} else if (event.which) {
+				code = event.which;
+			}
 			if(code && code == 13 ) {
 				save_field(this);
 			}
@@ -1039,7 +1048,13 @@ function Noted() {
 	 * 
 	 */
 	 
-	$('body').keyup(function(e){
+	$('html').keyup(function(e){
+		var code;
+		if (e.keyCode) {
+			code = e.keyCode;
+		} else if (e.which) {
+			code = e.which;
+		}
 		switch(e.which) {
 			// F1
 			case 112: $('#alerts_tab').click();
