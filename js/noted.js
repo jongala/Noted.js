@@ -825,11 +825,6 @@ function Noted() {
 		
 		// Note interactions
 		
-		// on click/drag, put dragged note on top
-		$('#board li.note').live('mousedown',function(){
-			$('#board li.note.top').removeClass('top flip_todo flip_done');
-			$(this).addClass('top');
-		});
 		
 	};
 

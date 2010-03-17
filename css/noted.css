@@ -283,13 +283,20 @@ ul.body_styles.menu {
 	margin:0;
 	padding:10px;
 	list-style:none;
-	overflow:auto;
-	
+
 	-webkit-perspective: 1000;
 	-webkit-transform-style: flat;
 	
 	-moz-perspective: 1000;
 	-moz-transform-style: flat;
+}
+
+#board:after {
+	content:'.';
+	display:block;
+	clear:both;
+	height:0;
+	visibility:hidden;
 }
 
 #new_note_ghost {
@@ -353,10 +360,6 @@ ul.body_styles.menu {
 	-moz-animation-name: flipback;
 }
 
-
-.note.top {
-	z-index:10;
-}
 
 /* From jQTouch */
 
