@@ -1339,7 +1339,12 @@ function Noted() {
 						self.save_note(oldlist);
 					}
 				},
-				
+				start:function(event,ui) {
+					$(ui.item).closest('.note').addClass('top');
+				},
+				stop:function(event,ui) {
+					$(ui.item).closest('.note').removeClass('top');
+				},
 				connectWith: '.items'
 				
 			}
