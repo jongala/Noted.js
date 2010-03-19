@@ -854,7 +854,7 @@ function Noted() {
 			var $due_field = $(this).find('input.due');
 
 			var off = $(this).offset();
-			var itemleft = off.left + $item.width() -10;
+			var itemleft = off.left + $item.width();
 			var itemtop = off.top;
 			
 			var due_date = new Date($due_field.val());

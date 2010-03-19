@@ -859,13 +859,13 @@ ul.body_styles.menu {
 
 #duedate_pointer {
 	position:absolute;
-	top:50%;
-	left:50%;
-	width:90px;
-	height:36px;
+	top:0;
+	left:0;
+	width:95px;
+	height:39px;
 	padding:1px 0px 0; 
-	margin-top:-36px;
-	margin-left:-28px;
+	margin-top:-39px;
+	margin-left:-82px;
 	
 	font-family:'LeagueGothicRegular',Arial,sans-serif;
 	font-size:24px;
@@ -881,7 +881,7 @@ ul.body_styles.menu {
 	border-radius:5px;
 
 
-	background:url('../images/duedate_pointer.png') 50% 0 no-repeat;
+	background:url('../images/duedate_pointer.png') 100% 0 no-repeat;
 	z-index:99;
 	
 	display:none;
