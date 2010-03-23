@@ -154,6 +154,7 @@
 <div class="modal" id="import_field">
 	<div class="content">
 		<h3>Paste JSON here to import into <span id="importing_note"></span>:</h3>
+		<p class="instructions">Paste JSON data for an exported note below, and click "Import".</p>
 		<p><textarea id="import_JSON" name="import_JSON"></textarea>
 		<input type="hidden" name="import_note_handle" id="import_note_handle" value="" /></p>
 		<p class="modal_controls"><a href="#import_cancel" id="import_cancel" class="modal_dismiss">Cancel</a> <button type="button" id="import_OK">Import</button></p>
@@ -163,6 +164,7 @@
 <div class="modal" id="export_field">
 	<div class="content">
 		<h3>JSON data for <span id="exported_note"></span>:</h3>
+		<p class="instructions">Copy the content below, and paste it someplace to save it, or into an import window in another instance of Noted.</p>
 		<p><textarea id="export_JSON" name="export_JSON"></textarea>
 		<input type="hidden" name="export_note_handle" id="export_note_handle" value="" /></p>
 		<p class="modal_controls"><button type="button" id="export_cancel" class="modal_dismiss">Done</button></p>
