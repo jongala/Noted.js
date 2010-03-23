@@ -852,6 +852,25 @@ ul.body_styles.menu {
 		color:#d00;
 	}
 
+	.delete_note_confirmation .panel_controls {
+		padding:7px 0 3px;
+		border-top:1px solid rgba(255,255,255,0.3);
+		overflow:auto;
+	}
+	
+		.delete_note_confirmation .panel_controls .delete_note_dismiss {
+			float:left;
+			margin:5px 0 0 7px;
+			color:#ccc;
+		}
+		
+		.delete_note_confirmation .panel_controls .delete_note_OK {
+			float:right;
+			margin:0 5px 0 0;
+			color:#b00;
+		}
+	
+
 /* 
 	EXTRAS
 */
