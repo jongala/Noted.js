@@ -283,7 +283,6 @@ ul.body_styles.menu {
 
 #board {
 	position:relative;
-	margin:0;
 	padding:10px 10px 20px;
 	list-style:none;
 
@@ -1039,10 +1038,6 @@ p.warning {
 }
 
 div#footer {
-	position:absolute;
-	left:0;
-	bottom:0;
-	width:100%;
 	padding:10px 0;
 	text-align:center;
 	color:rgba(255,255,255,0.65);
