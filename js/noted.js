@@ -1516,3 +1516,9 @@ $(document).ready(function(){
 	nd = new Noted();
 	
 });
+
+$(document).load(function(){
+	
+	$('#board').masonry();
+	
+});
