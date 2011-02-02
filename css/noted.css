@@ -659,12 +659,15 @@ ul.body_styles.menu {
 	.note .controls:hover a.color_trigger,
 	.note .controls a.color_trigger.open,
 	.note .controls:hover a.tools_trigger,
-	.note .controls a.tools_trigger.open {
+	.note .controls a.tools_trigger.open,
+	.note .controls:hover a.delete_note,
+	.note .controls a.delete_note.open {
 		opacity:1;
 	}
 	
 	.note .controls a.color_trigger,
-	.note .controls a.tools_trigger {
+	.note .controls a.tools_trigger,
+	.note .controls a.delete_note {
 		position:absolute;
 		top:0px;
 		background:transparent;
@@ -683,15 +686,8 @@ ul.body_styles.menu {
 		left:150px;
 	}
 
-	.note .title a.delete_note {
-		position:absolute;
-		top:2px;
-		right:2px;
-		display:none;
-	}
-	
-	.note .title:hover a.delete_note {
-		display:inline;
+	.note .controls a.delete_note {
+		left:173px;
 	}
 	
 /* SHOW AND HIDE ITEMS BASED ON NOTE STATE */
@@ -825,12 +821,12 @@ ul.body_styles.menu {
 .delete_note_confirmation {
 	display:none;
 	position:absolute;
-	top:0;
+	bottom:0;
 	left:0;
 	width:100%;
 	padding:0 0 6px;
 	color:#ccc;
-	background:rgba(0,0,0,0.9);
+	background:rgba(0,0,0,0.2) url('../images/color-tick.png') 177px 100% no-repeat;
 	z-index:5;
 	
 }
@@ -845,7 +841,8 @@ ul.body_styles.menu {
 	}
 
 	.delete_note_confirmation .content {
-		padding:10px 10px 0;
+		padding:10px 10px 4px;
+		background:rgba(0,0,0,0.9);
 	}
 	
 	.delete_note_confirmation .deleted_note_title {

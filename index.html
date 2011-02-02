@@ -67,7 +67,7 @@
 
 		<div class="note_content">
 
-			<div class="title"><span>(Double-click to edit note title)</span><a href="#delete" class="delete_note" title="Delete this note"><img src="images/delete.png" /></a></div>
+			<div class="title"><span>(Double-click to edit note title)</span></div>
 	
 			<ul class="items">
 			</ul>		
@@ -85,10 +85,10 @@
 				
 				<a href="#colors" class="color_trigger"><img src="images/color_wheel.png" /></a>
 				<a href="#tools" class="tools_trigger"><img src="images/cog.png" /></a>
-
+				<a href="#delete" class="delete_note" title="Delete this note"><img src="images/bin_closed.png" /></a>
 			</div>
 			
-			<div class="colors">
+			<div class="colors overlay">
 				<div class="panel_title">Set Note Color</div>
 				<div class="colorblocks">
 				<a href="#" style="background:#eee"></a>
@@ -101,7 +101,7 @@
 				<div class="color_input"><input class="color" value="#eee" /><a href="#" title="Set this color value"><img src="images/control_play.png" /></a></div>
 				<a href="#" class="close"><img src="images/cancel.png" /></a>
 			</div>
-			<div class="tools">
+			<div class="tools overlay">
 				<div class="panel_title">Note Tools</div>
 				<ul>
 					<li><a href="#exportJSON" class="export_trigger" title="Export this note as JSON">Export note data as JSON</a></li>
@@ -124,7 +124,7 @@
 </div>
 
 <div id="delete_note_confirmation_template">
-	<div class="delete_note_confirmation">
+	<div class="delete_note_confirmation overlay">
 		<div class="content">
 			<h3>Caution!</h3>
 			<p>Are you sure you want to delete the note "<span class="deleted_note_title"></span>"?</p>

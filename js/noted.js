@@ -133,7 +133,6 @@ function Noted() {
 					
 					if(note_json.length) {
 						// ADD NOTE TO DOM
-						//console.log('building: ' + note_list[i] + ',' + note_json);
 						
 						var note_data = {};
 						var valid_JSON = true;
@@ -145,7 +144,7 @@ function Noted() {
 							valid_JSON = false;
 						}
 						
-						if(valid_JSON) { build_note(note_list[i],JSON.parse(note_json)); }
+						if(valid_JSON) { build_note(note_list[i],note_data); }
 						
 					}
 					
@@ -457,11 +456,20 @@ function Noted() {
 	 * @arg note should be li.note NODE
 	 */
 	this.confirm_delete_note = function(note) {
-		$note = $(note);
-		note_handle = note.id;
-		note_title = $note.find('.title span').text();
-		confirmation_panel =  $('#delete_note_confirmation_template .delete_note_confirmation').clone();
-		$note.find('.note_content').append( $(confirmation_panel) ).find('.delete_note_confirmation').slideDown('fast');
+		var $note = $(note),
+				note_handle = note.id,
+				note_title = $note.find('.title span').text(),
+				$confirmation_panel = $note.find('.delete_note_confirmation');
+				
+		$note.find('.overlay').slideUp('fast',function(){$note.find('.controls .open').removeClass('open')});
+		
+		if (!$confirmation_panel.length) {
+		  $confirmation_panel = $('#delete_note_confirmation_template .delete_note_confirmation').clone();
+		  $note.find('.note_content').append( $confirmation_panel );
+		}
+		$confirmation_panel.slideDown('fast',function(){
+			$note.find('.delete_note').addClass('open');
+		});
 		$note.find('.deleted_note_title').text(note_title);
 	}
 	
@@ -661,8 +669,11 @@ function Noted() {
 		
 		// delete a whole note -- trigger
 		$('li.note a.delete_note').live('click',function(){
-			if( !$(this).closest('.note').find('.delete_note_confirmation').length) {
+			var $confirm = $(this).closest('.note').find('.delete_note_confirmation');
+			if( !$confirm.length || !$confirm.is(':visible') ) {
 				self.confirm_delete_note($(this).closest('li.note')[0]);
+			} else {
+				$confirm.find('.delete_note_dismiss').click();
 			}
 			return false;
 		});
@@ -682,9 +693,13 @@ function Noted() {
 		
 		// toggle colors panel from color trigger
 		$('.note .controls a.color_trigger').live('click',function(){
-			$(this).closest('.note').find('.tools').slideUp('fast')
-				.end().find('.controls a.tools_trigger').removeClass('open');
-			var $colorPanel = $(this).closest('.note').find('.colors');
+			var $note = $(this).closest('.note');
+			var $colorPanel = $note.find('.colors');
+			
+			$note.find('.overlay:visible:not(.colors)').slideUp('fast',function(){
+				$note.find('.controls .open:not(.color_trigger)').removeClass('open');
+			});
+			
 			if($colorPanel.is(':visible')){
 				$colorPanel.slideUp("fast");
 				$(this).removeClass('open');
@@ -730,9 +745,13 @@ function Noted() {
 		
 		// toggle tools panel from color trigger
 		$('.note .controls a.tools_trigger').live('click',function(){
-			$(this).closest('.note').find('.colors').slideUp('fast')
-				.end().find('.controls a.color_trigger').removeClass('open');
-			var $toolPanel = $(this).closest('.note').find('.tools');
+			var $note = $(this).closest('.note');
+			var $toolPanel = $note.find('.tools');
+			
+			$note.find('.overlay:visible:not(.tools)').slideUp('fast',function(){
+				$note.find('.controls .open:not(.tools_trigger)').removeClass('open');
+			});
+		
 			if($toolPanel.is(':visible')){
 				$toolPanel.slideUp("fast");		// hide it
 				$(this).removeClass('open');
@@ -1044,7 +1063,10 @@ function Noted() {
 		/* delete note stuff */
 		
 		$('.delete_note_confirmation .delete_note_dismiss').live('click',function(){
-			$(this).closest('.delete_note_confirmation').slideUp('fast',function(){$(this).remove()});
+			$(this).closest('.delete_note_confirmation').slideUp('fast',function(){
+				$(this).closest('.note').find('.delete_note').removeClass('open');
+				$(this).remove();
+			});
 			return false;
 		});
 		
