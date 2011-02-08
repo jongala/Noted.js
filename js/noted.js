@@ -687,7 +687,9 @@ function Noted() {
 		
 		// close colors panel with close button
 		$('.note .colors a.close').live('click',function(){
-			$(this).closest('.colors').slideUp('fast');
+			$(this).closest('.colors').slideUp('fast',function(){
+				$(this).closest('.note').find('.controls a.open').removeClass('open');
+			});
 			return false;
 		});
 		
@@ -739,7 +741,9 @@ function Noted() {
 		
 		// close tools panel with close button
 		$('.note .tools a.close').live('click',function(){
-			$(this).closest('.tools').slideUp('fast');
+			$(this).closest('.tools').slideUp('fast',function(){
+				$(this).closest('.note').find('.controls a.open').removeClass('open');
+			});
 			return false;
 		});
 		
