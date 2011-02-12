@@ -60,7 +60,22 @@ body.leather {
 }
 
 
+.wrap {
+	min-height:100%;
+}
 
+.main {
+	min-height:300px;
+	overflow:auto;
+	padding-bottom:40px;
+}
+
+div#footer {
+	position:relative;
+	margin-top:-40px;
+	height:40px;
+	clear:both;
+}
 
 a {
 	color:#c00;
@@ -283,7 +298,7 @@ ul.body_styles.menu {
 
 #board {
 	position:relative;
-	padding:10px 10px 20px;
+	padding:10px 10px 0px;
 	list-style:none;
 
 	-webkit-perspective: 1000;
@@ -585,6 +600,7 @@ ul.body_styles.menu {
 	}
 	
 	#ui-datepicker-div {
+		top:0;
 		z-index:10;
 	}
 	
@@ -1054,7 +1070,7 @@ p.warning {
 }
 
 div#footer {
-	padding:10px 0;
+	padding:0;
 	text-align:center;
 	color:rgba(255,255,255,0.65);
 	opacity:0.5;
@@ -1069,6 +1085,7 @@ div#footer {
 	}
 	
 	span#made_by {
+		display:inline-block;
 		padding:5px;
 		border:0;
 		border-radius:4px;

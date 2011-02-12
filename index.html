@@ -13,128 +13,244 @@
 </head>
 <body>
 
-<div id="masthead">
-	<span class="logo">Noted</span>
-	
-	<a href="#welcome" id="welcome_trigger" class="main_menu_item"><img src="images/information.png" /> About</a>
-	
-	<div id="tools" class="menu_trigger">
-		Tools
-
-		<ul class="menu">
-			<li><a href="#snap_to_size" id="snap_to_size" title="Snap all notes to standard size">Snap notes to size</a></li>
-			<li><a href="#import_all" id="import_all" title="Replace all notes with imported JSON">Import All Notes&#8217; Data</a></li>
-			<li><a href="#export_all" id="export_all" title="Export all notes as JSON">Export All Notes&#8217; Data</a></li>
-		</ul>
-		
-	</div>
-	
-	<a href="#new_note" id="new_note" class="main_menu_item"><img src="images/note_add.png" /> New Note</a><!--| <a href="#nuke" id="nuke">Nuke it</a>-->
-	
-	<div id="prefs">
-		<div class="styles menu_trigger">
-			Styles &rarr;
-			<ul class="body_styles menu">
-				<li><a href="#slate">Slate</a></li>
-				<li><a href="#cork">Cork</a></li>
-				<li><a href="#wood">Wood</a></li>
-				<li><a href="#wood2">Light Wood</a></li>
-				<li><a href="#wood3">Dark Wood</a></li>
-				<li><a href="#leather">Leather</a></li>
-			</ul>
-		</div>
-		
-	</div>
-</div>
-
-<div id="alerts">
-	<div class="alerts_content">
-		<div class="overdue"><h3>Overdue</h3></div>
-		<div class="due"><h3>Due Today — <span id="todayDisplay"></span></h3></div>
-		<div class="coming"><h3>Coming Up</h3></div>
-	</div>
-	<a href="#alerts" id="alerts_tab" title="Click or hit F1 to open/close alerts panel">=</a>
-</div>
-
-
-<ul id="board">
-	<li id="new_note_ghost" title="Create New Note"></li>
-</ul>
-
-
-<div id="note_template">
-	<li class="note todo" id="">
-
-		<div class="note_content">
-
-			<div class="title"><span>(Double-click to edit note title)</span></div>
-	
-			<ul class="items">
-			</ul>		
-	
-		
-			<div class="add"><a href="#" class="trigger"><img src="images/add.png" /></a><span>Add</span></div>
-		
+<div class="wrap">
+	<div class="main">
+		<div id="masthead">
+			<span class="logo">Noted</span>
 			
-		</div>
-
-		<div class="note_foot">
-			<div class="controls">
-				<a href="#todo" class="todo_trigger">to do</a>
-				<a href="#done" class="done_trigger">done</a>
-				
-				<a href="#colors" class="color_trigger"><img src="images/color_wheel.png" /></a>
-				<a href="#tools" class="tools_trigger"><img src="images/cog.png" /></a>
-				<a href="#delete" class="delete_note" title="Delete this note"><img src="images/bin_closed.png" /></a>
-			</div>
+			<a href="#welcome" id="welcome_trigger" class="main_menu_item"><img src="images/information.png" /> About</a>
 			
-			<div class="colors overlay">
-				<div class="panel_title">Set Note Color</div>
-				<div class="colorblocks">
-				<a href="#" style="background:#eee"></a>
-				<a href="#" style="background:#bbd6f9"></a><!--#cdf--><!--#c6d9ff-->
-				<a href="#" style="background:#cfd"></a>
-				<a href="#" style="background:#ffa"></a>
-				<a href="#" style="background:#ffdd90"></a>
-				<a href="#" style="background:#fce"></a>
-				</div>
-				<div class="color_input"><input class="color" value="#eee" /><a href="#" title="Set this color value"><img src="images/control_play.png" /></a></div>
-				<a href="#" class="close"><img src="images/cancel.png" /></a>
-			</div>
-			<div class="tools overlay">
-				<div class="panel_title">Note Tools</div>
-				<ul>
-					<li><a href="#exportJSON" class="export_trigger" title="Export this note as JSON">Export note data as JSON</a></li>
-					<li><a href="#importJSON" class="import_trigger" title="Import JSON into this note">Import note data as JSON</a></li>
+			<div id="tools" class="menu_trigger">
+				Tools
+		
+				<ul class="menu">
+					<li><a href="#snap_to_size" id="snap_to_size" title="Snap all notes to standard size">Snap notes to size</a></li>
+					<li><a href="#import_all" id="import_all" title="Replace all notes with imported JSON">Import All Notes&#8217; Data</a></li>
+					<li><a href="#export_all" id="export_all" title="Export all notes as JSON">Export All Notes&#8217; Data</a></li>
 				</ul>
-				<a href="#" class="close"><img src="images/cancel.png" /></a>
+				
+			</div>
+			
+			<a href="#new_note" id="new_note" class="main_menu_item"><img src="images/note_add.png" /> New Note</a><!--| <a href="#nuke" id="nuke">Nuke it</a>-->
+			
+			<div id="prefs">
+				<div class="styles menu_trigger">
+					Styles &rarr;
+					<ul class="body_styles menu">
+						<li><a href="#slate">Slate</a></li>
+						<li><a href="#cork">Cork</a></li>
+						<li><a href="#wood">Wood</a></li>
+						<li><a href="#wood2">Light Wood</a></li>
+						<li><a href="#wood3">Dark Wood</a></li>
+						<li><a href="#leather">Leather</a></li>
+					</ul>
+				</div>
+				
 			</div>
 		</div>
-		<input name="date" class="date" />
 		
-	</li>
-</div>
-
-<div id="item_template">
-	<li><a href="#" class="trigger" title="click to complete this item" ></a><span style="display:none"></span><input type="text" class="item" value="" /><a href="#date" class="date_trigger" title="set due date for this item"></a><input type="text" class="due" value="" /><a href="#date" class="date_delete" title="clear due date for this item"><img src="images/date_delete.png" /></a></li>
-</div>
-
-<div id="alert_template">
-	<div class="alert" title="click to complete this item"></div>
-</div>
-
-<div id="delete_note_confirmation_template">
-	<div class="delete_note_confirmation overlay">
-		<div class="content">
-			<h3>Caution!</h3>
-			<p>Are you sure you want to delete the note "<span class="deleted_note_title"></span>"?</p>
-			
-			<p>Once it is deleted, it cannot be recovered.</p>
-			<p class="panel_controls"><a href="#delete_note_dismiss" class="delete_note_dismiss">Cancel</a> <button class="delete_note_OK">Delete Note</button>
+		<div id="alerts">
+			<div class="alerts_content">
+				<div class="overdue"><h3>Overdue</h3></div>
+				<div class="due"><h3>Due Today — <span id="todayDisplay"></span></h3></div>
+				<div class="coming"><h3>Coming Up</h3></div>
+			</div>
+			<a href="#alerts" id="alerts_tab" title="Click or hit F1 to open/close alerts panel">=</a>
 		</div>
+		
+		
+		<ul id="board">
+			<li id="new_note_ghost" title="Create New Note"></li>
+		</ul>
 	</div>
 </div>
+<div id="footer"><span id="made_by">Noted: a <a href="http://www.jongala.com/">jongala.com</a> project.  &bull;  <a href="#license" id="license_trigger">License and credits</a></span></div>
 
+<div class="templates">
+	<div id="note_template">
+		<li class="note todo" id="">
+	
+			<div class="note_content">
+	
+				<div class="title"><span>(Double-click to edit note title)</span></div>
+		
+				<ul class="items">
+				</ul>		
+		
+			
+				<div class="add"><a href="#" class="trigger"><img src="images/add.png" /></a><span>Add</span></div>
+			
+				
+			</div>
+	
+			<div class="note_foot">
+				<div class="controls">
+					<a href="#todo" class="todo_trigger">to do</a>
+					<a href="#done" class="done_trigger">done</a>
+					
+					<a href="#colors" class="color_trigger"><img src="images/color_wheel.png" /></a>
+					<a href="#tools" class="tools_trigger"><img src="images/cog.png" /></a>
+					<a href="#delete" class="delete_note" title="Delete this note"><img src="images/bin_closed.png" /></a>
+				</div>
+				
+				<div class="colors overlay">
+					<div class="panel_title">Set Note Color</div>
+					<div class="colorblocks">
+					<a href="#" style="background:#eee"></a>
+					<a href="#" style="background:#bbd6f9"></a><!--#cdf--><!--#c6d9ff-->
+					<a href="#" style="background:#cfd"></a>
+					<a href="#" style="background:#ffa"></a>
+					<a href="#" style="background:#ffdd90"></a>
+					<a href="#" style="background:#fce"></a>
+					</div>
+					<div class="color_input"><input class="color" value="#eee" /><a href="#" title="Set this color value"><img src="images/control_play.png" /></a></div>
+					<a href="#" class="close"><img src="images/cancel.png" /></a>
+				</div>
+				<div class="tools overlay">
+					<div class="panel_title">Note Tools</div>
+					<ul>
+						<li><a href="#exportJSON" class="export_trigger" title="Export this note as JSON">Export note data as JSON</a></li>
+						<li><a href="#importJSON" class="import_trigger" title="Import JSON into this note">Import note data as JSON</a></li>
+					</ul>
+					<a href="#" class="close"><img src="images/cancel.png" /></a>
+				</div>
+			</div>
+			<input name="date" class="date" />
+			
+		</li>
+	</div>
+	
+	<div id="item_template">
+		<li><a href="#" class="trigger" title="click to complete this item" ></a><span style="display:none"></span><input type="text" class="item" value="" /><a href="#date" class="date_trigger" title="set due date for this item"></a><input type="text" class="due" value="" /><a href="#date" class="date_delete" title="clear due date for this item"><img src="images/date_delete.png" /></a></li>
+	</div>
+	
+	<div id="alert_template">
+		<div class="alert" title="click to complete this item"></div>
+	</div>
+	
+	<div id="delete_note_confirmation_template">
+		<div class="delete_note_confirmation overlay">
+			<div class="content">
+				<h3>Caution!</h3>
+				<p>Are you sure you want to delete the note "<span class="deleted_note_title"></span>"?</p>
+				
+				<p>Once it is deleted, it cannot be recovered.</p>
+				<p class="panel_controls"><a href="#delete_note_dismiss" class="delete_note_dismiss">Cancel</a> <button class="delete_note_OK">Delete Note</button>
+			</div>
+		</div>
+	</div>
+<!--templates--></div>
+
+<div class="modals">
+	<div class="modal" id="import_all_field">
+		<div class="content">
+			<h3>Paste JSON here to import a board:</h3>
+			<p class="warning"><strong>Warning:</strong> this action will destroy all current data, and cannot be undone.  Be careful!</p>
+			<p><textarea id="import_all_JSON" name="import_all_JSON"></textarea></p>		<p class="modal_controls"><a href="#import_all_cancel" id="import_all_cancel" class="modal_dismiss">Cancel</a> <button type="button" id="import_all_OK">Import</button></p>
+		</div>
+	</div>
+	
+	
+	<div class="modal" id="import_field">
+		<div class="content">
+			<h3>Paste JSON here to import into <span id="importing_note"></span>:</h3>
+			<p class="instructions">Paste JSON data for an exported note below, and click "Import".</p>
+			<p><textarea id="import_JSON" name="import_JSON"></textarea>
+			<input type="hidden" name="import_note_handle" id="import_note_handle" value="" /></p>
+			<p class="modal_controls"><a href="#import_cancel" id="import_cancel" class="modal_dismiss">Cancel</a> <button type="button" id="import_OK">Import</button></p>
+		</div>
+	</div>
+	
+	<div class="modal" id="export_field">
+		<div class="content">
+			<h3>JSON data for <span id="exported_note"></span>:</h3>
+			<p class="instructions">Copy the content below, and paste it someplace to save it, or into an import window in another instance of Noted.</p>
+			<p><textarea id="export_JSON" name="export_JSON"></textarea>
+			<input type="hidden" name="export_note_handle" id="export_note_handle" value="" /></p>
+			<p class="modal_controls"><button type="button" id="export_cancel" class="modal_dismiss">Done</button></p>
+		</div>
+	</div>
+	
+	<div class="modal" id="welcome">
+		<div class="content">
+			
+			
+			<div class="col instructions">
+				<h3>Welcome to <strong>noted.js</strong></h3>
+				
+				<p><strong>Noted is a note-taking and to-do list app for your browser</strong>.</p>  
+				
+	<ul>
+	<li><strong>Create notes</strong> and <strong>add items</strong>, which you can <strong>check off as you go</strong>.</li>
+	<li><strong>Add due dates</strong> to items to keep track of what needs doing, and <strong>get reminders</strong> when deadlines are approaching or have passed.</li>
+	
+	<li><strong>Double-click</strong> items or note titles to edit them.</li>
+	<li><strong>Drag and drop</strong> notes to sort them.</li>
+	<li>Resize notes by dragging from the bottom right corner.</li>
+	<li>Drag and drop items, too, within a note, or even between notes.</li>
+	<li>Change note colors and more with the <strong>note tools menu</strong>.</li>
+	<li>Choose between a few different background textures.</li>
+	</ul>
+	
+			
+			<!--col.instructions--></div>
+			
+			<div class="col moreinfo">
+				<h4>It&#8217;s All Yours</h4>
+			
+				<p>Noted uses HTML5 local storage to record your data &#8212; <strong>your information is never sent to any server</strong>.  That means it&#8217;s fast and totally private.  But it also mean there&#8217;s no syncing, and <strong>your notes are only available on the specific computer, using the specific browser used to create them</strong>.  </p>
+				
+				<p>To give you something to work with, you can export Noted data as JSON (a lightweight, open data format), which you can re-import in another browser or on another computer.</p>
+				
+				<h4>It&#8217;s Really All Yours</h4>
+				
+				<p>Noted is released as open source software under the <a href="license.txt">MIT License</a>. Coming soon: a zip package so you can easily download and run a local instance, for speedier use.</p>
+			<!--col.moreinfo--></div>
+			
+	
+			
+			<p class="modal_controls"><button type="button" id="welcome_OK" class="modal_dismiss">Start Using Noted!</button></p>
+		
+		</div>
+	</div>
+	
+	<div class="modal" id="license">
+		<div class="content">
+			<h3>License</h3>
+	
+			<p>Noted is released under the terms of the <a href="license.txt">MIT License</a>. The upshot is, you may use this for pretty much anything, commercial or non-commercial, as long as you retain the copyright notices. Thanks!</p>
+	
+			<h4>Credits</h4>
+			
+			<p>Noted makes use of the hard work of many people.</p>
+			
+			<ul>
+			<li>jQuery is the basis for the whole thing.</li>
+			<li>jQuery UI is responsible for all of the dragging, dropping, and sorting that make Noted so much easier to use.</li>
+			<li>Wood textures are by <a href="http://henriliriani.com/">Henri Liriani</a></li>
+			<li>Other textures by <a href="http://www.noctua-graphics.de/images/download/tex/wood/kork03.jpg">Noctua Graphics</a> and <a href="http://seamlesstextures.net/textures/slightly%20worn%20leather">SeamlessTextures.net</a></li>
+			<li>Several icons are from Mark James's <a href="http://famfamfam.com/lab/icons/silk/">FAMFAMFAM Silk</a> set.</li>
+			</ul>
+			
+			<p>Thanks to the jQuery and jQuery UI teams, Henri, Mark, and the texture folks for making this possible.</p>
+			
+			<p><button class="modal_dismiss">Got it</button></p>
+	
+		</div>
+	</div>
+	
+	<div class="modal" id="error">
+		<div class="content">
+			<h3>Error</h3>
+			
+			<div id="error_message">
+			</div>
+			
+			<p><button type="button" id="error_OK" class="modal_dismiss">OK</button></p>
+			
+		</div>
+	<!--modal--></div>
+<!--modals--></div>
 
 <div id="duedate_pointer">
 	<span class="day">Sun</span>
@@ -142,118 +258,8 @@
 	<span class="date">1</span>
 </div>
 
-<div class="modal" id="import_all_field">
-	<div class="content">
-		<h3>Paste JSON here to import a board:</h3>
-		<p class="warning"><strong>Warning:</strong> this action will destroy all current data, and cannot be undone.  Be careful!</p>
-		<p><textarea id="import_all_JSON" name="import_all_JSON"></textarea></p>		<p class="modal_controls"><a href="#import_all_cancel" id="import_all_cancel" class="modal_dismiss">Cancel</a> <button type="button" id="import_all_OK">Import</button></p>
-	</div>
-</div>
-
-
-<div class="modal" id="import_field">
-	<div class="content">
-		<h3>Paste JSON here to import into <span id="importing_note"></span>:</h3>
-		<p class="instructions">Paste JSON data for an exported note below, and click "Import".</p>
-		<p><textarea id="import_JSON" name="import_JSON"></textarea>
-		<input type="hidden" name="import_note_handle" id="import_note_handle" value="" /></p>
-		<p class="modal_controls"><a href="#import_cancel" id="import_cancel" class="modal_dismiss">Cancel</a> <button type="button" id="import_OK">Import</button></p>
-	</div>
-</div>
-
-<div class="modal" id="export_field">
-	<div class="content">
-		<h3>JSON data for <span id="exported_note"></span>:</h3>
-		<p class="instructions">Copy the content below, and paste it someplace to save it, or into an import window in another instance of Noted.</p>
-		<p><textarea id="export_JSON" name="export_JSON"></textarea>
-		<input type="hidden" name="export_note_handle" id="export_note_handle" value="" /></p>
-		<p class="modal_controls"><button type="button" id="export_cancel" class="modal_dismiss">Done</button></p>
-	</div>
-</div>
-
-<div class="modal" id="welcome">
-	<div class="content">
-		
-		
-		<div class="col instructions">
-			<h3>Welcome to <strong>noted.js</strong></h3>
-			
-			<p><strong>Noted is a note-taking and to-do list app for your browser</strong>.</p>  
-			
-<ul>
-<li><strong>Create notes</strong> and <strong>add items</strong>, which you can <strong>check off as you go</strong>.</li>
-<li><strong>Add due dates</strong> to items to keep track of what needs doing, and <strong>get reminders</strong> when deadlines are approaching or have passed.</li>
-
-<li><strong>Double-click</strong> items or note titles to edit them.</li>
-<li><strong>Drag and drop</strong> notes to sort them.</li>
-<li>Resize notes by dragging from the bottom right corner.</li>
-<li>Drag and drop items, too, within a note, or even between notes.</li>
-<li>Change note colors and more with the <strong>note tools menu</strong>.</li>
-<li>Choose between a few different background textures.</li>
-</ul>
-
-		
-		<!--col.instructions--></div>
-		
-		<div class="col moreinfo">
-			<h4>It&#8217;s All Yours</h4>
-		
-			<p>Noted uses HTML5 local storage to record your data &#8212; <strong>your information is never sent to any server</strong>.  That means it&#8217;s fast and totally private.  But it also mean there&#8217;s no syncing, and <strong>your notes are only available on the specific computer, using the specific browser used to create them</strong>.  </p>
-			
-			<p>To give you something to work with, you can export Noted data as JSON (a lightweight, open data format), which you can re-import in another browser or on another computer.</p>
-			
-			<h4>It&#8217;s Really All Yours</h4>
-			
-			<p>Noted is released as open source software under the <a href="license.txt">MIT License</a>. Coming soon: a zip package so you can easily download and run a local instance, for speedier use.</p>
-		<!--col.moreinfo--></div>
-		
-
-		
-		<p class="modal_controls"><button type="button" id="welcome_OK" class="modal_dismiss">Start Using Noted!</button></p>
-	
-	</div>
-</div>
-
-<div class="modal" id="license">
-	<div class="content">
-		<h3>License</h3>
-
-		<p>Noted is released under the terms of the <a href="license.txt">MIT License</a>. The upshot is, you may use this for pretty much anything, commercial or non-commercial, as long as you retain the copyright notices. Thanks!</p>
-
-		<h4>Credits</h4>
-		
-		<p>Noted makes use of the hard work of many people.</p>
-		
-		<ul>
-		<li>jQuery is the basis for the whole thing.</li>
-		<li>jQuery UI is responsible for all of the dragging, dropping, and sorting that make Noted so much easier to use.</li>
-		<li>Wood textures are by <a href="http://henriliriani.com/">Henri Liriani</a></li>
-		<li>Other textures by <a href="http://www.noctua-graphics.de/images/download/tex/wood/kork03.jpg">Noctua Graphics</a> and <a href="http://seamlesstextures.net/textures/slightly%20worn%20leather">SeamlessTextures.net</a></li>
-		<li>Several icons are from Mark James's <a href="http://famfamfam.com/lab/icons/silk/">FAMFAMFAM Silk</a> set.</li>
-		</ul>
-		
-		<p>Thanks to the jQuery and jQuery UI teams, Henri, Mark, and the texture folks for making this possible.</p>
-		
-		<p><button class="modal_dismiss">Got it</button></p>
-
-	</div>
-</div>
-
-<div class="modal" id="error">
-	<div class="content">
-		<h3>Error</h3>
-		
-		<div id="error_message">
-		</div>
-		
-		<p><button type="button" id="error_OK" class="modal_dismiss">OK</button></p>
-		
-	</div>
-<!--modal--></div>
-
 <div id="modal_screen"></div>
 
-<div id="footer"><span id="made_by">Noted: a <a href="http://www.jongala.com/">jongala.com</a> project.  &bull;  <a href="#license" id="license_trigger">License and credits</a></span></div>
 
 </body>
 </html>
