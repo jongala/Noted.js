@@ -191,15 +191,16 @@ function Noted() {
 
 		note_list.push(note_handle);										// add new note handle to list
 		
-		self.save_local_data('note_list',note_list.join(','));				// save the updated list
-		self.save_local_data('next_note_id',Number(new_note_id) + 1);		// save the updated increment
+		self.save_local_data('note_list', note_list.join(','));				// save the updated list
+		self.save_local_data('next_note_id', Number(new_note_id) + 1);		// save the updated increment
 
-		var default_note_data = serialize_note($('#note_template .note')[0]);
+		var default_note_data = {
+			name:'Click to edit Note title'
+		};
 
-		self.save_local_data('note' + new_note_id,default_note_data); 	// save the note data		
-		
+		self.save_local_data('note' + new_note_id, JSON.stringify(default_note_data)); 	// save the note data	
 
-		build_note(note_handle,JSON.parse(default_note_data));	// build the note
+		build_note(note_handle, default_note_data);	// build the note
 		
 		put_ghost_last();												// move ghost
 		
@@ -215,11 +216,12 @@ function Noted() {
 	 */
 	var build_note = function(note_handle,note_data) {
 		// GET NOTES HTML FROM TEMPLATE, SET ID TO note_handle
-		var $note = $('#note_template .note').clone().attr('id',note_handle);
+		//var $note = $('#note_template .note').clone().attr('id',note_handle);
+		note_data.id = note_handle;
 		
-		console.log('cloned template:' + $note);
+		var $note = $('#note_template').tmpl(note_data);
 		
-		console.log('build_note() raw data:' + note_data);
+		console.log('build_note() raw data:' , note_data);
 		
 		$note = deserialize_note($note,note_data);
 		
@@ -238,10 +240,7 @@ function Noted() {
 	var deserialize_note = function($note,note_data) {
 		
 		note_handle = $note[0].id;
-		
-		// SET NOTE NAME
-		$note.find('.title span').text(note_data['name']);
-		
+				
 		// SET NOTE SIZE, IF SPECIFIED
 		if( note_data['width'] && note_data['height'] ) {
 			$note.find('.note_content').width( note_data['width'] ).height( note_data['height'] );
@@ -257,12 +256,13 @@ function Noted() {
 		//console.log('deserialize_note(): raw items:' + note_data['items']);
 		
 		// PARSE NOTE ITEMS FROM JSON
-		note_items = JSON.parse(note_data['items']);
+		var note_items = (note_data.items)?note_data.items:[];
 		
 		console.log('deserialize_note(): number of note_items:' + note_items.length);
 
 		// LOOP THROUGH NOTE ITEMS AND BUILD LIST
 		// init done count
+		/* /
 		var d = 0;
 		for(i in note_items) {
 			
@@ -289,6 +289,9 @@ function Noted() {
 			
 			$('.items',$note).append($new_item);
 		}
+		/*  */
+		if(typeof note_items == 'string') note_items = JSON.parse(note_items);
+		$('#item_template').tmpl(note_items).appendTo($note.find('.items'));
 		
 		return $note;
 	}
@@ -323,7 +326,7 @@ function Noted() {
 		
 		
 		// BEGIN ITEM SERIALIZATION
-		var items = {};
+		var items = [];
 		
 		// FIND ITEM ELEMENTS
 		$note.find('.items li span').each(function(){
@@ -339,18 +342,21 @@ function Noted() {
 			item_text = $item.text();
 
 			if(item_text.length) { // only save items with text
-				items[item_name] = {};
-				items[item_name]['text'] = escapeQuotes(escapeHtmlEntities(item_text));
-				items[item_name]['done'] = item_is_done;
-				items[item_name]['due'] = item_due;
+				items.push({
+					text:escapeQuotes(escapeHtmlEntities(item_text)),
+					done:item_is_done,
+					due:item_due
+				});
 			}			
 			
 			//console.log(items[item_name]);
 		});
 		
-		item_JSON = JSON.stringify(items);
+		//item_JSON = JSON.stringify(items);
 
-		note_data.items = item_JSON;
+		//note_data.items = item_JSON;
+		
+		note_data.items = items;
 		
 		note_JSON = JSON.stringify(note_data);
 		
@@ -523,22 +529,13 @@ function Noted() {
 
 		var import_data = {};
 		var valid_JSON = true;
-
-
+		
 		try {
 			// try parsing the JSON data
 			import_data = JSON.parse(import_JSON);
-			
-			// try parsing the items, which are serialized within
-			// this is done just to avoid catching parse errors at the note level
-			for( var i in import_data ) {
-				var item_data = JSON.parse(import_data[i].items);
-				console.log(item_data);
-			}
-
+			console.log('import_data OK');
 		} catch(err) {
-			valid_JSON = false;
-			
+			valid_JSON = false;			
 			show_error('<h3><strong>JSON Parse Error</strong></h3><p>Sorry, an error was encountered when processing your data, and your notes could not be imported.</p>');
 			console.log('import_all() : JSON PARSE ERROR');
 			console.log('valid_JSON: ' + valid_JSON);
@@ -570,7 +567,7 @@ function Noted() {
 			self.save_local_data('next_note_id',note_list.length);		
 			self.save_local_data('note_list',note_list.join(','));
 			init_notes();
-		} 		
+		}
 		
 	}
 
@@ -927,8 +924,9 @@ function Noted() {
 		
 		// "Add" button creates a new item in entry mode
 		$('.note div.add').live('click',function(){
-			$new_item = $('#item_template li').clone().addClass('editing');
-			$(this).siblings('.items').append($new_item).find('li:last input.item').focus();
+			$items = $(this).siblings('.items');
+			//$new_item = $('#item_template li').clone().addClass('editing');
+			$new_item = $('#item_template').tmpl({editing:true}).appendTo($items).find('input.item').focus();
 			return false;
 		});
 		
