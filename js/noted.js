@@ -257,6 +257,16 @@ function Noted() {
 		
 		// PARSE NOTE ITEMS FROM JSON
 		var note_items = (note_data.items)?note_data.items:[];
+		if(typeof note_items == 'string') {
+			console.log('---String Items; converting');
+			// convert to array
+			var items_array = [];
+			note_items = JSON.parse(note_items);
+			for(item in note_items) {
+				items_array.push(note_items[item]);
+			}
+			note_items = items_array;
+		}
 		
 		console.log('deserialize_note(): number of note_items:' + note_items.length);
 
@@ -290,7 +300,6 @@ function Noted() {
 			$('.items',$note).append($new_item);
 		}
 		/*  */
-		if(typeof note_items == 'string') note_items = JSON.parse(note_items);
 		$('#item_template').tmpl(note_items).appendTo($note.find('.items'));
 		
 		return $note;
