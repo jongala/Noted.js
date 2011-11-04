@@ -869,10 +869,16 @@ function Noted() {
 	// set item interaction behaviors
 	var init_items = function() {
 		
-		// item completion trigger		
+		// todo item completion trigger		
 		$('.todo .items li .trigger').live('click',function(){
 			do_item($(this).closest('li'));
 			self.show_alerts();
+			return false;
+		});
+		
+		// done item trigger deletes the item
+		$('.done .items li .trigger').live('click',function(){
+			delete_item($(this).closest('li'));
 			return false;
 		});
 		
@@ -905,12 +911,6 @@ function Noted() {
 					this.className='';
 				});
 			},200);
-		});
-		
-		// delete a done item trigger
-		$('.done .items li .trigger').live('click',function(){
-			delete_item($(this).closest('li'));
-			return false;
 		});
 		
 		// Create and focus a text input when an item is double clicked.

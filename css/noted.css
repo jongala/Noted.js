@@ -404,7 +404,9 @@ ul.body_styles.menu {
 	position:relative;
 	padding:20px 0 38px;
 	
+	min-width:200px;
 	width:250px;
+	min-height:20px;
 	height:240px;
 	
 	overflow:visible;
