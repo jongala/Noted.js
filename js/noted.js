@@ -94,8 +94,8 @@ function Noted() {
 	var init_notes = function() {
 		
 		// GET NOTE INDECES	
-		next_note_id = localStorage.next_note_id;
-		note_list = localStorage.note_list;
+		var next_note_id = localStorage.next_note_id;
+		var note_list = localStorage.note_list;
 		
 		if( note_list === undefined || note_list === null || !note_list.length ) {
 
@@ -107,13 +107,13 @@ function Noted() {
 			self.save_local_data('next_note_id',0);	// set first note id number
 			self.create_note();	// create a note with default data
 			
-			firstnote = $('#board li.note')[0];
+			var firstnote = $('#board li.note')[0];
 			//self.save_note(firstnote);
 		
 
 		} else { // INITIALIZE NORMALLY
 			
-			note_list = note_list.split(',');
+			var note_list = note_list.split(',');
 			
 			console.log('init_notes() : found ' + note_list.length + ' notes');
 		
