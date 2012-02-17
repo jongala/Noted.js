@@ -72,8 +72,6 @@ function Noted() {
 		delete localStorage.note_list;
 		delete localStorage.next_note_id;
 		
-		
-		
 		console.log('******nuked******');
 	};
 
@@ -97,19 +95,15 @@ function Noted() {
 		var next_note_id = localStorage.next_note_id;
 		var note_list = localStorage.note_list;
 		
-		if( note_list === undefined || note_list === null || !note_list.length ) {
+		if(!note_list) {
 
 			console.log("==============================\nFirst Launch\n==============================");
 
 			var welcome_timer = setTimeout(function(){$('#welcome_trigger').click()},500);
 
-			self.save_local_data('note_list','');	// give create_note a base list
-			self.save_local_data('next_note_id',0);	// set first note id number
+			self.save_local_data('note_list', '');	// give create_note a base list
+			self.save_local_data('next_note_id', 0);	// set first note id number
 			self.create_note();	// create a note with default data
-			
-			var firstnote = $('#board li.note')[0];
-			//self.save_note(firstnote);
-		
 
 		} else { // INITIALIZE NORMALLY
 			
@@ -119,9 +113,7 @@ function Noted() {
 		
 			// IF NO NOTES FOUND, CREATE ONE
 			if (!note_list.length) {
-				
 				console.log('Creating first note');
-			
 				self.create_note();
 			} else {
 				// LOOP THROUGH ALL NOTES
@@ -131,7 +123,6 @@ function Noted() {
 					
 					if(note_json.length) {
 						// ADD NOTE TO DOM
-						
 						var note_data = {};
 						var valid_JSON = true;
 						try {
@@ -142,8 +133,7 @@ function Noted() {
 							valid_JSON = false;
 						}
 						
-						if(valid_JSON) { build_note(note_list[i],note_data); }
-						
+						if(valid_JSON) { build_note(note_list[i], note_data); }
 					}
 					
 				}
@@ -177,7 +167,7 @@ function Noted() {
 				
 		var note_list = localStorage.note_list;
 
-		if(note_list == undefined || !note_list.length) {
+		if(!note_list) {
 			note_list = [];
 		} else {
 			note_list = note_list.split(',');
@@ -476,13 +466,10 @@ function Noted() {
 			return;
 		}
 
-		console.log('valid_JSON: ' + valid_JSON);
-
 		if(valid_JSON) {
 	
 			self.nuke();
 			var note_list=[];
-			
 			var note_handle,note_id = 0;
 			
 			for(old_handle in import_data) {
@@ -525,7 +512,7 @@ function Noted() {
 			code = event.which;
 		}
 		if(code && code == 13 ) {
-			save_field(this);
+			save_field(event.target);
 		}
 	}
 	
@@ -556,11 +543,11 @@ function Noted() {
 		// save title field on change
 		/* */
 
-		$('.note .title input.titleText').live('blur',save_this_field);
+		$('.note .title input.titleText').live('blur', save_this_field);
 		/* */
 		
 		// save title field on ENTER keypress
-		$('.note .title input.titleText').live('keypress',save_on_enter);
+		$('.note .title input.titleText').live('keypress', save_on_enter);
 		
 		// the todo_trigger activates itself, deactivates the done_trigger sibling, and sets the parent note class
 		$('.note .todo_trigger').live('click',function(){
@@ -957,7 +944,6 @@ function Noted() {
 			var import_JSON = $('#import_all_JSON').val();
 			
 			if($.trim(import_JSON).length){
-				console.log('DOING IMPORT ALL');
 				self.import_all(import_JSON);				
 			}
 			
