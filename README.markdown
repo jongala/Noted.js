@@ -14,3 +14,5 @@ Noted is a twist on the familiar Stickies app in your browser, repurposed for to
 Noted uses HTML5 local storage to record your data — **your information is never sent to any server**. That means it’s fast and totally private. But it also means there’s no syncing, and your notes are only available on the specific computer, using the specific browser used to create them.
 
 To give you something to work with, you can export Noted data as JSON (a lightweight, open data format), which you can re-import in another browser or on another computer.
+
+For a demo, see [noted.jongala.com](http://noted.jongala.com/)
