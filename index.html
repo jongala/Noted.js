@@ -67,9 +67,8 @@
 </div>
 <div id="footer"><span id="made_by">Noted: a <a href="http://www.jongala.com/">jongala.com</a> project.  &bull;  <a href="#license" id="license_trigger">License and credits</a></span></div>
 
-<div class="templates">
+
 	<script id="note_template" type="text/x-jquery-tmpl">
-	<!--<div id="note_template">-->
 		<li class="note todo" id="${id}">
 
 			<div class="note_content">
@@ -118,17 +117,13 @@
 				</div>
 			</div>
 			<input name="date" class="date" />
-			
 		</li>
-	<!--</div>-->
 	</script>
 	
 	
-	<!--<div id="item_template">-->
 	<script id="item_template" type="text/x-jquery-tmpl">
 		<li class="{{if done}}done{{/if}} {{if has_deadline}}due{{/if}} {{if editing}}editing{{/if}}"><a href="#" class="trigger" title="click to complete this item" ></a><span>${text}</span>{{if editing}}<input type="text" class="item" value="" />{{/if}}<a href="#date" class="date_trigger" title="set due date for this item"></a><input type="text" class="due" value="${due}" /><a href="#date" class="date_delete" title="clear due date for this item"><img src="images/date_delete.png" /></a> </li>
 	</script>
-	<!--</div>-->
 	
 	<div id="alert_template">
 		<div class="alert" title="click to complete this item"></div>
@@ -145,7 +140,6 @@
 			</div>
 		</div>
 	</div>
-<!--templates--></div>
 
 <div class="modals">
 	<div class="modal" id="import_all_field">

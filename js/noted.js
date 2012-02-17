@@ -123,8 +123,6 @@ function Noted() {
 				console.log('Creating first note');
 			
 				self.create_note();
-				//console.log('init_notes(): new_note_id:' + new_note_id);
-				
 			} else {
 				// LOOP THROUGH ALL NOTES
 				for (var i=0 ; i < note_list.length ; i++ ) {
@@ -167,14 +165,12 @@ function Noted() {
 
 	/* 
 	 * Create a new note:
-	 * TODO: I don't know what's happening with the return values here.  Some scoping thing?
 	 * TODO: informative error
 	 * This creates a new note, then sets up a dummy note data object with some starting values
 	 * It passes the dummy data object to build_note() to actually create the DOM elements for the note
 	 */
 
 	this.create_note = function() {
-		console.log('create_note() : creating an empty note');
 
 		var create_status = false;		
 		var new_note_id = localStorage.next_note_id;			// get new note id from increment counter
@@ -221,14 +217,11 @@ function Noted() {
 		
 		var $note = $('#note_template').tmpl(note_data);
 		
-		console.log('build_note() raw data:' , note_data);
-		
 		$note = deserialize_note($note,note_data);
 		
 		$('#board').append($note);
 		
 		sortAndDrag($note);
-		
 	}
 	
 	
@@ -253,8 +246,6 @@ function Noted() {
 		// DEFAULT TO "TODO" STATE
 		$note.addClass('todo');
 		
-		//console.log('deserialize_note(): raw items:' + note_data['items']);
-		
 		// PARSE NOTE ITEMS FROM JSON
 		var note_items = (note_data.items)?note_data.items:[];
 		if(typeof note_items == 'string') {
@@ -268,38 +259,6 @@ function Noted() {
 			note_items = items_array;
 		}
 		
-		console.log('deserialize_note(): number of note_items:' + note_items.length);
-
-		// LOOP THROUGH NOTE ITEMS AND BUILD LIST
-		// init done count
-		/* /
-		var d = 0;
-		for(i in note_items) {
-			
-			if(note_items[i]['done']) {
-				item_class = 'done';
-				d++;
-				if(d > max_done) {
-					continue;
-				}
-			} else {
-				item_class = '';
-			}
-			
-			
-			if(note_items[i]['due']) {
-				item_class += ' has_deadline';
-			}
-			
-			$new_item = $('#item_template li').clone();
-			$new_item.addClass(item_class)
-			         .find('span').html(note_items[i]['text']).show()
-			         .siblings('input.due').val( note_items[i]['due'] );
-			$new_item.find('input.item').remove();
-			
-			$('.items',$note).append($new_item);
-		}
-		/*  */
 		$('#item_template').tmpl(note_items).appendTo($note.find('.items'));
 		
 		return $note;
@@ -313,16 +272,11 @@ function Noted() {
 	 * @arg note is a li.note NODE
 	 */
 	var serialize_note = function(note) {
-		$note = $(note);
-		console.log('serialize_note(): note argument: ' + note);
-		
-		console.log('serialize_note(): raw id: ' + note.id);
-		
-		
+		var $note = $(note);
 		var note_data= {};
 		
 		// GET NOTE METADATA
-		note_handle = $note.attr('id');
+		var note_handle = $note.attr('id');
 		note_data.name = $('.title span',$note).text();
 		note_data.color = $note.find('.colors input').val();
 		
@@ -330,25 +284,21 @@ function Noted() {
 		note_data.width = $note_content.width();
 		note_data.height = $note_content.height();
 		
-		console.log('serialize_note(): ' + note_handle);
-		console.log('serialize_note(): note_name:' + note_data.name);
-		
-		
 		// BEGIN ITEM SERIALIZATION
 		var items = [];
 		
 		// FIND ITEM ELEMENTS
 		$note.find('.items li span').each(function(){
-			$item = $(this);
+			var $item = $(this);
 			
 			// BUILD ITEM NAME IN ORDER, FROM JQUERY COLLECTION INDEX
-			item_name = "item" + $('.items li span',$(note)).index(this);
-			item_due = $item.siblings('input.due').val();
+			var item_name = "item" + $('.items li span',$(note)).index(this);
+			var item_due = $item.siblings('input.due').val();
 			
 			// IS ITEM DONE?
-			item_is_done = $item.closest('li').hasClass('done');
+			var item_is_done = $item.closest('li').hasClass('done');
 
-			item_text = $item.text();
+			var item_text = $item.text();
 
 			if(item_text.length) { // only save items with text
 				items.push({
@@ -357,20 +307,11 @@ function Noted() {
 					due:item_due
 				});
 			}			
-			
-			//console.log(items[item_name]);
 		});
 		
-		//item_JSON = JSON.stringify(items);
-
-		//note_data.items = item_JSON;
-		
 		note_data.items = items;
-		
 		note_JSON = JSON.stringify(note_data);
-		
-		return note_JSON
-		
+		return note_JSON;
 	}
 	
 	/* 
@@ -378,11 +319,8 @@ function Noted() {
 	 */
 	this.save_note = function(note) {
 
-		note_handle = note.id;
-		note_JSON = serialize_note(note);
-		
-		console.log('save_note(): raw id: ' + note.id);
-		console.log('save_note(): note JSON: ' + note_JSON);
+		var note_handle = note.id;
+		var note_JSON = serialize_note(note);
 		
 		self.save_local_data(note_handle,note_JSON);
 	}
@@ -392,21 +330,15 @@ function Noted() {
 	 * @arg note is a li.note node
 	 */
 	var save_note_size = function(note) {
-		$note = $(note);
-		
-		note_handle = $note.attr('id');
-		
-		$note_content = $note.find('.note_content');
-		note_content_width = $note_content.width();
-		note_content_height = $note_content.height();
-		
+		var $note = $(note);
+		var note_handle = $note.attr('id');
+		var $note_content = $note.find('.note_content');
 		var note_data = JSON.parse(localStorage[note_handle]);
 		
-		note_data.width = note_content_width;
-		note_data.height = note_content_height;
-	
-		self.save_local_data(note_handle,JSON.stringify(note_data));
+		note_data.width = $note_content.width();
+		note_data.height = $note_content.height();
 
+		self.save_local_data(note_handle,JSON.stringify(note_data));
 	}
 	
 	/*
@@ -414,14 +346,11 @@ function Noted() {
 	 * @arg note is a li.note node
 	 */
 	var save_note_color = function(note) {
-		$note = $(note);
-		
-		note_handle = $note.attr('id');
-
+		var $note = $(note);
+		var note_handle = $note.attr('id');
 		var note_data = JSON.parse(localStorage[note_handle]);
 		
 		note_data.color = $note.find('.colors input').val();		
-		
 		self.save_local_data(note_handle,JSON.stringify(note_data));
 	}
 	
@@ -429,8 +358,7 @@ function Noted() {
 	 * Saves the order of the notes
 	 */
 	var save_note_order = function() {
-		
-		note_handles = [];
+		var note_handles = [];
 		
 		$('#board li.note').each(function(){
 			note_handles.push(this.id);
@@ -450,7 +378,7 @@ function Noted() {
 	 * @arg item should be a <li> element
 	 */
 	var do_item = function(item) {
-		$item = $(item);
+		var $item = $(item);
 		$item.addClass('done');
 		self.save_note($item.parents('.note')[0]);
 	}
@@ -460,8 +388,8 @@ function Noted() {
 	 * @arg item should be a <li> element
 	 */
 	var delete_item = function(item) {
-		$item = $(item);
-		note = $item.parents('.note')[0];
+		var $item = $(item);
+		var note = $item.parents('.note')[0];
 		$item.remove();
 		self.save_note(note);
 	}
@@ -493,17 +421,16 @@ function Noted() {
 	 * @arg note should be li.note NODE
 	 */
 	this.delete_note = function(note) {
-		$note = $(note);
-		note_handle = note.id;
-		note_title = $note.find('.title span').text();
+		var $note = $(note);
+		var note_handle = note.id;
+		var note_title = $note.find('.title span').text();
+		var note_list = localStorage.note_list.split(',');
 
 		console.log('deleting note ' + note_handle);
 
 		$('#' + note_handle).remove();				// delete DOM nodes
 		delete localStorage[note_handle];			// delete data
 
-		var note_list = localStorage.note_list.split(',');
-		
 		for(var i =0 ; i<note_list.length ; i++) {	// delete from note list
 			if(note_list[i] == note_handle) {
 				note_list.splice(i,1);
@@ -511,7 +438,6 @@ function Noted() {
 		}
 		
 		self.save_local_data('note_list',note_list.join(','));
-
 	}
 
 
@@ -535,7 +461,6 @@ function Noted() {
 	 * Imports a store of all notes, as produced by export_all
 	 */
 	this.import_all = function(import_JSON) {
-
 		var import_data = {};
 		var valid_JSON = true;
 		
@@ -610,9 +535,6 @@ function Noted() {
 	var save_this_field = function(event){
 		save_field(this);
 	}
-	
-	
-	
 	
 
 	/* SET NOTE INTERACTION BEHAVIORS 
@@ -942,12 +864,12 @@ function Noted() {
 		
 		// Date trigger
 		$('.note .items li a.date_trigger').live('click',function(){
-			$trigger = $(this);
-			$note = $trigger.closest('.note');
-			item_date = $trigger.siblings('input.due').val();
+			var $trigger = $(this);
+			var $note = $trigger.closest('.note');
+			var item_date = $trigger.siblings('input.due').val();
 			
-			trigger_left = $trigger.offset().left - $note.offset().left;
-			trigger_top = $trigger.offset().top - $note.offset().top;
+			var trigger_left = $trigger.offset().left - $note.offset().left;
+			var trigger_top = $trigger.offset().top - $note.offset().top;
 			$(this).closest('li').addClass('datepicking').closest('.note').find('input.date').val(item_date).css({top:trigger_top,left:trigger_left}).datepicker('show');	
 
 			return false;
@@ -995,7 +917,7 @@ function Noted() {
 		});
 		
 		$('a#force').click(function(){
-			query =  prompt('Enter Query');
+			var query =  prompt('Enter Query');
 			self.force_query(query);
 			return false;
 		});
@@ -1008,7 +930,7 @@ function Noted() {
 		
 		// main menu trigger to export whole board
 		$('a#export_all').click(function(){
-			all_JSON = self.export_all();
+			var all_JSON = self.export_all();
 			$('#exported_note').text('everything');
 			$('#export_JSON').val(all_JSON);
 			self.show_modal('#export_field',{
@@ -1021,7 +943,6 @@ function Noted() {
 		
 		// main menu trigger to import whole board
 		$('a#import_all').click(function(){
-
 			self.show_modal('#import_all_field',{
 				'callback':function(){
 					$('#import_all_JSON').focus();
@@ -1033,7 +954,7 @@ function Noted() {
 		// modal button to do whole board import
 		$('#import_all_OK').click(function(){
 			console.log('IMPORTING ALL');
-			import_JSON = $('#import_all_JSON').val();
+			var import_JSON = $('#import_all_JSON').val();
 			
 			if($.trim(import_JSON).length){
 				console.log('DOING IMPORT ALL');
@@ -1047,17 +968,15 @@ function Noted() {
 		
 		// styles menu
 		$('.body_styles a').click(function(){
-			body_class_name = this.href.slice(this.href.indexOf('#') + 1);
+			var body_class_name = this.href.slice(this.href.indexOf('#') + 1);
 			console.log('body styles: ' + body_class_name);
-			//$('body')[0].className = '';
-			//$('body').addClass(body_class_name);
 			$('body')[0].className = body_class_name;
 			self.save_local_data('body_class',body_class_name);
 			return false;
 		});
 		
 		$('#alerts_tab').click(function(){
-			$content = $('#alerts .alerts_content');
+			var $content = $('#alerts .alerts_content');
 			if($content.is(':hidden')) {
 				$content.slideDown();
 			} else {
@@ -1090,13 +1009,12 @@ function Noted() {
 
 	// LOADS GENERAL APP PREFS LIKE BODY STYLES, DISPLAY PREFS, ETC.
 	load_defaults = function(){
-		body_class = localStorage.getItem('body_class');
+		var body_class = localStorage.getItem('body_class');
 		if(body_class == undefined || !body_class.length) {
 			body_class = 'slate';
 		}
 
 		$('body').addClass(body_class);
-
 	}
 	
 	
@@ -1199,8 +1117,7 @@ function Noted() {
 
 	// accepts input node as argument
 	var save_field = function(input_node) {
-		$input = $(input_node);
-		
+		var $input = $(input_node);
 		var item_id = input_node.id;
 		var item_text = input_node.value;
 
@@ -1244,7 +1161,7 @@ function Noted() {
 	this.cancelAllEdits = function() {
 		//$('.items li.editing').removeClass('editing').find('span').show().end().find('input.item').remove();
 		$('.items li.editing').each(function(){
-			$item = $(this);
+			var $item = $(this);
 			if( !($.trim($item.find('span').text()).length || $.trim($item.find('input.item').val()).length) ) {
 				$item.remove();
 			} else {
@@ -1270,7 +1187,7 @@ function Noted() {
 	 */
 	var escapeHtmlEntities = function(text) {
 		return text.replace(/[\u00A0-\u2666<>\&]/g, function(c) { 
-			s = escapeHtmlEntities.entityTable[c.charCodeAt(0)] || '#'+c.charCodeAt(0);
+			var s = escapeHtmlEntities.entityTable[c.charCodeAt(0)] || '#'+c.charCodeAt(0);
 			return '&' + s + ';'; 
 		});
 	};
@@ -1343,9 +1260,7 @@ function Noted() {
 	 * @arg $note is a jQuery note collection
 	 */
 	var sortAndDrag = function($note){
-			
-		$note;
-		
+
 		// Make notes resizable
 		// save when done
 		$note.find('.note_content').resizable(
@@ -1430,23 +1345,22 @@ function Noted() {
 		$('.items .due_today').removeClass('due_today');		// remove item classes
 		$('.items .overdue').removeClass('overdue');
 	
-		now = new Date();
+		var now = new Date();
 		/* 
 		var due_month = short_months[due_date.getMonth()];
 			var due_day = due_date.getDate();
 		*/
 		
-		nowDisplay = short_months[now.getMonth()] + "." + now.getDate();
+		var nowDisplay = short_months[now.getMonth()] + "." + now.getDate();
 		$('#todayDisplay').text(nowDisplay);
 		
-		today = Date.parse((now.getMonth() + 1) + '/' + now.getDate() + '/' + now.getFullYear());
-		console.log('today: ' + today);
+		var today = Date.parse((now.getMonth() + 1) + '/' + now.getDate() + '/' + now.getFullYear());
 		var auto_open = false;
 		
 		
 		
 		$('li.note').each(function(){
-			note_title = truncate_string($(this).find('.title').text());
+			var note_title = truncate_string($(this).find('.title').text());
 			
 			$('.items li:not(.done)',this).each(function(){		// loop through all items
 				var $item = $(this);
@@ -1464,12 +1378,9 @@ function Noted() {
 							});
 					$alert.html('<strong>' + note_title + '</strong>: ' + $(this).find('span').text());
 					
-					duedate = Date.parse(due);
-		
-					lead = Math.floor((duedate - today)/86400000);	// lead time in days
-					
-					console.log(lead);
-	
+					var duedate = Date.parse(due);
+					var lead = Math.floor((duedate - today)/86400000);	// lead time in days
+
 					if ( lead == 0 ) {
 						$('#alerts .due').append($alert);
 						$item.addClass('due_today');
@@ -1482,7 +1393,6 @@ function Noted() {
 					} else if ( lead <= 7 ) {  //   one week lead
 						$('#alerts .coming').append($alert);
 					}
-					
 					
 				}
 			});
@@ -1537,12 +1447,6 @@ function Noted() {
 		
 	}
 }
-
-
-
-
-
-
 
 $(document).ready(function(){
 	
