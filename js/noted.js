@@ -9,8 +9,6 @@
  *
  */
 
-
-
 if (!console) {
 	var console = {log: function(msg) {}};
 }
@@ -19,6 +17,14 @@ if (!console) {
 function Noted() {
 	
 	var self = this;
+	this.board = {};
+	var default_note_data = {
+		name:'Click to edit Note title',
+		color: null,
+		width: null,
+		height: null,
+		items: null
+	};
 
 	/* OVERVIEW:
 	
@@ -67,6 +73,7 @@ function Noted() {
 	this.nuke = function(){
 		// destroy all notes
 		$('#board .note').remove();
+		this.board = {};
 		
 		// clear note_list
 		delete localStorage.note_list;
@@ -95,7 +102,7 @@ function Noted() {
 		var next_note_id = localStorage.next_note_id;
 		var note_list = localStorage.note_list;
 		
-		if(!note_list) {
+		if(!note_list && !note_list.length) {
 
 			console.log("==============================\nFirst Launch\n==============================");
 
@@ -111,33 +118,28 @@ function Noted() {
 			
 			console.log('init_notes() : found ' + note_list.length + ' notes');
 		
-			// IF NO NOTES FOUND, CREATE ONE
-			if (!note_list.length) {
-				console.log('Creating first note');
-				self.create_note();
-			} else {
-				// LOOP THROUGH ALL NOTES
-				for (var i=0 ; i < note_list.length ; i++ ) {
-					
-					var note_json = localStorage.getItem(note_list[i]);
-					
-					if(note_json.length) {
-						// ADD NOTE TO DOM
-						var note_data = {};
-						var valid_JSON = true;
-						try {
-							note_data = JSON.parse(note_json);
-						} catch(err) {
-							show_error('<h3><strong>JSON Parse Error</strong></h3><p>Sorry, an error was encountered when processing your data, and your notes could not be loaded.</p>');
-							console.log('init_notes() : JSON PARSE ERROR');
-							valid_JSON = false;
-						}
-						
-						if(valid_JSON) { build_note(note_list[i], note_data); }
+			// LOOP THROUGH ALL NOTES
+			for (var i=0 ; i < note_list.length ; i++ ) {
+				var note_id = note_list[i];
+				var note_json = localStorage.getItem(note_id);
+				
+				if(note_json.length) {
+					// ADD NOTE TO DOM
+					var note_data = {};
+					var valid_JSON = true;
+					try {
+						note_data = JSON.parse(note_json);
+					} catch(err) {
+						show_error('<h3><strong>JSON Parse Error</strong></h3><p>Sorry, an error was encountered when processing your data, and your notes could not be loaded.</p>');
+						console.log('init_notes() : JSON PARSE ERROR');
+						return;
 					}
 					
+					self.board[note_id] = new Note(note_id, note_data).render();
+
 				}
-			}
+				
+			}	
 
 		}
 		
@@ -153,91 +155,43 @@ function Noted() {
 
 ======================================================================== */
 
-	/* 
-	 * Create a new note:
-	 * TODO: informative error
-	 * This creates a new note, then sets up a dummy note data object with some starting values
-	 * It passes the dummy data object to build_note() to actually create the DOM elements for the note
-	 */
-
-	this.create_note = function() {
-
-		var create_status = false;		
-		var new_note_id = localStorage.next_note_id;			// get new note id from increment counter
-				
-		var note_list = localStorage.note_list;
-
-		if(!note_list) {
-			note_list = [];
-		} else {
-			note_list = note_list.split(',');
-		}
-
-		var note_handle = 'note' + new_note_id;								// note handle will be note node's ID
-
-		note_list.push(note_handle);										// add new note handle to list
-		
-		self.save_local_data('note_list', note_list.join(','));				// save the updated list
-		self.save_local_data('next_note_id', Number(new_note_id) + 1);		// save the updated increment
-
-		var default_note_data = {
-			name:'Click to edit Note title'
+	var Note = function(note_id, data) {
+		this.id = note_id;
+		this.data = {
+			name : data.name,
+			color : data.color,
+			width : data.width,
+			height : data.height,
+			items : data.items
 		};
-
-		self.save_local_data('note' + new_note_id, JSON.stringify(default_note_data)); 	// save the note data	
-
-		build_note(note_handle, default_note_data);	// build the note
-		
-		put_ghost_last();												// move ghost
-		
-		return new_note_id;
-		
-	};
-	
-
-	/* 
-	 * Builds a note in the DOM, given note data
-	 * @arg note_handle = 'note' + id number
-	 * @arg note_data = note data object, parsed from the stringified JSON stored in localStorage
-	 */
-	var build_note = function(note_handle,note_data) {
-		// GET NOTES HTML FROM TEMPLATE, SET ID TO note_handle
-		//var $note = $('#note_template .note').clone().attr('id',note_handle);
-		note_data.id = note_handle;
-		
-		var $note = $('#note_template').tmpl(note_data);
-		
-		$note = deserialize_note($note,note_data);
-		
-		$('#board').append($note);
-		
-		sortAndDrag($note);
+				
+		return this;
 	}
-	
-	
-	/* 
-	 * Takes a 
-	 * @arg $note = jQuery object containing a note node
-	 * @arg note_data = note data object, parsed from the stringified JSON stored in localStorage
-	 */
-	var deserialize_note = function($note,note_data) {
-		
-		note_handle = $note[0].id;
+
+	Note.prototype.render = function() {
+		var $note = this.$note = $('#note_template').tmpl( $.extend(this.data, {id:this.id}) );
+
+		// replace the existing version of this note, or append to board
+		if($('#' + this.id, '#board').length) {
+			$('#' + this.id, '#board').replaceWith($note);
+		} else {
+			$note.appendTo('#board');	
+		}
 				
 		// SET NOTE SIZE, IF SPECIFIED
-		if( note_data['width'] && note_data['height'] ) {
-			$note.find('.note_content').width( note_data['width'] ).height( note_data['height'] );
+		if( this.data.width && this.data.height ) {
+			$note.find('.note_content').width( this.data.width ).height( this.data.height );
 		}
 		
 		// SET NOTE COLOR
-		$note.find('.note_content, .controls > a.done_trigger, .controls > a.todo_trigger').css('backgroundColor',note_data['color']);		// change actual color
-		$note.find('.colors .color_input input').val(note_data['color']);			// set val in the color selector
+		$note.find('.note_content, .controls > a.done_trigger, .controls > a.todo_trigger').css('backgroundColor',this.data.color);		// change actual color
+		$note.find('.colors .color_input input').val(this.data.color);			// set val in the color selector
 		
 		// DEFAULT TO "TODO" STATE
 		$note.addClass('todo');
 		
 		// PARSE NOTE ITEMS FROM JSON
-		var note_items = (note_data.items)?note_data.items:[];
+		var note_items = (this.data.items && this.data.items.length) ? this.data.items : [];
 		if(typeof note_items == 'string') {
 			console.log('---String Items; converting');
 			// convert to array
@@ -250,24 +204,19 @@ function Noted() {
 		}
 		
 		$('#item_template').tmpl(note_items).appendTo($note.find('.items'));
+
+		sortAndDrag($note);
 		
-		return $note;
+		return this;			
 	}
 
-	/* 
-	 * Fetches note data (ID, etc.)
-	 * Serializes the items by reading the DOM into an object, and feeding to JSON.stringify
-	 * Each item's value is another object, which contains the "text" member, 
-	 * as well as others like "due" and "done"
-	 * @arg note is a li.note NODE
-	 */
-	var serialize_note = function(note) {
-		var $note = $(note);
-		var note_data= {};
+	Note.prototype.sync_from_DOM = function() {
+		var note_data= {},
+			$note = this.$note;
 		
 		// GET NOTE METADATA
-		var note_handle = $note.attr('id');
-		note_data.name = $('.title span',$note).text();
+
+		note_data.name = $('.title span', $note).text();
 		note_data.color = $note.find('.colors input').val();
 		
 		$note_content = $note.find('.note_content');
@@ -281,8 +230,6 @@ function Noted() {
 		$note.find('.items li span').each(function(){
 			var $item = $(this);
 			
-			// BUILD ITEM NAME IN ORDER, FROM JQUERY COLLECTION INDEX
-			var item_name = "item" + $('.items li span',$(note)).index(this);
 			var item_due = $item.siblings('input.due').val();
 			
 			// IS ITEM DONE?
@@ -300,64 +247,113 @@ function Noted() {
 		});
 		
 		note_data.items = items;
-		note_JSON = JSON.stringify(note_data);
-		return note_JSON;
+		this.data = note_data;
+		
 	}
-	
+
+	Note.prototype.serialize = function() {
+		return JSON.stringify(this.data);
+	}
+
+	Note.prototype.save = function() {
+		console.log('saving ' + this.id, this.serialize());
+		self.save_local_data(this.id, this.serialize());
+	}
+
+	Note.prototype.save_color = function() {
+		this.data.color = this.$note.find('.colors input').val();
+		this.save();
+	}
+
+	Note.prototype.save_size = function() {
+		var $content = this.$note.find('.note_content');
+		this.data.width = $content.width();
+		this.data.height = $content.height();
+		this.save();
+	}
+
+	Note.prototype.save_items = function() {
+		// BEGIN ITEM SERIALIZATION
+		var items = [];
+		
+		// FIND ITEM ELEMENTS
+		this.$note.find('.items li span').each(function(){
+			var $item = $(this);
+			
+			var item_due = $item.siblings('input.due').val();
+			
+			// IS ITEM DONE?
+			var item_is_done = $item.closest('li').hasClass('done');
+
+			var item_text = $item.text();
+
+			if(item_text.length) { // only save items with text
+				items.push({
+					text:escapeQuotes(escapeHtmlEntities(item_text)),
+					done:item_is_done,
+					due:item_due
+				});
+			}			
+		});
+		
+		this.data.items = items;
+		this.save();
+	}
+
+	Note.prototype.save_name = function() {
+		this.data.name = this.$note.find('.title').text().trim();
+		this.save();
+	}
+
+	Note.prototype.import = function(data) {
+		this.data = data;
+		this.render();
+		this.save();
+	}
+
 	/* 
-	 * Takes note, fetches JSON via serialize_note(), and saves it
+	 * Create a new note:
+	 * TODO: informative error
+	 * This creates a new note, then sets up a dummy note data object with some starting values
+	 * It passes the dummy data object to build_note() to actually create the DOM elements for the note
 	 */
-	this.save_note = function(note) {
 
-		var note_handle = note.id;
-		var note_JSON = serialize_note(note);
-		
-		self.save_local_data(note_handle,note_JSON);
-	}
-	
-	/*
-	 * Saves a note's size
-	 * @arg note is a li.note node
-	 */
-	var save_note_size = function(note) {
-		var $note = $(note);
-		var note_handle = $note.attr('id');
-		var $note_content = $note.find('.note_content');
-		var note_data = JSON.parse(localStorage[note_handle]);
-		
-		note_data.width = $note_content.width();
-		note_data.height = $note_content.height();
+	this.create_note = function() {
+		var new_note_id = localStorage.next_note_id;			// get new note id from increment counter
+		var note_list = localStorage.note_list;
 
-		self.save_local_data(note_handle,JSON.stringify(note_data));
-	}
-	
-	/*
-	 * Saves a note's color
-	 * @arg note is a li.note node
-	 */
-	var save_note_color = function(note) {
-		var $note = $(note);
-		var note_handle = $note.attr('id');
-		var note_data = JSON.parse(localStorage[note_handle]);
+		if(!note_list) {
+			note_list = [];
+		} else {
+			note_list = note_list.split(',');
+		}
+
+		var note_handle = 'note' + new_note_id;								// note handle will be note node's ID
+
+		note_list.push(note_handle);										// add new note handle to list
 		
-		note_data.color = $note.find('.colors input').val();		
-		self.save_local_data(note_handle,JSON.stringify(note_data));
-	}
+		self.save_local_data('note_list', note_list.join(','));				// save the updated list
+		self.save_local_data('next_note_id', Number(new_note_id) + 1);		// save the updated increment
+		self.save_local_data(note_handle, JSON.stringify(default_note_data)); 	// save the note data	
+
+		self.board[note_handle] = new Note(note_handle, default_note_data).render(); 
+
+		put_ghost_last();												// move ghost
+		
+		return note_handle;		
+	};
+
+	
 	
 	/*
 	 * Saves the order of the notes
 	 */
 	var save_note_order = function() {
 		var note_handles = [];
-		
 		$('#board li.note').each(function(){
 			note_handles.push(this.id);
-		});
-		
+		});		
 		self.save_local_data('note_list',note_handles.join(','));
-		
-		console.log("new order: " + note_handles);
-		
 		put_ghost_last();
 	}
 	 
@@ -370,7 +366,7 @@ function Noted() {
 	var do_item = function(item) {
 		var $item = $(item);
 		$item.addClass('done');
-		self.save_note($item.parents('.note')[0]);
+		self.board[$item.parents('.note').attr('id')].save_items();
 	}
 
 	/* 
@@ -379,9 +375,9 @@ function Noted() {
 	 */
 	var delete_item = function(item) {
 		var $item = $(item);
-		var note = $item.parents('.note')[0];
+		var note_id = $item.parents('.note').attr('id');
 		$item.remove();
-		self.save_note(note);
+		self.board[note_id].save_items();
 	}
 	
 	/* 
@@ -390,11 +386,13 @@ function Noted() {
 	 */
 	this.confirm_delete_note = function(note) {
 		var $note = $(note),
-				note_handle = note.id,
-				note_title = $note.find('.title span').text(),
-				$confirmation_panel = $note.find('.delete_note_confirmation');
+			note_handle = note.id,
+			note_title = $note.find('.title span').text(),
+			$confirmation_panel = $note.find('.delete_note_confirmation');
 				
-		$note.find('.overlay').slideUp('fast',function(){$note.find('.controls .open').removeClass('open')});
+		$note.find('.overlay').slideUp('fast', function(){
+			$note.find('.controls .open').removeClass('open')
+		});
 		
 		if (!$confirmation_panel.length) {
 		  $confirmation_panel = $('#delete_note_confirmation_template .delete_note_confirmation').clone();
@@ -423,11 +421,11 @@ function Noted() {
 
 		for(var i =0 ; i<note_list.length ; i++) {	// delete from note list
 			if(note_list[i] == note_handle) {
-				note_list.splice(i,1);
+				note_list.splice(i, 1);
 			}
 		}
 		
-		self.save_local_data('note_list',note_list.join(','));
+		self.save_local_data('note_list', note_list.join(','));
 	}
 
 
@@ -442,7 +440,7 @@ function Noted() {
 		for(var i=0; i<note_list.length ; i++) {
 			note_JSON += "\n" + '"' + note_list[i] + '"' + ':' + localStorage[note_list[i]] + ',';
 		}
-		note_JSON = note_JSON.slice(0,-1);
+		note_JSON = note_JSON.slice(0,-1); // trim trailing comma
 		note_JSON += "\n}"
 		return note_JSON;
 	}
@@ -632,7 +630,8 @@ function Noted() {
 			var colorval = $(this).val();
 			$(this).parents('.note').find('.note_content, .controls > a.done_trigger, .controls > a.todo_trigger').css('backgroundColor',colorval) 	// set color
 			.end().end().parents('.colors').slideUp('fast');								// close the panel
-			save_note_color($(this).parents('.note')[0]);								// save it
+			//save_note_color($(this).parents('.note')[0]);								// save it
+			self.board[$(this).parents('.note').attr('id')].save_color();
 		});
 		
 		// click on color squares to set the color input value to the hex code, then trigger change event, which does save
@@ -704,25 +703,18 @@ function Noted() {
 			var $note = $('#' + $('#import_note_handle').val());
 
 			if($.trim(import_JSON).length){
-			
-				var valid_JSON = true;
 				var note_data = {};
 				
 				try {
 					note_data = JSON.parse(import_JSON);
 				} catch(e) {
-					valid_JSON = false;
 					show_error('<h3><strong>JSON Parse Error</strong></h3><p>Sorry, an error was encountered when processing your data, and your note data could not be loaded.</p>');
 					console.log('import one note: JSON PARSE ERROR');
+					return;
 				}
 				
-				if(valid_JSON) {
-					$note.find('ul.items').empty();
-					deserialize_note($note,note_data);
-					self.save_note($note[0]);		
-				}
-				
-				
+				var note = self.board[$note.attr('id')];
+				note.import(note_data);
 			}
 			self.clear_modals();
 			$note.find('div.tools a.close').click();
@@ -737,7 +729,7 @@ function Noted() {
 		// export button
 		$('.note .tools a.export_trigger').live('click',function(){
 			var $note = $(this).closest('.note');
-			var note_JSON = serialize_note($note[0]);
+			var note_JSON = self.board[$note.attr('id')].serialize();
 			$('#export_note_handle').val( $note[0].id );
 			$('#exported_note').text($(this).closest('.note').find('.title span').text());
 			$('#export_JSON').val(note_JSON);
@@ -865,8 +857,7 @@ function Noted() {
 		// Date delete trigger
 		$('a.date_delete').live('click',function(){
 			$(this).closest('li').removeClass('has_deadline').find('input.due').val('');
-			self.save_note($(this).closest('.note')[0]);
-			
+			self.board[$(this).closest('.note').attr('id')].save_items();
 			self.show_alerts();
 			$('#duedate_pointer').hide();
 			return false;
@@ -1105,19 +1096,24 @@ function Noted() {
 	var save_field = function(input_node) {
 		var $input = $(input_node);
 		var item_id = input_node.id;
-		var item_text = input_node.value;
+		var item_text = $input.val().trim();
+		var note;
 
 		console.log('save_field(): saving: "' + item_text + '"');
 		
 		// IF WE HAVE TEXT,
 		// update and show span, remove input, save note.
-		if(item_text.length) {										
+		if(item_text.length) {
+			note = self.board[ $input.parents('.note').attr('id') ];
 			$input.closest('li').removeClass('editing');
 			$input.siblings('span').text(item_text).show().end().hide();
 			
-			//save_local_data(item_id,item_text);
-			self.save_note( $input.parents('.note')[0] );
-			
+			if($input.hasClass('titleText')) {
+				note.save_name();
+			} else if ($input.hasClass('item')) {
+				note.save_items();	
+			}
+
 			$input.remove();
 		
 		
@@ -1160,7 +1156,8 @@ function Noted() {
 	var snap_to_size = function() {
 		$('#board li.note').each(function(){
 			$(this).find('.note_content').css({width:250,height:240});
-			save_note_size(this);
+			//save_note_size(this);
+			self.board[this.id].save_size();
 		});
 	}
 
@@ -1254,7 +1251,8 @@ function Noted() {
 				handles: 'e, se',
 				stop: function(event,ui) {
 					if ( (ui.originalSize.width !== ui.size.width) || (ui.originalSize.height !== ui.size.height) ) {
-						save_note_size( $(this).closest('.note')[0] );
+						//save_note_size( $(this).closest('.note')[0] );
+						self.board[$(this).closest('.note').attr('id')].save_size();
 					}
 				}
 			}
@@ -1267,10 +1265,10 @@ function Noted() {
 				distance:3,
 				update:function(event,ui) {
 					list = $(ui.item).closest('.note')[0];
-					self.save_note(list);
+					self.board[list.id].save_items();
 					if (ui.sender) {
 						oldlist = $(ui.sender).closest('.note')[0];
-						self.save_note(oldlist);
+						self.board[oldlist.id].save_items();
 					}
 				},
 				start:function(event,ui) {
@@ -1291,8 +1289,7 @@ function Noted() {
 				
 				if(dateText.length) {
 					$picking_item.find('input.due').val(dateText).end().addClass('has_deadline');
-					self.save_note( $note[0] );
-					
+					self.board[ $note.attr('id') ].save_items();
 					self.show_alerts();
 				} else {
 					console.log('no date selected');
