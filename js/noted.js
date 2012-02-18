@@ -202,7 +202,7 @@ function Noted() {
 			}
 			note_items = items_array;
 		}
-		
+
 		$('#item_template').tmpl(note_items).appendTo($note.find('.items'));
 
 		sortAndDrag($note);
@@ -835,7 +835,6 @@ function Noted() {
 		// "Add" button creates a new item in entry mode
 		$('.note div.add').live('click',function(){
 			$items = $(this).siblings('.items');
-			//$new_item = $('#item_template li').clone().addClass('editing');
 			$new_item = $('#item_template').tmpl({editing:true}).appendTo($items).find('input.item').focus();
 			return false;
 		});

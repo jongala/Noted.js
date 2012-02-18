@@ -117,7 +117,7 @@
 	
 	
 	<script id="item_template" type="text/x-jquery-tmpl">
-		<li class="{{if done}}done{{/if}} {{if has_deadline}}due{{/if}} {{if editing}}editing{{/if}}"><a href="#" class="trigger" title="click to complete this item" ></a><span>${text}</span>{{if editing}}<input type="text" class="item" value="" />{{/if}}<a href="#date" class="date_trigger" title="set due date for this item"></a><input type="text" class="due" value="${due}" /><a href="#date" class="date_delete" title="clear due date for this item"><img src="images/date_delete.png" /></a> </li>
+		<li class="{{if done}}done{{/if}} {{if due}}has_deadline{{/if}} {{if editing}}editing{{/if}}"><a href="#" class="trigger" title="click to complete this item" ></a><span>${text}</span>{{if editing}}<input type="text" class="item" value="" />{{/if}}<a href="#date" class="date_trigger" title="set due date for this item"></a><input type="text" class="due" value="${due}" /><a href="#date" class="date_delete" title="clear due date for this item"><img src="images/date_delete.png" /></a> </li>
 	</script>
 	
 	<div id="alert_template">
