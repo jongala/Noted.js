@@ -1430,9 +1430,3 @@ function Noted() {
 		
 	}
 }
-
-$(document).ready(function(){
-	
-	nd = new Noted();
-	
-});
