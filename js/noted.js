@@ -139,14 +139,20 @@ function Noted() {
 
 				}
 				
-			}	
+			}
+
+			// delay the slow sortAndDrag call
+			var sort_timer = setTimeout(function(){
+				sortAndDrag($('#board .note'));
+			}, 500);
+
 
 		}
 		
 		// run this either way
 		self.show_alerts();
 		put_ghost_last();
-
+		
 	}; // init_notes
 
 /* ========================================================================
@@ -204,8 +210,6 @@ function Noted() {
 		}
 
 		$('#item_template').tmpl(note_items).appendTo($note.find('.items'));
-
-		sortAndDrag($note);
 		
 		return this;			
 	}
@@ -339,6 +343,7 @@ function Noted() {
 		self.board[note_handle] = new Note(note_handle, default_note_data).render(); 
 
 		put_ghost_last();												// move ghost
+		sortAndDrag($('#' + note_handle));								// resizing and item sorting
 		
 		return note_handle;		
 	};
