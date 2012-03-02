@@ -143,7 +143,10 @@ function Noted() {
 
 			// delay the slow sortAndDrag call
 			var sort_timer = setTimeout(function(){
+				var tstart = new Date().getTime();
 				sortAndDrag($('#board .note'));
+				var tend = new Date().getTime();
+				console.log('sorting took ', (tend - tstart)/1000);
 			}, 500);
 
 
