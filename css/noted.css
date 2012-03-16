@@ -1146,3 +1146,40 @@ button {
     font-style: normal;
 }
 
+/* Scrollbars
+----------------------------------------- */
+
+body ::-webkit-scrollbar{
+    width:10px;
+    height:10px;
+    padding:0 2px;
+    margin:3px 0;
+}
+
+body ::-webkit-scrollbar-track {
+	background:rgba(0, 0, 0, 0.07);
+}
+
+body ::-webkit-scrollbar-track:hover{
+    background:rgba(0, 0, 0, 0.1);
+}
+body ::-webkit-resizer{
+    .border-radius(5px);
+    background: rgba(0, 0, 0, 0.1);
+    border:1px solid rgba(0, 0, 0, 0.5);
+    border-width:0 1px 1px 0;
+}
+
+body ::-webkit-scrollbar-thumb{
+    min-height:0.8em;
+    min-width:0.8em;
+    background-color: #aaa;
+    background:rgba(0, 0, 0, 0.13);
+}
+
+body ::-webkit-scrollbar-thumb:hover{
+    background-color: #888;
+}
+body ::-webkit-scrollbar-thumb:active{
+    background-color:#666;
+}
