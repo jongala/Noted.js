@@ -36,7 +36,6 @@ function Noted() {
 	
 	 */
 
-	var gutter = 20; 		// gutter between newly created notes
 	var max_done = 15; 
 	 
 	 /* 
@@ -181,8 +180,8 @@ function Noted() {
 		var $note = this.$note = $('#note_template').tmpl( $.extend(this.data, {id:this.id}) );
 
 		// replace the existing version of this note, or append to board
-		if($('#' + this.id, '#board').length) {
-			$('#' + this.id, '#board').replaceWith($note);
+		if($('#' + this.id).length) {
+			$('#' + this.id).replaceWith($note);
 		} else {
 			$note.appendTo('#board');	
 		}
@@ -215,48 +214,7 @@ function Noted() {
 		$('#item_template').tmpl(note_items).appendTo($note.find('.items'));
 		
 		return this;			
-	}
-
-	Note.prototype.sync_from_DOM = function() {
-		var note_data= {},
-			$note = this.$note;
-		
-		// GET NOTE METADATA
-
-		note_data.name = $('.title span', $note).text();
-		note_data.color = $note.find('.colors input').val();
-		
-		$note_content = $note.find('.note_content');
-		note_data.width = $note_content.width();
-		note_data.height = $note_content.height();
-		
-		// BEGIN ITEM SERIALIZATION
-		var items = [];
-		
-		// FIND ITEM ELEMENTS
-		$note.find('.items li span').each(function(){
-			var $item = $(this);
-			
-			var item_due = $item.siblings('input.due').val();
-			
-			// IS ITEM DONE?
-			var item_is_done = $item.closest('li').hasClass('done');
-
-			var item_text = $item.text();
-
-			if(item_text.length) { // only save items with text
-				items.push({
-					text:escapeQuotes(escapeHtmlEntities(item_text)),
-					done:item_is_done,
-					due:item_due
-				});
-			}			
-		});
-		
-		note_data.items = items;
-		this.data = note_data;
-		
-	}
+	}	
 
 	Note.prototype.serialize = function() {
 		return JSON.stringify(this.data);
