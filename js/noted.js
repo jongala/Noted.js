@@ -125,19 +125,15 @@ function Noted() {
 				if(note_json.length) {
 					// ADD NOTE TO DOM
 					var note_data = {};
-					var valid_JSON = true;
 					try {
 						note_data = JSON.parse(note_json);
+						self.board[note_id] = new Note(note_id, note_data).render();
 					} catch(err) {
 						show_error('<h3><strong>JSON Parse Error</strong></h3><p>Sorry, an error was encountered when processing your data, and your notes could not be loaded.</p>');
 						console.log('init_notes() : JSON PARSE ERROR');
 						return;
 					}
-					
-					self.board[note_id] = new Note(note_id, note_data).render();
-
 				}
-				
 			}
 
 			// delay the slow sortAndDrag call
@@ -200,6 +196,7 @@ function Noted() {
 		
 		// PARSE NOTE ITEMS FROM JSON
 		var note_items = (this.data.items && this.data.items.length) ? this.data.items : [];
+		// convert from old style item serialization
 		if(typeof note_items == 'string') {
 			console.log('---String Items; converting');
 			// convert to array
@@ -244,7 +241,6 @@ function Noted() {
 		// FIND ITEM ELEMENTS
 		this.$note.find('.items li span').each(function(){
 			var $item = $(this);
-			
 			var item_due = $item.siblings('input.due').val();
 			
 			// IS ITEM DONE?
@@ -416,22 +412,11 @@ function Noted() {
 	 */
 	this.import_all = function(import_JSON) {
 		var import_data = {};
-		var valid_JSON = true;
 		
 		try {
 			// try parsing the JSON data
 			import_data = JSON.parse(import_JSON);
-			console.log('import_data OK');
-		} catch(err) {
-			valid_JSON = false;			
-			show_error('<h3><strong>JSON Parse Error</strong></h3><p>Sorry, an error was encountered when processing your data, and your notes could not be imported.</p>');
-			console.log('import_all() : JSON PARSE ERROR');
-			console.log('valid_JSON: ' + valid_JSON);
-			return;
-		}
-
-		if(valid_JSON) {
-	
+			
 			self.nuke();
 			var note_list=[];
 			var note_handle,note_id = 0;
@@ -452,8 +437,12 @@ function Noted() {
 			self.save_local_data('next_note_id',note_list.length);		
 			self.save_local_data('note_list',note_list.join(','));
 			init_notes();
-		}
-		
+
+		} catch(err) {
+			show_error('<h3><strong>JSON Parse Error</strong></h3><p>Sorry, an error was encountered when processing your data, and your notes could not be imported.</p>');
+			console.log('import_all() : JSON PARSE ERROR');
+			return;
+		}		
 	}
 
 /* ========================================================================
@@ -673,14 +662,14 @@ function Noted() {
 				
 				try {
 					note_data = JSON.parse(import_JSON);
+					var note = self.board[$note.attr('id')];
+					note.import(note_data);
 				} catch(e) {
 					show_error('<h3><strong>JSON Parse Error</strong></h3><p>Sorry, an error was encountered when processing your data, and your note data could not be loaded.</p>');
 					console.log('import one note: JSON PARSE ERROR');
 					return;
 				}
-				
-				var note = self.board[$note.attr('id')];
-				note.import(note_data);
+		
 			}
 			self.clear_modals();
 			$note.find('div.tools a.close').click();
@@ -720,8 +709,6 @@ function Noted() {
 		// END TOOLS
 		
 		// Note interactions
-		
-		
 	};
 
 
@@ -827,7 +814,6 @@ function Noted() {
 			$('#duedate_pointer').hide();
 			return false;
 		});
-		
 		
 	};
 	
@@ -1007,7 +993,6 @@ function Noted() {
 		});
 		
 		$( modal_selector + ', #modal_screen').fadeIn('fast',options.callback);
-			
 	}
 
 	this.clear_modals = function() {
@@ -1179,8 +1164,8 @@ function Noted() {
 	
 	var short_days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 	
-	var truncate_string = function(fullstring,limit) {
-		if(limit === undefined || limit === null) limit=15;
+	var truncate_string = function(fullstring, limit) {
+		var limit = limit || 15;
 		if(fullstring.length < limit) {
 			return fullstring;
 		} else {
@@ -1216,7 +1201,6 @@ function Noted() {
 				handles: 'e, se',
 				stop: function(event,ui) {
 					if ( (ui.originalSize.width !== ui.size.width) || (ui.originalSize.height !== ui.size.height) ) {
-						//save_note_size( $(this).closest('.note')[0] );
 						self.board[$(this).closest('.note').attr('id')].save_size();
 					}
 				}
@@ -1243,7 +1227,6 @@ function Noted() {
 					$(ui.item).closest('.note').removeClass('top');
 				},
 				connectWith: '.items'
-				
 			}
 		);
 		
@@ -1261,7 +1244,6 @@ function Noted() {
 				}
 				
 				$picking_item.removeClass('datepicking');
-									
 			}
 		});
 				
