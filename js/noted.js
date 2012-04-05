@@ -218,7 +218,7 @@ function Noted() {
 	}
 
 	Note.prototype.save = function() {
-		console.log('saving ' + this.id, this.serialize());
+		console.log('saving ' + this.id);
 		self.save_local_data(this.id, this.serialize());
 	}
 
