@@ -503,8 +503,8 @@ function Noted() {
 		$('.note .title input.titleText').live('keypress', save_on_enter);
 		
 		// the todo_trigger activates itself, deactivates the done_trigger sibling, and sets the parent note class
-		$('.note .todo_trigger').live('click',function(){
-			//$(this).parents('.note').removeClass('done').addClass('todo');
+		$('.note .todo_trigger').live('click', function(e){
+			e.preventDefault();
 			$note = $(this).closest('.note');
 			if($note.is('.done')) {
 				// switch note state
@@ -516,11 +516,10 @@ function Noted() {
 					var reveal = setTimeout(function(){$note.find('ul.items, .title, .controls, .add').fadeIn()},500);
 				}
 			}
-			return false;
 		});
 		
-		$('.note .done_trigger').live('click',function(){
-			//$(this).parents('.note').removeClass('todo').addClass('done');
+		$('.note .done_trigger').live('click', function(e){
+			e.preventDefault();
 			$note = $(this).closest('.note');
 			if($note.is('.todo')) {
 				// switch note state
@@ -532,18 +531,17 @@ function Noted() {
 					var reveal = setTimeout(function(){$note.find('ul.items, .title, .controls').fadeIn()},500);
 				}
 			}
-			return false;
 		});
 		
 		// delete a whole note -- trigger
-		$('li.note a.delete_note').live('click',function(){
+		$('li.note a.delete_note').live('click', function(e){
+			e.preventDefault();
 			var $confirm = $(this).closest('.note').find('.delete_note_confirmation');
 			if( !$confirm.length || !$confirm.is(':visible') ) {
 				self.confirm_delete_note($(this).closest('li.note')[0]);
 			} else {
 				$confirm.find('.delete_note_dismiss').click();
 			}
-			return false;
 		});
 
 
@@ -554,15 +552,16 @@ function Noted() {
 		 */ 
 		
 		// close colors panel with close button
-		$('.note .colors a.close').live('click',function(){
+		$('.note .colors a.close').live('click', function(e){
+			e.preventDefault();
 			$(this).closest('.colors').slideUp('fast',function(){
 				$(this).closest('.note').find('.controls a.open').removeClass('open');
 			});
-			return false;
 		});
 		
 		// toggle colors panel from color trigger
-		$('.note .controls a.color_trigger').live('click',function(){
+		$('.note .controls a.color_trigger').live('click', function(e){
+			e.preventDefault();
 			var $note = $(this).closest('.note');
 			var $colorPanel = $note.find('.colors');
 			
@@ -577,7 +576,6 @@ function Noted() {
 				$colorPanel.slideDown("fast");
 				$(this).addClass('open');
 			}
-			return false;
 		});
 
 		// Change input hex val to set color
@@ -590,17 +588,17 @@ function Noted() {
 		});
 		
 		// click on color squares to set the color input value to the hex code, then trigger change event, which does save
-		$('.note .colors > .colorblocks > a').live('click',function(){
+		$('.note .colors > .colorblocks > a').live('click', function(e){
+			e.preventDefault();
 			var thiscolor = $(this).css('backgroundColor');
 			console.log('set color to: ' + getHex(thiscolor) );
 			$(this).closest('.colors').find('input').val(getHex(thiscolor)).change();
-			return false;
 		});
 		
 		// little arrow button triggers change event on color field, if they don't press ENTER
-		$('.note .colors .color_input a').live('click',function(){
+		$('.note .colors .color_input a').live('click', function(e){
+			e.preventDefault();
 			$(this).siblings('input').change();
-			return false;
 		});
 		
 		/* TOOLS
@@ -609,15 +607,16 @@ function Noted() {
 		 */ 
 		
 		// close tools panel with close button
-		$('.note .tools a.close').live('click',function(){
+		$('.note .tools a.close').live('click', function(e){
+			e.preventDefault();
 			$(this).closest('.tools').slideUp('fast',function(){
 				$(this).closest('.note').find('.controls a.open').removeClass('open');
 			});
-			return false;
 		});
 		
 		// toggle tools panel from color trigger
-		$('.note .controls a.tools_trigger').live('click',function(){
+		$('.note .controls a.tools_trigger').live('click', function(e){
+			e.preventDefault();
 			var $note = $(this).closest('.note');
 			var $toolPanel = $note.find('.tools');
 			
@@ -632,12 +631,11 @@ function Noted() {
 				$toolPanel.slideDown("fast");	// show it
 				$(this).addClass('open');
 			}
-			return false;
 		});
 		
 		// import button
-		$('.note .tools a.import_trigger').live('click',function(){
-			
+		$('.note .tools a.import_trigger').live('click', function(e){
+			e.preventDefault();
 			var $note = $(this).closest('.note');
 			
 			console.log('importing into:' + $note.attr('id'));
@@ -650,7 +648,6 @@ function Noted() {
 				}
 			});
 			$(this).closest('.tools').find('a.close').click();
-			return false;
 		});
 		
 		$('#import_OK').click(function(){
@@ -682,7 +679,8 @@ function Noted() {
 		});
 		
 		// export button
-		$('.note .tools a.export_trigger').live('click',function(){
+		$('.note .tools a.export_trigger').live('click', function(e){
+			e.preventDefault();
 			var $note = $(this).closest('.note');
 			var note_JSON = self.board[$note.attr('id')].serialize();
 			$('#export_note_handle').val( $note[0].id );
@@ -694,16 +692,15 @@ function Noted() {
 				}
 			});
 			$(this).closest('.tools').find('a.close').click();
-			return false;
 		});
 		
-		$('#export_cancel').click(function(){
+		$('#export_cancel').click(function(e){
+			e.preventDefault();
 			self.clear_modals();
 			var export_note_handle = $('#export_note_handle').val();
 			if(export_note_handle.length) {
 				$('#' + export_note_handle).find('div.tools a.close').click();
 			}
-			return false;
 		});
 		
 		// END TOOLS
@@ -724,16 +721,16 @@ function Noted() {
 	var init_items = function() {
 		
 		// todo item completion trigger		
-		$('.todo .items li .trigger').live('click',function(){
+		$('.todo .items li .trigger').live('click', function(e){
+			e.preventDefault();
 			do_item($(this).closest('li'));
 			self.show_alerts();
-			return false;
 		});
 		
 		// done item trigger deletes the item
-		$('.done .items li .trigger').live('click',function(){
+		$('.done .items li .trigger').live('click', function(e){
+			e.preventDefault();
 			delete_item($(this).closest('li'));
-			return false;
 		});
 		
 		// item due date pointer display
@@ -775,7 +772,6 @@ function Noted() {
 				$item.addClass('editing');
 				$item.append('<input type="text" class="item" value="' + escapeQuotes(escapeHtmlEntities($(this).text())) + '"/>').find('input.item').focus();
 			}
-			return false;
 		});
 	
 		
@@ -786,15 +782,15 @@ function Noted() {
 		$('.items input.item').live('keypress',save_on_enter);
 		
 		// "Add" button creates a new item in entry mode
-		$('.note div.add').live('click',function(){
+		$('.note div.add').live('click', function(){
 			$items = $(this).siblings('.items');
 			$new_item = $('#item_template').tmpl({editing:true}).appendTo($items).find('input.item').focus();
-			return false;
 		});
 		
 		
 		// Date trigger
-		$('.note .items li a.date_trigger').live('click',function(){
+		$('.note .items li a.date_trigger').live('click', function(e){
+			e.preventDefault();
 			var $trigger = $(this);
 			var $note = $trigger.closest('.note');
 			var item_date = $trigger.siblings('input.due').val();
@@ -802,17 +798,15 @@ function Noted() {
 			var trigger_left = $trigger.offset().left - $note.offset().left;
 			var trigger_top = $trigger.offset().top - $note.offset().top;
 			$(this).closest('li').addClass('datepicking').closest('.note').find('input.date').val(item_date).css({top:trigger_top,left:trigger_left}).datepicker('show');	
-
-			return false;
 		});
 		
 		// Date delete trigger
-		$('a.date_delete').live('click',function(){
+		$('a.date_delete').live('click', function(e){
+			e.preventDefault();
 			$(this).closest('li').removeClass('has_deadline').find('input.due').val('');
 			self.board[$(this).closest('.note').attr('id')].save_items();
 			self.show_alerts();
 			$('#duedate_pointer').hide();
-			return false;
 		});
 		
 	};
@@ -822,43 +816,44 @@ function Noted() {
 	 * Set behaviors for creating new notes, and forcing SQL queries.
 	 */
 	init_controls = function() {
-		$('a#new_note').click(function(){
+		$('a#new_note').click(function(e){
+			e.preventDefault();
 			self.create_note();
-			return false;
 		});
 		
-		$('#new_note_ghost').live('click',function(){
+		$('#new_note_ghost').live('click', function(){
 			$('a#new_note').click();	
 		});
 		
 		
-		$('a#nuke').click(function(){
+		$('a#nuke').click(function(e){
+			e.preventDefault();
 			self.nuke();
 			window.location.reload();
-			return false;
 		});
 		
-		$('#welcome_trigger').click(function(){
+		$('#welcome_trigger').click(function(e){
+			e.preventDefault();
 			self.show_modal('#welcome',{
 				'width':650
 			});
-			return false;
 		});
 		
-		$('a#force').click(function(){
+		$('a#force').click(function(e){
+			e.preventDefault();
 			var query =  prompt('Enter Query');
 			self.force_query(query);
-			return false;
 		});
 		
 		// snap to size
-		$('a#snap_to_size').click(function(){
+		$('a#snap_to_size').click(function(e){
+			e.preventDefault();
 			snap_to_size();
-			return false;
 		});
 		
 		// main menu trigger to export whole board
-		$('a#export_all').click(function(){
+		$('a#export_all').click(function(e){
+			e.preventDefault();
 			var all_JSON = self.export_all();
 			$('#exported_note').text('everything');
 			$('#export_JSON').val(all_JSON);
@@ -867,21 +862,21 @@ function Noted() {
 					$('#export_JSON').focus();
 				}
 			});
-			return false;
 		});
 		
 		// main menu trigger to import whole board
-		$('a#import_all').click(function(){
+		$('a#import_all').click(function(e){
 			self.show_modal('#import_all_field',{
 				'callback':function(){
 					$('#import_all_JSON').focus();
 				}
 			});
-			return false;
+			e.preventDefault();
 		});
 		
 		// modal button to do whole board import
-		$('#import_all_OK').click(function(){
+		$('#import_all_OK').click(function(e){
+			e.preventDefault();
 			console.log('IMPORTING ALL');
 			var import_JSON = $('#import_all_JSON').val();
 			
@@ -891,46 +886,45 @@ function Noted() {
 			
 			$('#import_all_JSON').val('');
 			self.clear_modals();
-			return false;		
 		});
 		
 		// styles menu
-		$('.body_styles a').click(function(){
+		$('.body_styles a').click(function(e){
+			e.preventDefault();
 			var body_class_name = this.href.slice(this.href.indexOf('#') + 1);
 			console.log('body styles: ' + body_class_name);
 			$('body')[0].className = body_class_name;
 			self.save_local_data('body_class',body_class_name);
-			return false;
 		});
 		
-		$('#alerts_tab').click(function(){
+		$('#alerts_tab').click(function(e){
+			e.preventDefault();
 			var $content = $('#alerts .alerts_content');
 			if($content.is(':hidden')) {
 				$content.slideDown();
 			} else {
 				$content.slideUp();
 			}
-			return false;
 		});
 		
-		$('#license_trigger').click(function(){
+		$('#license_trigger').click(function(e){
+			e.preventDefault();
 			self.show_modal('#license');
-			return false;
 		});
 		
 		/* delete note stuff */
 		
-		$('.delete_note_confirmation .delete_note_dismiss').live('click',function(){
+		$('.delete_note_confirmation .delete_note_dismiss').live('click', function(e){
+			e.preventDefault();
 			$(this).closest('.delete_note_confirmation').slideUp('fast',function(){
 				$(this).closest('.note').find('.delete_note').removeClass('open');
 				$(this).remove();
 			});
-			return false;
 		});
 		
-		$('.delete_note_confirmation .delete_note_OK').live('click',function(){
+		$('.delete_note_confirmation .delete_note_OK').live('click', function(e){
+			e.preventDefault();
 			self.delete_note( $(this).closest('.note')[0] );
-			return false;
 		});
 		
 	}
@@ -1025,15 +1019,15 @@ function Noted() {
 		},300);
 	}
 	
-	$('.modal_dismiss').live('click',function(){
+	$('.modal_dismiss').live('click', function(e){
+		e.preventDefault();
 		$(this).closest('div.modal').find('textarea, input').val('');
 		self.clear_modals();
-		return false;
 	});
 	
-	$('#modal_screen').click(function(){
+	$('#modal_screen').click(function(e){
+		e.preventDefault();
 		self.clear_modals();
-		return false;
 	});
 
 /* ========================================================================
