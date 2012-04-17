@@ -4,3 +4,4 @@ _project_files_noted
 .DS_Store
 */.DS_Store
 index_online.html
+.jshintrc
