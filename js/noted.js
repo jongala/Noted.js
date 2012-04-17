@@ -59,7 +59,7 @@ function Noted() {
 			has_css_transform ++;
 		}
 	}
-	if( has_css_transform ) {$('body').addClass('css_transform');};
+	if( has_css_transform ) {$('body').addClass('css_transform');}
 
 /* ========================================================================
 
@@ -105,7 +105,7 @@ function Noted() {
 
 			console.log("==============================\nFirst Launch\n==============================");
 
-			var welcome_timer = setTimeout(function(){$('#welcome_trigger').click()},500);
+			var welcome_timer = setTimeout(function(){$('#welcome_trigger').click();},500);
 
 			self.save_local_data('note_list', '');	// give create_note a base list
 			self.save_local_data('next_note_id', 0);	// set first note id number
@@ -113,7 +113,7 @@ function Noted() {
 
 		} else { // INITIALIZE NORMALLY
 			
-			var note_list = note_list.split(',');
+			note_list = note_list.split(',');
 			
 			console.log('init_notes() : found ' + note_list.length + ' notes');
 		
@@ -170,7 +170,7 @@ function Noted() {
 		};
 				
 		return this;
-	}
+	};
 
 	Note.prototype.render = function() {
 		var $note = this.$note = $('#note_template').tmpl( $.extend(this.data, {id:this.id}) );
@@ -211,28 +211,28 @@ function Noted() {
 		$('#item_template').tmpl(note_items).appendTo($note.find('.items'));
 		
 		return this;			
-	}	
+	};
 
 	Note.prototype.serialize = function() {
 		return JSON.stringify(this.data);
-	}
+	};
 
 	Note.prototype.save = function() {
 		console.log('saving ' + this.id);
 		self.save_local_data(this.id, this.serialize());
-	}
+	};
 
 	Note.prototype.save_color = function() {
 		this.data.color = this.$note.find('.colors input').val();
 		this.save();
-	}
+	};
 
 	Note.prototype.save_size = function() {
 		var $content = this.$note.find('.note_content');
 		this.data.width = $content.width();
 		this.data.height = $content.height();
 		this.save();
-	}
+	};
 
 	Note.prototype.save_items = function() {
 		// BEGIN ITEM SERIALIZATION
@@ -259,18 +259,18 @@ function Noted() {
 		
 		this.data.items = items;
 		this.save();
-	}
+	};
 
 	Note.prototype.save_name = function() {
 		this.data.name = this.$note.find('.title').text().trim();
 		this.save();
-	}
+	};
 
-	Note.prototype.import = function(data) {
+	Note.prototype.import_JSON = function(data) {
 		this.data = data;
 		this.render();
 		this.save();
-	}
+	};
 
 	/* 
 	 * Create a new note:
@@ -295,7 +295,7 @@ function Noted() {
 		
 		self.save_local_data('note_list', note_list.join(','));				// save the updated list
 		self.save_local_data('next_note_id', Number(new_note_id) + 1);		// save the updated increment
-		self.save_local_data(note_handle, JSON.stringify(default_note_data)); 	// save the note data	
+		self.save_local_data(note_handle, JSON.stringify(default_note_data));	// save the note data	
 
 		self.board[note_handle] = new Note(note_handle, default_note_data).render(); 
 
@@ -317,7 +317,7 @@ function Noted() {
 		});		
 		self.save_local_data('note_list',note_handles.join(','));
 		put_ghost_last();
-	}
+	};
 	 
 	
 
@@ -329,7 +329,7 @@ function Noted() {
 		var $item = $(item);
 		$item.addClass('done');
 		self.board[$item.parents('.note').attr('id')].save_items();
-	}
+	};
 
 	/* 
 	 * Delete an item.
@@ -340,7 +340,7 @@ function Noted() {
 		var note_id = $item.parents('.note').attr('id');
 		$item.remove();
 		self.board[note_id].save_items();
-	}
+	};
 	
 	/* 
 	 * Confirm deleting a note.
@@ -353,7 +353,7 @@ function Noted() {
 			$confirmation_panel = $note.find('.delete_note_confirmation');
 				
 		$note.find('.overlay').slideUp('fast', function(){
-			$note.find('.controls .open').removeClass('open')
+			$note.find('.controls .open').removeClass('open');
 		});
 		
 		if (!$confirmation_panel.length) {
@@ -364,7 +364,7 @@ function Noted() {
 			$note.find('.delete_note').addClass('open');
 		});
 		$note.find('.deleted_note_title').text(note_title);
-	}
+	};
 	
 	/* 
 	 * Delete a note.
@@ -388,7 +388,7 @@ function Noted() {
 		}
 		
 		self.save_local_data('note_list', note_list.join(','));
-	}
+	};
 
 
 	/* 
@@ -403,9 +403,9 @@ function Noted() {
 			note_JSON += "\n" + '"' + note_list[i] + '"' + ':' + localStorage[note_list[i]] + ',';
 		}
 		note_JSON = note_JSON.slice(0,-1); // trim trailing comma
-		note_JSON += "\n}"
+		note_JSON += "\n}";
 		return note_JSON;
-	}
+	};
 	
 	/* 
 	 * Imports a store of all notes, as produced by export_all
@@ -443,7 +443,7 @@ function Noted() {
 			console.log('import_all() : JSON PARSE ERROR');
 			return;
 		}		
-	}
+	};
 
 /* ========================================================================
 
@@ -467,14 +467,14 @@ function Noted() {
 		if(code && code == 13 ) {
 			save_field(event.target);
 		}
-	}
+	};
 	
 	/**
 	 * Field: save itself when blurred 
 	 */
 	var save_this_field = function(event){
 		save_field(this);
-	}
+	};
 	
 
 	/* SET NOTE INTERACTION BEHAVIORS 
@@ -513,7 +513,7 @@ function Noted() {
 				// if we have CSS transforms, show/hide the note contents during transition
 				if( $('body').hasClass('css_transform') ) {
 					$note.find('ul.items, .title, .controls, .add').hide();
-					var reveal = setTimeout(function(){$note.find('ul.items, .title, .controls, .add').fadeIn()},500);
+					var reveal = setTimeout(function(){$note.find('ul.items, .title, .controls, .add').fadeIn();},500);
 				}
 			}
 		});
@@ -528,7 +528,7 @@ function Noted() {
 				// if we have CSS transforms, show/hide the note contents during transition
 				if( $('body').hasClass('css_transform') ) {
 					$note.find('ul.items, .title, .controls, .add').hide();
-					var reveal = setTimeout(function(){$note.find('ul.items, .title, .controls').fadeIn()},500);
+					var reveal = setTimeout(function(){$note.find('ul.items, .title, .controls').fadeIn();},500);
 				}
 			}
 		});
@@ -581,7 +581,7 @@ function Noted() {
 		// Change input hex val to set color
 		$('.note .colors input').live('change',function(){
 			var colorval = $(this).val();
-			$(this).parents('.note').find('.note_content, .controls > a.done_trigger, .controls > a.todo_trigger').css('backgroundColor',colorval) 	// set color
+			$(this).parents('.note').find('.note_content, .controls > a.done_trigger, .controls > a.todo_trigger').css('backgroundColor',colorval)	// set color
 			.end().end().parents('.colors').slideUp('fast');								// close the panel
 			//save_note_color($(this).parents('.note')[0]);								// save it
 			self.board[$(this).parents('.note').attr('id')].save_color();
@@ -660,7 +660,7 @@ function Noted() {
 				try {
 					note_data = JSON.parse(import_JSON);
 					var note = self.board[$note.attr('id')];
-					note.import(note_data);
+					note.import_JSON(note_data);
 				} catch(e) {
 					show_error('<h3><strong>JSON Parse Error</strong></h3><p>Sorry, an error was encountered when processing your data, and your note data could not be loaded.</p>');
 					console.log('import one note: JSON PARSE ERROR');
@@ -927,17 +927,17 @@ function Noted() {
 			self.delete_note( $(this).closest('.note')[0] );
 		});
 		
-	}
+	};
 
 	// LOADS GENERAL APP PREFS LIKE BODY STYLES, DISPLAY PREFS, ETC.
 	load_defaults = function(){
 		var body_class = localStorage.getItem('body_class');
-		if(body_class == undefined || !body_class.length) {
+		if(body_class === undefined || !body_class.length) {
 			body_class = 'slate';
 		}
 
 		$('body').addClass(body_class);
-	}
+	};
 	
 	
 	/* KEYBOARD COMMANDS
@@ -987,11 +987,11 @@ function Noted() {
 		});
 		
 		$( modal_selector + ', #modal_screen').fadeIn('fast',options.callback);
-	}
+	};
 
 	this.clear_modals = function() {
 		return $('.modal, #modal_screen').fadeOut('fast');
-	}
+	};
 	
 	var show_error = function(error_message,options) {
 		var defaults = {
@@ -1017,7 +1017,7 @@ function Noted() {
 		var error_timer = setTimeout(function(){
 			$('#error, #modal_screen').show();
 		},300);
-	}
+	};
 	
 	$('.modal_dismiss').live('click', function(e){
 		e.preventDefault();
@@ -1072,7 +1072,7 @@ function Noted() {
 		} else {
 			$input.closest('li').remove();
 		}
-	}
+	};
 	
 	
 	this.save_local_data = function(key,val) {
@@ -1082,7 +1082,7 @@ function Noted() {
 			console.log('**** DATA SAVE ERROR ******');
 			show_error('<h3><strong>Data Save Error</strong></h3><p>Your data was not saved.  Please make sure that you are not browsing in Icognito/Private Browsing mode, and reload Noted.</p>');
 		}
-	}
+	};
 
 	this.cancelAllEdits = function() {
 		//$('.items li.editing').removeClass('editing').find('span').show().end().find('input.item').remove();
@@ -1095,7 +1095,7 @@ function Noted() {
 			}
 		});
 		$('li.note div.title').find('input').remove().end().find('span').show();
-	}
+	};
 	
 	var snap_to_size = function() {
 		$('#board li.note').each(function(){
@@ -1103,11 +1103,11 @@ function Noted() {
 			//save_note_size(this);
 			self.board[this.id].save_size();
 		});
-	}
+	};
 
 	var escapeQuotes = function(text) {
 		return text.replace(/"/g,'&quot;');
-	}
+	};
 
 	/* 
 	 * Javascript entity escape functions from Stackoverflow http://stackoverflow.com/questions/1354064/how-to-convert-characters-to-html-entities-using-plain-javascript/1354715#1354715
@@ -1121,7 +1121,7 @@ function Noted() {
 	
 	// all HTML4 entities as defined here: http://www.w3.org/TR/html4/sgml/entities.html
 	// added: amp, lt, gt, quot and apos
-	escapeHtmlEntities.entityTable = { 34 : 'quot', 38 : 'amp', 39 : 'apos', 60 : 'lt', 62 : 'gt', 160 : 'nbsp', 161 : 'iexcl', 162 : 'cent', 163 : 'pound', 164 : 'curren', 165 : 'yen', 166 : 'brvbar', 167 : 'sect', 168 : 'uml', 169 : 'copy', 170 : 'ordf', 171 : 'laquo', 172 : 'not', 173 : 'shy', 174 : 'reg', 175 : 'macr', 176 : 'deg', 177 : 'plusmn', 178 : 'sup2', 179 : 'sup3', 180 : 'acute', 181 : 'micro', 182 : 'para', 183 : 'middot', 184 : 'cedil', 185 : 'sup1', 186 : 'ordm', 187 : 'raquo', 188 : 'frac14', 189 : 'frac12', 190 : 'frac34', 191 : 'iquest', 192 : 'Agrave', 193 : 'Aacute', 194 : 'Acirc', 195 : 'Atilde', 196 : 'Auml', 197 : 'Aring', 198 : 'AElig', 199 : 'Ccedil', 200 : 'Egrave', 201 : 'Eacute', 202 : 'Ecirc', 203 : 'Euml', 204 : 'Igrave', 205 : 'Iacute', 206 : 'Icirc', 207 : 'Iuml', 208 : 'ETH', 209 : 'Ntilde', 210 : 'Ograve', 211 : 'Oacute', 212 : 'Ocirc', 213 : 'Otilde', 214 : 'Ouml', 215 : 'times', 216 : 'Oslash', 217 : 'Ugrave', 218 : 'Uacute', 219 : 'Ucirc', 220 : 'Uuml', 221 : 'Yacute', 222 : 'THORN', 223 : 'szlig', 224 : 'agrave', 225 : 'aacute', 226 : 'acirc', 227 : 'atilde', 228 : 'auml', 229 : 'aring', 230 : 'aelig', 231 : 'ccedil', 232 : 'egrave', 233 : 'eacute', 234 : 'ecirc', 235 : 'euml', 236 : 'igrave', 237 : 'iacute', 238 : 'icirc', 239 : 'iuml', 240 : 'eth', 241 : 'ntilde', 242 : 'ograve', 243 : 'oacute', 244 : 'ocirc', 245 : 'otilde', 246 : 'ouml', 247 : 'divide', 248 : 'oslash', 249 : 'ugrave', 250 : 'uacute', 251 : 'ucirc', 252 : 'uuml', 253 : 'yacute', 254 : 'thorn', 255 : 'yuml', 402 : 'fnof', 913 : 'Alpha', 914 : 'Beta', 915 : 'Gamma', 916 : 'Delta', 917 : 'Epsilon', 918 : 'Zeta', 919 : 'Eta', 920 : 'Theta', 921 : 'Iota', 922 : 'Kappa', 923 : 'Lambda', 924 : 'Mu', 925 : 'Nu', 926 : 'Xi', 927 : 'Omicron', 928 : 'Pi', 929 : 'Rho', 931 : 'Sigma', 932 : 'Tau', 933 : 'Upsilon', 934 : 'Phi', 935 : 'Chi', 936 : 'Psi', 937 : 'Omega', 945 : 'alpha', 946 : 'beta', 947 : 'gamma', 948 : 'delta', 949 : 'epsilon', 950 : 'zeta', 951 : 'eta', 952 : 'theta', 953 : 'iota', 954 : 'kappa', 955 : 'lambda', 956 : 'mu', 957 : 'nu', 958 : 'xi', 959 : 'omicron', 960 : 'pi', 961 : 'rho', 962 : 'sigmaf', 963 : 'sigma', 964 : 'tau', 965 : 'upsilon', 966 : 'phi', 967 : 'chi', 968 : 'psi', 969 : 'omega', 977 : 'thetasym', 978 : 'upsih', 982 : 'piv', 8226 : 'bull', 8230 : 'hellip', 8242 : 'prime', 8243 : 'Prime', 8254 : 'oline', 8260 : 'frasl', 8472 : 'weierp', 8465 : 'image', 8476 : 'real', 8482 : 'trade', 8501 : 'alefsym', 8592 : 'larr', 8593 : 'uarr', 8594 : 'rarr', 8595 : 'darr', 8596 : 'harr', 8629 : 'crarr', 8656 : 'lArr', 8657 : 'uArr', 8658 : 'rArr', 8659 : 'dArr', 8660 : 'hArr', 8704 : 'forall', 8706 : 'part', 8707 : 'exist', 8709 : 'empty', 8711 : 'nabla', 8712 : 'isin', 8713 : 'notin', 8715 : 'ni', 8719 : 'prod', 8721 : 'sum', 8722 : 'minus', 8727 : 'lowast', 8730 : 'radic', 8733 : 'prop', 8734 : 'infin', 8736 : 'ang', 8743 : 'and', 8744 : 'or', 8745 : 'cap', 8746 : 'cup', 8747 : 'int', 8756 : 'there4', 8764 : 'sim', 8773 : 'cong', 8776 : 'asymp', 8800 : 'ne', 8801 : 'equiv', 8804 : 'le', 8805 : 'ge', 8834 : 'sub', 8835 : 'sup', 8836 : 'nsub', 8838 : 'sube', 8839 : 'supe', 8853 : 'oplus', 8855 : 'otimes', 8869 : 'perp', 8901 : 'sdot', 8968 : 'lceil', 8969 : 'rceil', 8970 : 'lfloor', 8971 : 'rfloor', 9001 : 'lang', 9002 : 'rang', 9674 : 'loz', 9824 : 'spades', 9827 : 'clubs', 9829 : 'hearts', 9830 : 'diams', 34 : 'quot', 38 : 'amp', 60 : 'lt', 62 : 'gt', 338 : 'OElig', 339 : 'oelig', 352 : 'Scaron', 353 : 'scaron', 376 : 'Yuml', 710 : 'circ', 732 : 'tilde', 8194 : 'ensp', 8195 : 'emsp', 8201 : 'thinsp', 8204 : 'zwnj', 8205 : 'zwj', 8206 : 'lrm', 8207 : 'rlm', 8211 : 'ndash', 8212 : 'mdash', 8216 : 'lsquo', 8217 : 'rsquo', 8218 : 'sbquo', 8220 : 'ldquo', 8221 : 'rdquo', 8222 : 'bdquo', 8224 : 'dagger', 8225 : 'Dagger', 8240 : 'permil', 8249 : 'lsaquo', 8250 : 'rsaquo', 8364 : 'euro' };
+	escapeHtmlEntities.entityTable = { 34 : 'quot', 38 : 'amp', 39 : 'apos', 60 : 'lt', 62 : 'gt', 160 : 'nbsp', 161 : 'iexcl', 162 : 'cent', 163 : 'pound', 164 : 'curren', 165 : 'yen', 166 : 'brvbar', 167 : 'sect', 168 : 'uml', 169 : 'copy', 170 : 'ordf', 171 : 'laquo', 172 : 'not', 173 : 'shy', 174 : 'reg', 175 : 'macr', 176 : 'deg', 177 : 'plusmn', 178 : 'sup2', 179 : 'sup3', 180 : 'acute', 181 : 'micro', 182 : 'para', 183 : 'middot', 184 : 'cedil', 185 : 'sup1', 186 : 'ordm', 187 : 'raquo', 188 : 'frac14', 189 : 'frac12', 190 : 'frac34', 191 : 'iquest', 192 : 'Agrave', 193 : 'Aacute', 194 : 'Acirc', 195 : 'Atilde', 196 : 'Auml', 197 : 'Aring', 198 : 'AElig', 199 : 'Ccedil', 200 : 'Egrave', 201 : 'Eacute', 202 : 'Ecirc', 203 : 'Euml', 204 : 'Igrave', 205 : 'Iacute', 206 : 'Icirc', 207 : 'Iuml', 208 : 'ETH', 209 : 'Ntilde', 210 : 'Ograve', 211 : 'Oacute', 212 : 'Ocirc', 213 : 'Otilde', 214 : 'Ouml', 215 : 'times', 216 : 'Oslash', 217 : 'Ugrave', 218 : 'Uacute', 219 : 'Ucirc', 220 : 'Uuml', 221 : 'Yacute', 222 : 'THORN', 223 : 'szlig', 224 : 'agrave', 225 : 'aacute', 226 : 'acirc', 227 : 'atilde', 228 : 'auml', 229 : 'aring', 230 : 'aelig', 231 : 'ccedil', 232 : 'egrave', 233 : 'eacute', 234 : 'ecirc', 235 : 'euml', 236 : 'igrave', 237 : 'iacute', 238 : 'icirc', 239 : 'iuml', 240 : 'eth', 241 : 'ntilde', 242 : 'ograve', 243 : 'oacute', 244 : 'ocirc', 245 : 'otilde', 246 : 'ouml', 247 : 'divide', 248 : 'oslash', 249 : 'ugrave', 250 : 'uacute', 251 : 'ucirc', 252 : 'uuml', 253 : 'yacute', 254 : 'thorn', 255 : 'yuml', 402 : 'fnof', 913 : 'Alpha', 914 : 'Beta', 915 : 'Gamma', 916 : 'Delta', 917 : 'Epsilon', 918 : 'Zeta', 919 : 'Eta', 920 : 'Theta', 921 : 'Iota', 922 : 'Kappa', 923 : 'Lambda', 924 : 'Mu', 925 : 'Nu', 926 : 'Xi', 927 : 'Omicron', 928 : 'Pi', 929 : 'Rho', 931 : 'Sigma', 932 : 'Tau', 933 : 'Upsilon', 934 : 'Phi', 935 : 'Chi', 936 : 'Psi', 937 : 'Omega', 945 : 'alpha', 946 : 'beta', 947 : 'gamma', 948 : 'delta', 949 : 'epsilon', 950 : 'zeta', 951 : 'eta', 952 : 'theta', 953 : 'iota', 954 : 'kappa', 955 : 'lambda', 956 : 'mu', 957 : 'nu', 958 : 'xi', 959 : 'omicron', 960 : 'pi', 961 : 'rho', 962 : 'sigmaf', 963 : 'sigma', 964 : 'tau', 965 : 'upsilon', 966 : 'phi', 967 : 'chi', 968 : 'psi', 969 : 'omega', 977 : 'thetasym', 978 : 'upsih', 982 : 'piv', 8226 : 'bull', 8230 : 'hellip', 8242 : 'prime', 8243 : 'Prime', 8254 : 'oline', 8260 : 'frasl', 8472 : 'weierp', 8465 : 'image', 8476 : 'real', 8482 : 'trade', 8501 : 'alefsym', 8592 : 'larr', 8593 : 'uarr', 8594 : 'rarr', 8595 : 'darr', 8596 : 'harr', 8629 : 'crarr', 8656 : 'lArr', 8657 : 'uArr', 8658 : 'rArr', 8659 : 'dArr', 8660 : 'hArr', 8704 : 'forall', 8706 : 'part', 8707 : 'exist', 8709 : 'empty', 8711 : 'nabla', 8712 : 'isin', 8713 : 'notin', 8715 : 'ni', 8719 : 'prod', 8721 : 'sum', 8722 : 'minus', 8727 : 'lowast', 8730 : 'radic', 8733 : 'prop', 8734 : 'infin', 8736 : 'ang', 8743 : 'and', 8744 : 'or', 8745 : 'cap', 8746 : 'cup', 8747 : 'int', 8756 : 'there4', 8764 : 'sim', 8773 : 'cong', 8776 : 'asymp', 8800 : 'ne', 8801 : 'equiv', 8804 : 'le', 8805 : 'ge', 8834 : 'sub', 8835 : 'sup', 8836 : 'nsub', 8838 : 'sube', 8839 : 'supe', 8853 : 'oplus', 8855 : 'otimes', 8869 : 'perp', 8901 : 'sdot', 8968 : 'lceil', 8969 : 'rceil', 8970 : 'lfloor', 8971 : 'rfloor', 9001 : 'lang', 9002 : 'rang', 9674 : 'loz', 9824 : 'spades', 9827 : 'clubs', 9829 : 'hearts', 9830 : 'diams', 338 : 'OElig', 339 : 'oelig', 352 : 'Scaron', 353 : 'scaron', 376 : 'Yuml', 710 : 'circ', 732 : 'tilde', 8194 : 'ensp', 8195 : 'emsp', 8201 : 'thinsp', 8204 : 'zwnj', 8205 : 'zwj', 8206 : 'lrm', 8207 : 'rlm', 8211 : 'ndash', 8212 : 'mdash', 8216 : 'lsquo', 8217 : 'rsquo', 8218 : 'sbquo', 8220 : 'ldquo', 8221 : 'rdquo', 8222 : 'bdquo', 8224 : 'dagger', 8225 : 'Dagger', 8240 : 'permil', 8249 : 'lsaquo', 8250 : 'rsaquo', 8364 : 'euro' };
 
 
 	// Color Conversion functions based on work from highlightFade
@@ -1151,7 +1151,7 @@ function Noted() {
 
 		// Otherwise, we're most likely dealing with a named color
 		return colors[jQuery.trim(color).toLowerCase()];
-	}
+	};
 	
 	
 	var short_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -1159,13 +1159,13 @@ function Noted() {
 	var short_days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 	
 	var truncate_string = function(fullstring, limit) {
-		var limit = limit || 15;
+		limit = limit || 15;
 		if(fullstring.length < limit) {
 			return fullstring;
 		} else {
 			return fullstring.slice(0,limit-1) + '…';
 		}
-	}
+	};
 	
 	var put_ghost_last = function() {
 		$ghost = $('#new_note_ghost');
@@ -1173,7 +1173,7 @@ function Noted() {
 			$ghost.remove();
 			$('#board').append($ghost);
 		}
-	}
+	};
 
 /* ========================================================================
 
@@ -1251,7 +1251,7 @@ function Noted() {
 	
 	this.renderCalendar = function() {
 	
-	}
+	};
 
 /* ========================================================================
 
@@ -1305,7 +1305,7 @@ function Noted() {
 					var duedate = Date.parse(due);
 					var lead = Math.floor((duedate - today)/86400000);	// lead time in days
 
-					if ( lead == 0 ) {
+					if ( lead === 0 ) {
 						$('#alerts .due').append($alert);
 						$item.addClass('due_today');
 						new_pressing++;
@@ -1326,7 +1326,7 @@ function Noted() {
 		if( new_pressing > old_pressing ) {		// slide down panel if we have new urgent items, or if this is initialization
 			$('#alerts .alerts_content').slideDown();
 		}
-	}
+	};
 
 /* ========================================================================
 
@@ -1355,7 +1355,7 @@ function Noted() {
 			update:function(event,ui){
 				save_note_order();
 			}
-		})
+		});
 		
 	} else { // OTHERWISE SHOW ERROR
 		
