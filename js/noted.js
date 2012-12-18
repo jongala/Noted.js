@@ -101,7 +101,7 @@ function Noted() {
 		var next_note_id = localStorage.next_note_id;
 		var note_list = localStorage.note_list;
 		
-		if(!note_list && !note_list.length) {
+		if(!note_list || !note_list.length) {
 
 			console.log("==============================\nFirst Launch\n==============================");
 
@@ -932,7 +932,7 @@ function Noted() {
 	// LOADS GENERAL APP PREFS LIKE BODY STYLES, DISPLAY PREFS, ETC.
 	load_defaults = function(){
 		var body_class = localStorage.getItem('body_class');
-		if(body_class === undefined || !body_class.length) {
+		if(!body_class) {
 			body_class = 'slate';
 		}
 
