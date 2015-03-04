@@ -266,7 +266,7 @@ ul.body_styles.menu {
 	text-transform:uppercase;
 	margin:2px 10px 5px;
 
-	/* opacity:0.99; */
+	-webkit-font-smoothing: antialiased;
 }
 
 #todayDisplay {
@@ -431,7 +431,7 @@ ul.body_styles.menu {
 		width:100%;
 		padding:3px 0;
 		text-indent:10px;
-		border-bottom:1px solid rgba(50,50,50,0.3);
+		border-bottom:1px solid rgba(0, 0, 0, 0.1);
 		font-weight:bold;
 	}
 	
@@ -612,9 +612,8 @@ ul.body_styles.menu {
 	}
 
 	.note div.add {
-		margin:0 10px;
-		padding:5px 0;
-		border-top:1px solid rgba(0,0,0,0.3);
+		margin: 0 5px;
+		padding: 5px 5px;
 		opacity:0.66;
 	}
 	
@@ -638,7 +637,8 @@ ul.body_styles.menu {
 		position:absolute;
 		top:0;
 		left:0;
-		width:100%;
+		right:0;
+		padding-left: 25px;
 	}
 	
 	.note .controls a {
@@ -647,22 +647,22 @@ ul.body_styles.menu {
 		padding:1px 6px;
 		text-decoration:none;
 		color:rgba(0,0,0,0.6);
-		background:#eee url('../images/tab_shade.png') 0 0 repeat-x;
+		background-color: #eee;
+		background-repeat: no-repeat;
+		background-image: linear-gradient(top, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.1) 6px);
+		background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.1) 6px);
+		background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.1) 6px);
 		box-shadow:0 3px 2px rgba(0,0,0,0.3);
 		-webkit-box-shadow:0 3px 2px rgba(0,0,0,0.3);
 		-moz-box-shadow:0 3px 2px rgba(0,0,0,0.3);
 		opacity:0.5;
 	}
 	
-	.note .controls a.todo_trigger {
-		margin-left:25px;
-	}
-	
 	/* hover in off state */
 	.note.todo .controls a.done_trigger:hover,
 	.note.done .controls a.todo_trigger:hover {
 		text-decoration:underline;
-		background-position:0 -60px;
+		background-image: none;
 		opacity:1;
 	}
 	
@@ -857,6 +857,8 @@ ul.body_styles.menu {
 		line-height:26px;
 		text-transform:uppercase;
 		color:#d00;
+
+		-webkit-font-smoothing: antialiased;
 	}
 
 	.delete_note_confirmation .content {
