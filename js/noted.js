@@ -465,6 +465,7 @@ function Noted() {
 			code = event.which;
 		}
 		if(code && code == 13 ) {
+			$(event.target).closest('.note_content').find('.add > .trigger').focus();
 			save_field(event.target);
 		}
 	};
