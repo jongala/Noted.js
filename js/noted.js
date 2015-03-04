@@ -787,6 +787,7 @@ function Noted() {
 			$items = $(this).siblings('.items');
 			$new_item = $('#item_template').tmpl({editing:true}).appendTo($items).find('input.item').focus();
 		});
+		$('.note div.add > a').live('click', function(e) {e.preventDefault()});
 		
 		
 		// Date trigger
