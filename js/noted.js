@@ -19,7 +19,7 @@ function Noted() {
 	var self = this;
 	this.board = {};
 	var default_note_data = {
-		name:'Click to edit Note title',
+		name:'Double click to edit Note title',
 		color: null,
 		width: null,
 		height: null,
