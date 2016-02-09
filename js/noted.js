@@ -1292,7 +1292,7 @@ function Noted() {
 				var $item = $(this);
 				var due = $item.find('input.due').val();
 				if(due) {
-					$alert = $('#alert_template .alert').clone()
+					$alert = $('#alert_template').tmpl()
 							.click(function(){
 								$item.find('a.trigger').click();
 							}).hover(function(){
